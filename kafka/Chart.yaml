@@ -1,0 +1,9 @@
+apiVersion: v2
+name: kafka
+version: 0.1.0
+description: A Helm chart for kafka cluster
+
+dependencies:
+  - name: kafka
+    version: "26.4.0"
+    repository: "https://charts.bitnami.com/bitnami"
