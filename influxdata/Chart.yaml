@@ -1,0 +1,9 @@
+apiVersion: v2
+name: influxdata
+version: 0.1.0
+description: A Helm chart for influxdata stack
+
+dependencies:
+  - name: influxdb
+    version: "6.3.2"
+    repository: "https://charts.bitnami.com/bitnami"
