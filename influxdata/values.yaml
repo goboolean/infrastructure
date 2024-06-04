@@ -3,5 +3,5 @@ influxdb:
     service:
       type: LoadBalancer
   admin:
-    username: admin
+    user: admin
     password: password
