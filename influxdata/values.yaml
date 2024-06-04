@@ -2,10 +2,6 @@ influxdb:
   influxdb:
     service:
       type: LoadBalancer
-  auth:
-    admin:
-      username: admin
-      password: admin
-      token: token
-      org: goboolean
-      bucket: minimal
+  admin:
+    username: admin
+    password: password
