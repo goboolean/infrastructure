@@ -1,0 +1,9 @@
+apiVersion: v2
+name: influxddata
+version: 0.1.0
+description: A Helm chart for influxdata stack
+
+dependencies:
+  - name: influxdb2
+    version: "2.1.2"
+    repository: "https://helm.influxdata.com"
