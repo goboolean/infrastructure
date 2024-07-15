@@ -26,4 +26,3 @@ spec:
           value: "{{ .Values.dbiniter.env.polygonSecretKey }}"
       restartPolicy: Never
   backoffLimit: 3
-  
