@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fetch-system-streams
+spec:
+  template:
+    spec:
+      containers:
+      - name: fetch-system-streams
+        env:
+        - name: KAFKA_BOOTSTRAP_HOST
+          value: "fetch-system-kafka:9092"
+        - name: ETCD_HOST
+          value: "fetch-system-etcd:2379"
+        - name: OTEL_ENDPOINT
+          value: "fetch-system-opentelemetry-collector:4317"

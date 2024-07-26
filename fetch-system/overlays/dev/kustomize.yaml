@@ -1,0 +1,7 @@
+resources:
+  - ../../base
+
+patchesStrategicMerge:
+  - replica-count.yaml
+  - image.yaml
+  - env-vars.yaml

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fetch-system-streams
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fetch-system-streams
+  template:
+    metadata:
+      labels:
+        app: fetch-system-streams
+    spec:
+      containers:
+      - name: fetch-system-streams
+        image: "registry.mulmuri.dev/fetch-system-streams:latest"
+        imagePullPolicy: Always
+        imagePullSecrets:
+        - name: harbor-registry
+        env:
+        - name: KAFKA_BOOTSTRAP_HOST
+          value: ""
+        - name: ETCD_HOST
+          value: ""
+        - name: OTEL_ENDPOINT
+          values: ""
