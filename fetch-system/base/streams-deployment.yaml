@@ -24,4 +24,4 @@ spec:
         - name: ETCD_HOST
           value: ""
         - name: OTEL_ENDPOINT
-          values: ""
+          value: ""

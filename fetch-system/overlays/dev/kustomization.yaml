@@ -1,0 +1,24 @@
+resources:
+- ../../base
+
+patches:
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: fetch-system-streams
+  path: replica-count.yaml
+
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: fetch-system-streams
+  path: image.yaml
+
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: fetch-system-streams
+  path: env-vars.yaml
