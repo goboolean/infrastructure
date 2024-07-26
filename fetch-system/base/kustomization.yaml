@@ -1,2 +1,2 @@
 resources:
-- streams-deployment.yaml
+  - streams-deployment.yaml

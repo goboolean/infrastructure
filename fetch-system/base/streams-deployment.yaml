@@ -13,15 +13,15 @@ spec:
         app: fetch-system-streams
     spec:
       imagePullSecrets:
-      - name: harbor-registry
+        - name: harbor-registry
       containers:
-      - name: fetch-system-streams
-        image: "registry.mulmuri.dev/fetch-system/fetch-system-streams:latest"
-        imagePullPolicy: Always
-        env:
-        - name: KAFKA_BOOTSTRAP_HOST
-          value: ""
-        - name: ETCD_HOST
-          value: ""
-        - name: OTEL_ENDPOINT
-          value: ""
+        - name: fetch-system-streams
+          image: "registry.mulmuri.dev/fetch-system/fetch-system-streams:latest"
+          imagePullPolicy: Always
+          env:
+          - name: KAFKA_BOOTSTRAP_HOST
+            value: ""
+          - name: ETCD_HOST
+            value: ""
+          - name: OTEL_ENDPOINT
+            value: ""

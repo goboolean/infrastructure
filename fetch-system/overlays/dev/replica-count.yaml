@@ -3,4 +3,4 @@ kind: Deployment
 metadata:
   name: fetch-system-streams
 spec:
-  replicas: 2
+  replicas: 1

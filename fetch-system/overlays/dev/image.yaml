@@ -6,8 +6,8 @@ spec:
   template:
     spec:
       imagePullSecrets:
-      - name: harbor-registry
+        - name: harbor-registry
       containers:
-      - name: fetch-system-streams
-        image: "34.84.212.14:80/fetch-system/fetch-system-streams:79058dc34077ea5a30d04d237f315064af54773b"
-        imagePullPolicy: Always
+        - name: fetch-system-streams
+          image: "34.84.212.14:80/fetch-system/fetch-system-streams:79058dc34077ea5a30d04d237f315064af54773b"
+          imagePullPolicy: Always
