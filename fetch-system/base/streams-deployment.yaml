@@ -16,7 +16,7 @@ spec:
       - name: harbor-registry
       containers:
       - name: fetch-system-streams
-        image: "registry.mulmuri.dev/fetch-system-streams:latest"
+        image: "registry.mulmuri.dev/fetch-system/fetch-system-streams:latest"
         imagePullPolicy: Always
         env:
         - name: KAFKA_BOOTSTRAP_HOST

@@ -9,5 +9,5 @@ spec:
       - name: harbor-registry
       containers:
       - name: fetch-system-streams
-        image: "34.84.212.14:80/fetch-system-streams:79058dc34077ea5a30d04d237f315064af54773b"
+        image: "34.84.212.14:80/fetch-system/fetch-system-streams:79058dc34077ea5a30d04d237f315064af54773b"
         imagePullPolicy: Always
