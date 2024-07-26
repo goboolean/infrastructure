@@ -12,12 +12,12 @@ spec:
       labels:
         app: fetch-system-streams
     spec:
+      imagePullSecrets:
+      - name: harbor-registry
       containers:
       - name: fetch-system-streams
         image: "registry.mulmuri.dev/fetch-system-streams:latest"
         imagePullPolicy: Always
-        imagePullSecrets:
-        - name: harbor-registry
         env:
         - name: KAFKA_BOOTSTRAP_HOST
           value: ""
