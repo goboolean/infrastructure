@@ -3,3 +3,49 @@ image:
   repo: "docker.io/library/telegraf"
   tag: "1.31-alpine"
   pullPolicy: IfNotPresent
+
+config:
+  agent:
+    interval: "10s"
+    round_interval: true
+    metric_batch_size: 1000
+    metric_buffer_limit: 10000
+    collection_jitter: "0s"
+    flush_interval: "10s"
+    flush_jitter: "0s"
+    precision: ""
+    debug: false
+    quiet: false
+    hostname: "$HOSTNAME"
+    omit_hostname: false
+
+  inputs:
+    - kubernetes:
+        url: "https://kubernetes.default.svc:443"
+        bearer_token: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+        insecure_skip_verify: true
+
+  outputs:
+    - influxdb_v2:
+        urls:
+          - "http://35.221.115.74/:8086"
+        token: "token"
+        organization: "org"
+        bucket: "k8s_metrics"
+
+rbac:
+  create: true
+  clusterWide: true
+  rules:
+    - apiGroups: [""]
+      resources:
+        - nodes
+        - nodes/proxy
+        - nodes/metrics
+        - services
+        - endpoints
+        - pods
+      verbs: ["get", "list", "watch"]
+
+serviceAccount:
+  create: true
