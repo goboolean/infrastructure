@@ -6,3 +6,7 @@ influxdb2:
     bucket: minimal
     user: admin
     password: password
+
+chronograf:
+  service:
+    type: LoadBalancer
