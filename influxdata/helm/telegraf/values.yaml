@@ -1,37 +1,39 @@
-replicaCount: 1
-image:
-  repo: "docker.io/library/telegraf"
-  tag: "1.31-alpine"
-  pullPolicy: IfNotPresent
 
-config:
-  inputs:
-    - kubernetes:
-        url: "https://kubernetes.default.svc:443"
-        bearer_token: "/var/run/secrets/kubernetes.io/serviceaccount/token"
-        insecure_skip_verify: true
-  outputs:
-    - influxdb:
-        urls:
-          - "http://influxdata-influxdb2.influxdata.svc.cluster.local:8086"
-          - "http://35.221.115.74"
-        token: "CdR0VFBDO30TVSvG8wqWUO8IEqKFext5gegv7wJqJrU19-0WaY1nUqLgbjP3X3H53H7VRZkxJw13-Z6hj_eCDg=="
-        organization: "goboolean"
-        bucket: "k8s_metrics"
+telegraf:
+  replicaCount: 1
+  image:
+    repo: "docker.io/library/telegraf"
+    tag: "1.31-alpine"
+    pullPolicy: IfNotPresent
 
-rbac:
-  create: true
-  clusterWide: true
-  rules:
-    - apiGroups: [""]
-      resources:
-        - nodes
-        - nodes/proxy
-        - nodes/metrics
-        - services
-        - endpoints
-        - pods
-      verbs: ["get", "list", "watch"]
+  config:
+    inputs:
+      - kubernetes:
+          url: "https://kubernetes.default.svc:443"
+          bearer_token: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+          insecure_skip_verify: true
+    outputs:
+      - influxdb_v2:
+          urls:
+            - "http://influxdata-influxdb2.influxdata.svc.cluster.local:8086"
+            - "http://35.221.115.74"
+          token: "CdR0VFBDO30TVSvG8wqWUO8IEqKFext5gegv7wJqJrU19-0WaY1nUqLgbjP3X3H53H7VRZkxJw13-Z6hj_eCDg=="
+          organization: "goboolean"
+          bucket: "k8s_metrics"
 
-serviceAccount:
-  create: true
+  rbac:
+    create: true
+    clusterWide: true
+    rules:
+      - apiGroups: [""]
+        resources:
+          - nodes
+          - nodes/proxy
+          - nodes/metrics
+          - services
+          - endpoints
+          - pods
+        verbs: ["get", "list", "watch"]
+
+  serviceAccount:
+    create: true
