@@ -11,7 +11,7 @@ config:
         bearer_token: "/var/run/secrets/kubernetes.io/serviceaccount/token"
         insecure_skip_verify: true
   outputs:
-    - influxdb_v2:
+    - influxdb:
         urls:
           - "http://influxdata-influxdb2.influxdata.svc.cluster.local:8086"
           - "http://35.221.115.74"
