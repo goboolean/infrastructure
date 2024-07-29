@@ -19,7 +19,7 @@ telegraf:
             - "http://35.221.115.74"
           token: "CdR0VFBDO30TVSvG8wqWUO8IEqKFext5gegv7wJqJrU19-0WaY1nUqLgbjP3X3H53H7VRZkxJw13-Z6hj_eCDg=="
           organization: "goboolean"
-          bucket: "k8s_metrics"
+          bucket: "k8s"
 
   rbac:
     create: true
@@ -30,10 +30,28 @@ telegraf:
           - nodes
           - nodes/proxy
           - nodes/metrics
+          - nodes/stats
           - services
           - endpoints
           - pods
+          - configmaps
+          - events
         verbs: ["get", "list", "watch"]
+      - apiGroups: ["extensions", "networking.k8s.io"]
+        resources:
+          - ingresses
+        verbs: ["get", "list", "watch"]
+      - nonResourceURLs: ["/metrics"]
+        verbs: ["get"]
 
   serviceAccount:
     create: true
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: telegraf-metrics-reader
+rules:
+- apiGroups: [""]
+  resources: ["nodes/stats", "nodes/proxy"]
+  verbs: ["get", "list"]
