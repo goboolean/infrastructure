@@ -4,7 +4,7 @@ telegraf-ds:
   config:
     inputs:
       - kubernetes:
-          url: "https://kubernetes.default.svc:443"
+          url: "https://$HOSTIP:10250"
           bearer_token: "/var/run/secrets/kubernetes.io/serviceaccount/token"
           insecure_skip_verify: true
     outputs:
