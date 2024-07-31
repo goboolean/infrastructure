@@ -1,9 +1,0 @@
-apiVersion: v2
-name: telegraf
-version: 0.1.0
-description: A Helm chart for telegraf
-
-dependencies:
-  - name: telegraf
-    version: "1.8.51"
-    repository: "https://helm.influxdata.com"
