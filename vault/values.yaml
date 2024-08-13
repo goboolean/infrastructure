@@ -1,0 +1,74 @@
+vault:
+  global:
+    enabled: true
+    tlsDisable: true
+
+  server:
+    # Stateful storage
+    dataStorage:
+      enabled: true
+    auditStorage:
+      enabled: true
+
+    # For HA configuration and because we need to manually init the vault,
+    # we need to define custom readiness/liveness Probe settings
+    readinessProbe:
+      enabled: true
+      path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
+    livenessProbe:
+      enabled: true
+      path: "/v1/sys/health?standbyok=true"
+      initialDelaySeconds: 60
+
+    # This configures the Vault Statefulset to create a PVC for audit logs.
+    # See https://www.vaultproject.io/docs/audit/index.html to know more
+    auditStorage:
+      enabled: true
+    standalone:
+      enabled: false
+
+    # Run Vault in "HA" mode.
+    ha:
+      enabled: true
+      replicas: 3
+      raft:
+        enabled: true
+        setNodeId: true
+
+        config: |
+          ui = true
+          cluster_name = "vault-integrated-storage"
+          listener "tcp" {
+            address = "[::]:8200"
+            cluster_address = "[::]:8201"
+            tls_disable = "true"
+          }
+
+          storage "raft" {
+            path = "/vault/data"
+            retry_join {
+              leader_api_addr = "http://vault-0.vault-internal:8200"
+            }
+            retry_join {
+              leader_api_addr = "http://vault-1.vault-internal:8200"
+            }
+            retry_join {
+              leader_api_addr = "http://vault-2.vault-internal:8200"
+            }
+            autopilot {
+              server_stabilization_time = "10s"
+              last_contact_threshold = "10s"
+              min_quorum = 3
+              cleanup_dead_servers = false
+              dead_server_last_contact_threshold = "10m"
+              max_trailing_logs = 1000
+              disable_upgrade_migration = false
+            }
+          }
+
+  # Vault UI
+  ui:
+    enabled: true
+    serviceType: "LoadBalancer"
+    serviceNodePort: null
+    externalPort: 8200
