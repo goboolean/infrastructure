@@ -58,12 +58,12 @@ chronograf:
 
     github:
       enabled: true
-      client_id: CHANGE_ME
-      client_secret: CHANGE_ME
+      client_id: OAUTH_GITHUB_CLIENT_ID
+      client_secret: OAUTH_GITHUB_CLIENT_SECRET
       gh_orgs: "goboolean" # 고블린 구성원만 접근 허용. 관리자용
     
     google:
-      enabled: true
+      enabled: false
       client_id: CHANGE_ME
       client_secret: CHANGE_ME
       public_url: "" # 사용자가 접근할 공개 url
