@@ -17,7 +17,7 @@ chronograf:
     keepPvc: true # 서비스 삭제 시 데이터를 유지
     # Helm 차트를 삭제해도 PVC와 데이터가 남아있음 -> 차트 재배포 및 서비스 이전에 유용
     ## Helm 차트 삭제는 언제하냐고 물어볼거같음 [서비스 업그레이드, 환경 재구성, 섭종]
-    a#ccessMode: ReadWriteOnce
+    accessMode: ReadWriteOnce
     ## RWO: 하나의 노드에서만 RW [ReadWriteOnce] <- 여러 노드에서 동시에 데이터 접근하면 안됨
     ## ROX: 여러 노드에서 R [ReadOnlyMany] <- 실시간 데이터 변경상황에서는 안되겠지
     ## RWX: 여러 노드에서 RW [ReadWriteMany] <- GCP 기본형으로는 지원X. 추가 Filestore 시스템이 필요함
