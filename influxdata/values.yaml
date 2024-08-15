@@ -36,21 +36,6 @@ chronograf:
       memory: 2Gi
       cpu: 2
 
-  ingress: # k8s에서 외부 트래픽을 클러스터 내부의 서비스로 라우팅
-  # 여긴 좀 어렵다
-    enabled: true
-    annotations: # ingress 컨트롤러 추가 설정
-      kubernetes.io/ingress.class: "nginx" # nginx, haproxy, traefix 등
-      cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    hosts: # 트래픽 라우팅 도메인 이름
-      - host: "your-domain.com"
-        paths:
-          - path: /
-    tls: # http 세팅
-      - hosts:
-        - "your-domain.com"
-        secretName: your-tls-secret
-
   oauth:
     ## CHANGE_ME는 아직 설정하지 않아서 값이 없음
     enabled: true # Oauth 사용할거임. 깃헙하고 구글만 사용함.
