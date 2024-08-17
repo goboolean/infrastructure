@@ -43,7 +43,7 @@ chronograf:
 
     github:
       enabled: true
-      client_id: OAUTH_GITHUB_CLIENT_ID
+      client_id: "Ov23liGjYUevdzO07JYn"
       client_secret: OAUTH_GITHUB_CLIENT_SECRET
       gh_orgs: "goboolean" # 고블린 구성원만 접근 허용. 관리자용
     
