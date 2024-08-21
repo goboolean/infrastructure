@@ -38,11 +38,11 @@ chronograf:
 
   oauth:
     ## CHANGE_ME는 아직 설정하지 않아서 값이 없음
-    enabled: false # Oauth 사용할거임. 깃헙하고 구글만 사용함.
+    enabled: true # Oauth 사용할거임. 깃헙하고 구글만 사용함.
     token_secret: "HhKN/zb7fsLwoHTR1CdRwoSTVNY6E9BWe4/Vxju+BOc="
 
     github:
-      enabled: false
+      enabled: true
       client_id: "Ov23liGjYUevdzO07JYn"
       client_secret: "448c94c716739da3ac86da6207256f1cb0ef27f2"
       gh_orgs: "goboolean" # 고블린 구성원만 접근 허용. 관리자용
