@@ -1,0 +1,9 @@
+apiVersion: v2
+name: chronograf
+version: 0.1.0
+description: A Helm chart for chronograf
+
+dependencies:
+  - name: chronograf
+    version: "2.1.2"
+    repository: "https://helm.influxdata.com"

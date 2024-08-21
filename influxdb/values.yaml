@@ -7,6 +7,3 @@ influxdb2:
     user: admin
     password: password
 
-chronograf:
-  service:
-    type: LoadBalancer
