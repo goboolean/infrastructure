@@ -43,8 +43,8 @@ chronograf:
 
     github:
       enabled: true
-      client_id: "Ov23liGjYUevdzO07JYn"
-      client_secret: "448c94c716739da3ac86da6207256f1cb0ef27f2"
+      client_id: "Ov23liEk5CoJ8x5PW9py"
+      client_secret: "c304abcfc48dd0527c40884c4f36378b2545e830"
       gh_orgs: "Goboolean" # 고블린 구성원만 접근 허용. 관리자용
     
     google:
