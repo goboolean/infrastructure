@@ -42,7 +42,7 @@ chronograf:
     token_secret: "HhKN/zb7fsLwoHTR1CdRwoSTVNY6E9BWe4/Vxju+BOc="
 
     github:
-      enabled: true
+      enabled: false
       client_id: "Ov23liGjYUevdzO07JYn"
       client_secret: "448c94c716739da3ac86da6207256f1cb0ef27f2"
       gh_orgs: "goboolean" # 고블린 구성원만 접근 허용. 관리자용
