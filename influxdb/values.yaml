@@ -6,3 +6,4 @@ influxdb2:
     bucket: minimal
     user: admin
     password: password
+
