@@ -1,17 +1,3 @@
-argo-cd:
-  redis-ha:
-    enabled: false
-  server:
-    service:
-      type: LoadBalancer
-    replicas: 1
-  controller:
-    replicas: 1  
-  repoServer:
-    replicas: 1  
-  applicationSet:
-    replicas: 1
-
 harbor:
   expose:
     # Set how to expose the service. Set the type as "ingress", "clusterIP", "nodePort" or "loadBalancer"
