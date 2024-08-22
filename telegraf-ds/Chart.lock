@@ -1,0 +1,6 @@
+dependencies:
+- name: telegraf-ds
+  repository: https://helm.influxdata.com
+  version: 1.1.32
+digest: sha256:a01e27fff79cdabcabf8c4f8c7bb2b1f055d4c9ec6211a6587b182e050b8015a
+generated: "2024-08-22T17:07:34.868107+09:00"
