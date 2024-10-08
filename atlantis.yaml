@@ -1,0 +1,6 @@
+version: 3
+projects:
+  - dir: envs/stg
+    autoplan:
+      enabled: true
+      when_modified: ["*.tf", "*.tfvars", "../../modules/**/*.tf"]
