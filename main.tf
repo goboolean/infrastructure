@@ -1,5 +1,5 @@
-resource "null_resource" "hello_world" {
-  provisioner "local-exec" {
-    command = "echo Hello, Terraform!"
-  }
+terraform {
+    backend "local" {
+        path = "/srv/atlantis/terraform.tfstate"
+    }
 }
