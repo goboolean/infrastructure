@@ -3,4 +3,4 @@ projects:
   - dir: .
     autoplan:
       enabled: true
-      when_modified: ["*.tf", "*.tfvars", "../../modules/**/*.tf"]
+      when_modified: ["*.tf", "*.tfvars", "modules/**/*.tf", "modules/**/*.tfvars"]
