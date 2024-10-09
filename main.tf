@@ -5,7 +5,7 @@ terraform {
 }
 
 module "gke" {
-    source = "../../modules/gcp/gke"
+    source = "modules/gcp/gke"
     project_id = var.project_id
     region = var.region
     zone = var.zone
