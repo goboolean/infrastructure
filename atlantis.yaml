@@ -1,6 +1,6 @@
 version: 3
 projects:
-  - dir: .
+  - dir: ./projects/dev
     autoplan:
       enabled: true
-      when_modified: ["*.tf", "*.tfvars", "modules/**/*.tf", "modules/**/*.tfvars"]
+      when_modified: ["**/*.tf", "**/*.tfvars"]
