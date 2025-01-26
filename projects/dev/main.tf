@@ -21,3 +21,10 @@ module "gce" {
     service_account_email = module.iam.atlantis_service_account_email
     depends_on = [module.service]
 }
+
+module "cloudflare" {
+    source = "../../modules/cloudflare"
+    api_token = var.cloudflare_api_token
+    zone_id = var.cloudflare_zone_id
+    ip_address = module.gce.ip_address
+}
