@@ -1,8 +1,14 @@
-resource "google_project_service" "services" {
-  for_each = toset([
+locals {
+  services = toset([
+    "cloudresourcemanager.googleapis.com",
+    "iam.googleapis.com",
     "serviceusage.googleapis.com",
     "compute.googleapis.com"
   ])
+}
+
+resource "google_project_service" "services" {
+  for_each = local.services
   
   project = var.project_id
   service = each.key
