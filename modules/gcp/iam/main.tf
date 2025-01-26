@@ -27,3 +27,9 @@ resource "google_project_iam_member" "storage_admin" {
   role    = "roles/storage.admin"
   member  = "serviceAccount:${google_service_account.atlantis.email}"
 }
+
+resource "google_storage_bucket_iam_member" "terraform_state_access" {
+  bucket = "goboolean-terraform-state"
+  role   = "roles/storage.admin"
+  member = "serviceAccount:${google_service_account.atlantis.email}"
+}
