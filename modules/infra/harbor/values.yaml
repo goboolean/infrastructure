@@ -1,0 +1,6 @@
+harbor:
+  expose:
+    type: loadBalancer
+    tls:
+      enabled: false
+  externalURL: http://core.harbor.domain
