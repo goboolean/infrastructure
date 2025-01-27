@@ -37,3 +37,10 @@ module "gcs" {
     location = var.location
     depends_on = [module.service]
 }
+
+module "gke" {
+    source = "../../modules/gcp/gke"
+    project_id = var.project_id
+    zone = var.zone
+    depends_on = [module.service]
+}
