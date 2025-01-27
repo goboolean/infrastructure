@@ -12,4 +12,6 @@ resource "helm_release" "harbor" {
     name  = "configmap_checksum"
     value = sha256(file("${path.module}/values.yaml"))
   }
+
+  timeout = 600
 }
