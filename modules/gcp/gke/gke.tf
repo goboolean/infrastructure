@@ -2,6 +2,7 @@ data "google_client_config" "default" {}
 
 data "google_container_engine_versions" "gke_version" {
   location = var.zone
+  version_prefix = "1.30.4"
 }
 
 resource "google_container_cluster" "primary" {
@@ -23,6 +24,8 @@ resource "google_container_node_pool" "primary_nodes" {
   name       = google_container_cluster.primary.name
   location   = var.zone
   cluster    = google_container_cluster.primary.name
+  version    = data.google_container_engine_versions.gke_version.release_channel_latest_version["REGULAR"]
+  node_count = var.gke_num_nodes
 
   node_config {
     oauth_scopes = [
@@ -41,7 +44,5 @@ resource "google_container_node_pool" "primary_nodes" {
       disable-legacy-endpoints = "true"
     }
   }
-
-  version = data.google_container_engine_versions.gke_version.release_channel_latest_version["REGULAR"]
-  node_count = var.gke_num_nodes
 }
+
