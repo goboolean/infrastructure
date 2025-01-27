@@ -2,20 +2,3 @@
    projects:
    - dir: projects/dev
      workflow: default
-workflows:
-  default:
-    plan:
-      steps:
-      - env:
-          name: TF_VAR_cloudflare_api_token
-          command: |
-            if [ -z "$TF_VAR_cloudflare_api_token" ]; then
-              echo "Error: TF_VAR_cloudflare_api_token is not set"
-              exit 1
-            fi
-            echo "TF_VAR_cloudflare_api_token is set to $TF_VAR_cloudflare_api_token"
-      - init
-      - plan
-    apply:
-      steps:
-      - apply
