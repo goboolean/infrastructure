@@ -1,5 +1,8 @@
+data "google_client_config" "default" {}
+
 data "google_container_engine_versions" "gke_version" {
   location = var.zone
+  version_prefix = "1.31.4-gke.1256000"
 }
 
 resource "google_container_cluster" "primary" {
@@ -21,8 +24,8 @@ resource "google_container_node_pool" "primary_nodes" {
   name       = google_container_cluster.primary.name
   location   = var.zone
   cluster    = google_container_cluster.primary.name
-  
-  version = data.google_container_engine_versions.gke_version.release_channel_latest_version["REGULAR"]
+
+  version    = data.google_container_engine_versions.gke_version.release_channel_latest_version["REGULAR"]
   node_count = var.gke_num_nodes
 
   node_config {
@@ -35,6 +38,12 @@ resource "google_container_node_pool" "primary_nodes" {
       env = var.project_id
     }
 
+    kubelet_config {
+      cpu_manager_policy = "none"
+      cpu_cfs_quota     = false
+      pod_pids_limit    = 0
+    }
+
     machine_type = "n1-standard-1"
     disk_size_gb = 10
     tags         = ["gke-node", "${var.project_id}-gke"]
@@ -43,3 +52,4 @@ resource "google_container_node_pool" "primary_nodes" {
     }
   }
 }
+
