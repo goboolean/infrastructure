@@ -1,5 +1,7 @@
 terraform {
-    backend "local" {
+    backend "gcs" {
+        bucket = "goboolean-terraform-state"
+        prefix = "dev"
     }
 }
 
@@ -27,4 +29,11 @@ module "cloudflare" {
     api_token = var.cloudflare_api_token
     zone_id = var.cloudflare_zone_id
     ip_address = module.gce.ip_address
+}
+
+module "gcs" {
+    source = "../../modules/gcp/gcs"
+    project_id = var.project_id
+    location = var.location
+    depends_on = [module.service]
 }
