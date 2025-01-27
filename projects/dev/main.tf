@@ -14,14 +14,12 @@ module "iam" {
     source = "../../modules/gcp/iam"
     project_id = var.project_id
     region = var.region
-    depends_on = [module.service]
 }
 
 module "gce" {
     source = "../../modules/gcp/gce"
     zone = var.zone
     service_account_email = module.iam.atlantis_service_account_email
-    depends_on = [module.service]
 }
 
 module "cloudflare" {
@@ -35,5 +33,12 @@ module "gcs" {
     source = "../../modules/gcp/gcs"
     project_id = var.project_id
     location = var.location
-    depends_on = [module.service]
 }
+/*
+module "gke" {
+    source = "../../modules/gcp/gke"
+    region = var.region
+    project_id = var.project_id
+    zone = var.zone
+}
+*/
