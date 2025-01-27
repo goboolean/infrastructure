@@ -24,7 +24,7 @@ provider "cloudflare" {
 
 provider "helm" {
   kubernetes {
-    host                   = module.gke.host
+    host                   = module.gke.kubernetes_cluster_host
     cluster_ca_certificate = module.gke.cluster_ca_certificate
     token                  = module.gke.token
   }
