@@ -34,9 +34,11 @@ module "gcs" {
     project_id = var.project_id
     location = var.location
 }
-
+/*
 module "gke" {
     source = "../../modules/gcp/gke"
+    region = var.region
     project_id = var.project_id
     zone = var.zone
 }
+*/
