@@ -46,3 +46,8 @@ module "istio" {
     source = "../../modules/infra/istio"
     depends_on = [module.gke]
 }
+
+module "harbor" {
+    source = "../../modules/infra/harbor"
+    depends_on = [module.gke]
+}
