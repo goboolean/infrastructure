@@ -21,3 +21,11 @@ provider "google" {
 provider "cloudflare" {
   api_token = var.cloudflare_api_token
 }
+
+provider "helm" {
+  kubernetes {
+    host                   = module.gke.host
+    cluster_ca_certificate = module.gke.cluster_ca_certificate
+    token                  = module.gke.token
+  }
+}
