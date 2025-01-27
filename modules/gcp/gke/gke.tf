@@ -1,11 +1,14 @@
 data "google_container_engine_versions" "gke_version" {
   location = var.zone
-  version_prefix = "1.30.4-gke.1348000"
 }
 
 resource "google_container_cluster" "primary" {
   name     = "${var.project_id}-gke"
   location = var.zone
+
+  release_channel {
+    channel = "REGULAR"
+  }
 
   remove_default_node_pool = true
   initial_node_count       = 1
