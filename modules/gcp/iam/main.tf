@@ -28,6 +28,12 @@ resource "google_project_iam_member" "compute_network_admin" {
   member  = "serviceAccount:${google_service_account.atlantis.email}"
 }
 
+resource "google_project_iam_member" "compute_instance_admin" {
+  project = var.project_id
+  role    = "roles/compute.instanceAdmin.v1"
+  member  = "serviceAccount:${google_service_account.atlantis.email}"
+}
+
 resource "google_project_iam_member" "service_account_user" {
   project = var.project_id
   role    = "roles/iam.serviceAccountUser"
