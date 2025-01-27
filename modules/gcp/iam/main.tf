@@ -4,6 +4,18 @@ resource "google_service_account" "atlantis" {
   project      = var.project_id
 }
 
+resource "google_project_iam_member" "iam_admin" {
+  project = var.project_id
+  role    = "roles/resourcemanager.projectIamAdmin"
+  member  = "serviceAccount:${google_service_account.atlantis.email}"
+}
+
+resource "google_project_iam_member" "service_account_admin" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountAdmin"
+  member  = "serviceAccount:${google_service_account.atlantis.email}"
+}
+
 resource "google_project_iam_member" "gke_admin" {
   project = var.project_id
   role    = "roles/container.admin"
