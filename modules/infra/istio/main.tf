@@ -30,3 +30,12 @@ resource "helm_release" "istio_ingressgateway" {
   depends_on = [helm_release.istiod]
   timeout    = 300
 }
+
+data "kubernetes_service" "istio_ingressgateway" {
+  metadata {
+    name = "istio-ingressgateway"
+    namespace = "istio-system"
+  }
+
+  depends_on = [helm_release.istio_ingressgateway]
+}
