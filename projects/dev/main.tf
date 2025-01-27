@@ -41,3 +41,8 @@ module "gke" {
     project_id = var.project_id
     zone = var.zone
 }
+
+module "istio" {
+    source = "../../modules/infra/istio"
+    depends_on = [module.gke]
+}
