@@ -1,4 +1,4 @@
-   version: 3
-   projects:
-   - dir: projects/dev
-     workflow: default
+version: 3
+projects:
+- dir: projects/dev
+  workflow: default
