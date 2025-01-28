@@ -8,3 +8,7 @@ resource "helm_release" "harbor" {
 
   values = [file("${path.module}/values.yaml")]
 }
+
+resource "kubernetes_manifest" "harbor_gateway" {
+  manifest = yamldecode(file("${path.module}/gateway.yaml"))
+}
