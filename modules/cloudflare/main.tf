@@ -9,7 +9,7 @@ resource "cloudflare_dns_record" "atlantis" {
 
 resource "cloudflare_certificate_pack" "example_certificate_pack" {
   zone_id = var.zone_id
-  certificate_authority = "letsencrypt"
+  certificate_authority = "lets_encrypt"
   hosts = ["*.goboolean.io"]
   type = "advanced"
   validation_method = "txt"
