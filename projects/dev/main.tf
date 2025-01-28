@@ -26,7 +26,7 @@ module "cloudflare" {
     source = "../../modules/cloudflare"
     api_token = var.cloudflare_api_token
     zone_id = var.cloudflare_zone_id
-    ip_address = module.gce.ip_address
+    ip_address = module.istio.istio_gateway_ip
 }
 
 module "gcs" {
@@ -53,7 +53,7 @@ module "harbor" {
 }
 
 module "acme" {
-    source = "../../modules/acme"
+    source = "../../modules/cloudflare/acme"
 
     cloudflare_email = var.cloudflare_email
     cloudflare_api_token = var.cloudflare_api_token
