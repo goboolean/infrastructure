@@ -61,3 +61,6 @@ module "acme" {
     cloudflare_api_key = var.cloudflare_api_key
 }
 
+module "namespace" {
+    source = "../../modules/gcp/gke/namespace"
+}
