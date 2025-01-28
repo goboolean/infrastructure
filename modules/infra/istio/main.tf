@@ -39,3 +39,7 @@ data "kubernetes_service" "istio_ingressgateway" {
 
   depends_on = [helm_release.istio_ingressgateway]
 }
+
+resource "kubernetes_manifest" "istio_gateway" {
+  manifest = yamldecode(file("${path.module}/gateway.yaml"))
+}
