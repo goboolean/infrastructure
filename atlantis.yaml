@@ -1,4 +1,8 @@
 version: 3
+automerge: true
 projects:
-- dir: projects/dev
-  workflow: default
+  - dir: projects/dev
+    workflow: default
+    autoplan:
+      when_modified: ["*.tf", "*.yaml", "*.json"]
+      enabled: true
