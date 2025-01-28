@@ -8,7 +8,12 @@ terraform {
     cloudflare = {
       source  = "cloudflare/cloudflare"
       version = "5.0.0-rc1"
-    }    
+    }
+
+    acme = {
+      source = "vancluever/acme"
+      version = "2.29.0"
+    }
   }
   required_version = ">= 0.14"
 }
@@ -34,4 +39,8 @@ provider "helm" {
     token                  = module.gke.kubernetes_provider_config.token
     cluster_ca_certificate = module.gke.kubernetes_provider_config.cluster_ca_certificate
   }
+}
+
+provider "acme" {
+  server_url = "https://acme-staging-v02.api.letsencrypt.org/directory"
 }
