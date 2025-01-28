@@ -1,4 +1,6 @@
 expose:
   type: clusterIP
+  tls:
+    enabled: true
+    certSource: none
 externalURL: https://registry.goboolean.io
-
