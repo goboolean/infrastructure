@@ -1,5 +1,9 @@
 expose:
-  type: loadBalancer
+  type: ingress
   tls:
-    enabled: false
-externalURL: http://core.harbor.domain
+    enabled: true
+  ingress:
+    hosts:
+      core: registry.goboolean.io
+externalURL: http://registry.goboolean.io
+
