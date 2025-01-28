@@ -9,5 +9,5 @@ spec:
   - "*.goboolean.io"
   - "goboolean.io"
   issuerRef:
-    name: letsencrypt-prod
+    name: letsencrypt-stg
     kind: ClusterIssuer

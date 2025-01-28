@@ -1,4 +1,3 @@
-/*
 resource "kubernetes_secret" "cloudflare_api_token" {
   metadata {
     name      = "cloudflare-api-token-secret"
@@ -21,4 +20,3 @@ resource "kubernetes_manifest" "wildcard_certificate" {
 
   depends_on = [kubernetes_manifest.cluster_issuer]
 }
-*/
