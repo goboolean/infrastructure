@@ -9,3 +9,8 @@ resource "helm_release" "vault" {
     file("${path.module}/values.yaml")
   ]
 }
+
+resource "kubernetes_manifest" "vault_gateway" {
+  manifest = yamldecode(file("${path.module}/gateway.yaml"))
+  depends_on = [helm_release.vault]
+}
