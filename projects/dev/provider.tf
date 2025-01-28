@@ -22,6 +22,12 @@ provider "cloudflare" {
   api_token = var.cloudflare_api_token
 }
 
+provider "kubernetes" {
+  host                   = module.gke.kubernetes_provider_config.host
+  token                  = module.gke.kubernetes_provider_config.token
+  cluster_ca_certificate = module.gke.kubernetes_provider_config.cluster_ca_certificate
+}
+
 provider "helm" {
   kubernetes {
     host                   = module.gke.kubernetes_provider_config.host
