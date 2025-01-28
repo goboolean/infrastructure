@@ -70,3 +70,8 @@ module "cert_manager" {
     depends_on = [module.namespace]
     cloudflare_api_token = var.cloudflare_api_token
 }
+
+module "vault" {
+    source = "../../modules/infra/vault"
+    depends_on = [module.namespace]
+}

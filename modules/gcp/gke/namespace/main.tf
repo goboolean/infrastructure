@@ -18,3 +18,9 @@ resource "kubernetes_namespace" "harbor" {
     }
   }
 }
+
+resource "kubernetes_namespace" "vault" {
+  metadata {
+    name = "vault"
+  }
+}
