@@ -4,10 +4,10 @@ metadata:
   name: wildcard-goboolean-io
   namespace: cert-manager
 spec:
-  secretName: wildcard-goboolean-tls
+  secretName: wildcard-goboolean-io-tls
   dnsNames:
   - "*.goboolean.io"
   - "goboolean.io"
   issuerRef:
-    name: letsencrypt-stg
+    name: letsencrypt-prod
     kind: ClusterIssuer
