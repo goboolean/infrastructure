@@ -49,7 +49,7 @@ module "istio" {
 
 module "harbor" {
     source = "../../modules/infra/harbor"
-    depends_on = [module.gke]
+    depends_on = [module.gke, module.namespace]
 }
 
 module "acme" {
