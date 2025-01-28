@@ -1,8 +1,8 @@
-resource "cloudflare_dns_record" "atlantis" {
+resource "cloudflare_dns_record" "istio-gateway" {
   zone_id = var.zone_id
   content = var.ip_address
-  name = "atlantis.goboolean.io"
-  proxied = true
+  name = "*.goboolean.io"
+  proxied = false
   ttl = 1
   type = "A"
 }
