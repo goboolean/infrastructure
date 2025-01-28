@@ -5,5 +5,7 @@ expose:
   ingress:
     hosts:
       core: registry.goboolean.io
+    annotations:
+      kubernetes.io/ingress.class: istio
 externalURL: https://registry.goboolean.io
 
