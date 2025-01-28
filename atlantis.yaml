@@ -1,6 +1,7 @@
 version: 3
 automerge: true
-merge_strategy: "squash"
+pull_request_workflow: 
+  merge_strategy: "squash"
 projects:
   - dir: projects/dev
     workflow: default
