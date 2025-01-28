@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard-goboolean-io
+  namespace: cert-manager
+spec:
+  secretName: wildcard-goboolean-tls
+  dnsNames:
+  - "*.goboolean.io"
+  - "goboolean.io"
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

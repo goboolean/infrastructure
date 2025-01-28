@@ -14,6 +14,11 @@ terraform {
       source = "vancluever/acme"
       version = "2.29.0"
     }
+
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = ">= 1.14.0"
+    }
   }
   required_version = ">= 0.14"
 }
@@ -43,4 +48,11 @@ provider "helm" {
 
 provider "acme" {
   server_url = "https://acme-staging-v02.api.letsencrypt.org/directory"
+}
+
+provider "kubectl" {
+  host                   = module.gke.kubernetes_provider_config.host
+  token                  = module.gke.kubernetes_provider_config.token
+  cluster_ca_certificate = module.gke.kubernetes_provider_config.cluster_ca_certificate
+  load_config_file       = false
 }

@@ -64,3 +64,9 @@ module "acme" {
 module "namespace" {
     source = "../../modules/gcp/gke/namespace"
 }
+
+module "cert_manager" {
+    source = "../../modules/infra/cert-manager"
+    depends_on = [module.namespace]
+    cloudflare_api_token = var.cloudflare_api_token
+}
