@@ -51,3 +51,13 @@ module "harbor" {
     source = "../../modules/infra/harbor"
     depends_on = [module.gke]
 }
+
+module "acme" {
+    source = "../../modules/acme"
+
+    cloudflare_email = var.cloudflare_email
+    cloudflare_api_token = var.cloudflare_api_token
+    cloudflare_zone_id = var.cloudflare_zone_id
+    cloudflare_api_key = var.cloudflare_api_key
+}
+
