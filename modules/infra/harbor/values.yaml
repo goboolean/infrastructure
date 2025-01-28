@@ -5,5 +5,5 @@ expose:
   ingress:
     hosts:
       core: registry.goboolean.io
-externalURL: http://registry.goboolean.io
+externalURL: https://registry.goboolean.io
 
