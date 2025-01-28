@@ -7,6 +7,4 @@ resource "helm_release" "harbor" {
   version          = "1.15.0"
 
   values = [file("${path.module}/values.yaml")]
-
-  timeout = 600
 }
