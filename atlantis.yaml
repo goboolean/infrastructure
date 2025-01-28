@@ -4,5 +4,5 @@ projects:
   - dir: projects/dev
     workflow: default
     autoplan:
-      when_modified: ["*.tf", "*.yaml", "*.json"]
+      when_modified: ["*.tf", "*.yaml", "*.json", "../../modules/**/*.tf", "../../modules/**/*.yaml", "../../modules/**/*.json"]
       enabled: true
