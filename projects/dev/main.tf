@@ -75,3 +75,8 @@ module "vault" {
     source = "../../modules/infra/vault"
     depends_on = [module.namespace]
 }
+
+module "argocd" {
+    source = "../../modules/infra/argocd"
+    depends_on = [module.namespace]
+}
