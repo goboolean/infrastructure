@@ -1,12 +1,4 @@
 expose:
-  type: ingress
-  tls:
-    enabled: false
-    certSource: none
-  ingress:
-    hosts:
-      core: registry.goboolean.io
-    annotations:
-      kubernetes.io/ingress.class: istio
+  type: clusterIP
 externalURL: https://registry.goboolean.io
 
