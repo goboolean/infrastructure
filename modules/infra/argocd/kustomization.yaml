@@ -6,9 +6,9 @@ images:
     newTag: v2.7.9
 
 resources:
-- https://github.com/argoproj/argo-cd//manifests/cluster-install?ref=v2.7.9
-- cmp-plugin.yaml
+  - https://github.com/argoproj/argo-cd//manifests/cluster-install?ref=v2.7.9
+#- cmp-plugin.yaml
 
-patchesStrategicMerge:
-- argocd-vault-plugin.yaml
-- patches.yaml
+#patchesStrategicMerge:
+#- argocd-vault-plugin.yaml
+#- patches.yaml
