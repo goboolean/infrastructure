@@ -47,10 +47,6 @@ resource "kustomization_resource" "p2" {
   depends_on = [kustomization_resource.p1]
 }
 
-resource "kubernetes_manifest" "argocd_gateway" {
-  manifest = yamldecode(file("${path.module}/gateway.yaml"))
-}
-
 resource "kubernetes_manifest" "argocd_repo_server_role" {
   manifest = yamldecode(file("${path.module}/role/argocd-repo-server-rbac.yaml"))
 }
