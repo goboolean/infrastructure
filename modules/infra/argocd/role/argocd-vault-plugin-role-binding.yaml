@@ -2,11 +2,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: argocd-repo-server-rolebinding
-  namespace: gitops
+  namespace: argocd
 subjects:
   - kind: ServiceAccount
     name: argocd-repo-server
-    namespace: gitops
+    namespace: argocd
 roleRef:
   kind: Role
   name: argocd-repo-server-role

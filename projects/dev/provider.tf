@@ -19,6 +19,11 @@ terraform {
       source  = "gavinbunney/kubectl"
       version = ">= 1.14.0"
     }
+
+    kustomization = {
+      source = "kbst/kustomization"
+      version = "0.9.6"
+    }
   }
   required_version = ">= 0.14"
 }
@@ -55,4 +60,8 @@ provider "kubectl" {
   token                  = module.gke.kubernetes_provider_config.token
   cluster_ca_certificate = module.gke.kubernetes_provider_config.cluster_ca_certificate
   load_config_file       = false
+}
+
+provider "kustomization" {
+  kubeconfig_path = "~/.kube/config"
 }
