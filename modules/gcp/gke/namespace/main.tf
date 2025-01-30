@@ -24,3 +24,12 @@ resource "kubernetes_namespace" "vault" {
     name = "vault"
   }
 }
+
+resource "kubernetes_namespace" "fetch-system" {
+  metadata {
+    name = "fetch-system"
+    labels = {
+      "istio-injection" = "enabled"
+    }
+  }
+}
