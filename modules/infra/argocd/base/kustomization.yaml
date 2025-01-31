@@ -13,3 +13,5 @@ resources:
 
 patchesStrategicMerge:
   - argocd-vault-plugin.yaml
+  - argocd-server-deployment-patch.yaml
+  - argocd-cmd-params-cm-patch.yaml
