@@ -69,6 +69,4 @@ resource "kubernetes_secret" "argocd_vault_plugin_credentials" {
 
 resource "kubernetes_manifest" "argocd_vault_plugin_rolebinding" {
   manifest = yamldecode(file("${path.module}/role/argocd-vault-plugin-role-binding.yaml"))
-  depends_on = [kustomization_resource.p2]
 }
-
