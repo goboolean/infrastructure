@@ -33,3 +33,15 @@ resource "kubernetes_namespace" "fetch-system" {
     }
   }
 }
+
+resource "kubernetes_namespace" "kafka" {
+  metadata {
+    name = "kafka"
+  }
+}
+
+resource "kubernetes_namespace" "etcd" {
+  metadata {
+    name = "etcd"
+  }
+}
