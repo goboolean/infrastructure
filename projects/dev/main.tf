@@ -94,3 +94,8 @@ module "etcd" {
     source = "../../modules/infra/etcd"
     depends_on = [module.namespace]
 }
+
+module "opentelemetry" {
+    source = "../../modules/infra/opentelemetry"
+    depends_on = [module.namespace]
+}
