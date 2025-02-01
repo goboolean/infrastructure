@@ -39,3 +39,12 @@ resource "kubernetes_secret" "argocd_vault_plugin_credentials" {
 
   depends_on = [helm_release.argocd]
 }
+
+data "kubernetes_secret" "argocd_initial_password" {
+  metadata {
+    name      = "argocd-initial-admin-secret"
+    namespace = "argocd"
+  }
+
+  depends_on = [helm_release.argocd]
+}
