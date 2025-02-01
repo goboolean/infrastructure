@@ -24,6 +24,11 @@ terraform {
       source = "argoproj-labs/argocd"
       version = "7.3.0"
     }
+
+    helm = {
+      source = "hashicorp/helm"
+      version = "3.0.0-pre1"
+    }
   }
   required_version = ">= 0.14"
 }
