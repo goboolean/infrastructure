@@ -33,3 +33,9 @@ resource "kubernetes_namespace" "fetch-system" {
     }
   }
 }
+
+resource "kubernetes_namespace" "kafka" {
+  metadata {
+    name = "kafka"
+  }
+}
