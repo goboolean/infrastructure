@@ -27,10 +27,9 @@ resource "argocd_application" "fetch-system-streams" {
         self_heal   = true
         allow_empty = true
       }
+
+      sync_options = ["StatusForceHealth=true"]
     }
-
-    sync_options = ["StatusForceHealth=true"]
-
   }
 }
 
@@ -63,8 +62,8 @@ resource "argocd_application" "fetch-system-worker" {
         self_heal   = true
         allow_empty = true
       }
-    }
 
-    sync_options = ["StatusForceHealth=true"]
+      sync_options = ["StatusForceHealth=true"]
+    }
   }
 }
