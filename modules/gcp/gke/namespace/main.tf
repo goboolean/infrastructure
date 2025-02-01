@@ -39,3 +39,9 @@ resource "kubernetes_namespace" "kafka" {
     name = "kafka"
   }
 }
+
+resource "kubernetes_namespace" "etcd" {
+  metadata {
+    name = "etcd"
+  }
+}
