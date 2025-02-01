@@ -62,10 +62,6 @@ provider "kubectl" {
   load_config_file       = false
 }
 
-provider "kustomization" {
-  kubeconfig_path = "~/.kube/config"
-}
-
 provider "argocd" {
   server_addr = "argocd.goboolean.io:443"
   auth_token = var.argocd_auth_token
