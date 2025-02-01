@@ -76,10 +76,10 @@ module "vault" {
     depends_on = [module.namespace]
 }
 
-#module "argocd" {
-#    source = "../../modules/infra/argocd"
-#    depends_on = [module.namespace]
-#}
+module "argocd" {
+    source = "../../modules/infra/argocd"
+    depends_on = [module.namespace]
+}
 
 #module "argocd-application" {
 #    source = "../../modules/infra/argocd/application"
