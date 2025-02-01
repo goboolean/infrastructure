@@ -10,8 +10,13 @@ images:
 resources:
   - https://github.com/argoproj/argo-cd/manifests/cluster-install?ref=v2.7.9
   - cmp-plugin.yaml
+  - gateway.yaml
+  - argocd-repo-server-rbac.yaml
+  - argocd-vault-plugin-role-binding.yaml
+  - argocd-vault-plugin-role.yaml
 
 patchesStrategicMerge:
   - argocd-vault-plugin.yaml
   - argocd-server-deployment-patch.yaml
   - argocd-cmd-params-cm-patch.yaml
+  - argocd-cm.yaml
