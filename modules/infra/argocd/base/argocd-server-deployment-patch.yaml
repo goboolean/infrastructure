@@ -8,4 +8,5 @@ spec:
       containers:
       - name: argocd-server
         args:
+        - argocd-server
         - --insecure
