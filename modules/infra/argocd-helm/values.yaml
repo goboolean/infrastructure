@@ -32,8 +32,6 @@ repoServer:
       name: cmp-plugin
     - name: custom-tools
       emptyDir: {}
-    - name: tmp-dir
-      emptyDir: {}
 
   # Download tools
   initContainers:
@@ -69,7 +67,7 @@ repoServer:
         - mountPath: /home/argocd/cmp-server/plugins
           name: plugins
         - mountPath: /tmp
-          name: tmp-dir
+          name: tmp
 
         # Register plugins into sidecar
         - mountPath: /home/argocd/cmp-server/config/plugin.yaml
@@ -94,7 +92,7 @@ repoServer:
         - mountPath: /home/argocd/cmp-server/plugins
           name: plugins
         - mountPath: /tmp
-          name: tmp-dir
+          name: tmp
 
         # Register plugins into sidecar
         - mountPath: /home/argocd/cmp-server/config/plugin.yaml
@@ -119,7 +117,7 @@ repoServer:
         - mountPath: /home/argocd/cmp-server/plugins
           name: plugins
         - mountPath: /tmp
-          name: tmp-dir
+          name: tmp
 
         # Register plugins into sidecar
         - mountPath: /home/argocd/cmp-server/config/plugin.yaml
