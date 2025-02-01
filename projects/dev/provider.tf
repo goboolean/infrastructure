@@ -24,6 +24,11 @@ terraform {
       source = "kbst/kustomization"
       version = "0.9.6"
     }
+
+    argocd = {
+      source = "argoproj-labs/argocd"
+      version = "7.3.0"
+    }
   }
   required_version = ">= 0.14"
 }
@@ -64,4 +69,9 @@ provider "kubectl" {
 
 provider "kustomization" {
   kubeconfig_path = "~/.kube/config"
+}
+
+provider "argocd" {
+  server_addr = "argocd.goboolean.io:443"
+  auth_token = var.argocd_auth_token
 }

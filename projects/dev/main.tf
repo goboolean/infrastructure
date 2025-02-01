@@ -80,3 +80,8 @@ module "argocd" {
     source = "../../modules/infra/argocd"
     depends_on = [module.namespace]
 }
+
+module "argocd-application" {
+    source = "../../modules/infra/argocd/application"
+    depends_on = [module.argocd]
+}

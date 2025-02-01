@@ -29,3 +29,7 @@ variable "cloudflare_zone_id" {
 variable "cloudflare_api_key" {
   description = "cloudflare api key"
 }
+
+variable "argocd_auth_token" {
+  description = "argocd auth token"
+}

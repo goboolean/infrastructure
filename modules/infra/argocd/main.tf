@@ -46,27 +46,3 @@ resource "kustomization_resource" "p2" {
 
   depends_on = [kustomization_resource.p1]
 }
-
-resource "kubernetes_manifest" "argocd_repo_server_role" {
-  manifest = yamldecode(file("${path.module}/role/argocd-repo-server-rbac.yaml"))
-}
-
-resource "kubernetes_secret" "argocd_vault_plugin_credentials" {
-  metadata {
-    name      = "argocd-vault-plugin-credentials"
-    namespace = "argocd"
-  }
-
-  type = "Opaque"
-
-  data = {
-    VAULT_ADDR    = "http://vault.vault:8200"
-    AVP_TYPE      = "vault"
-    AVP_AUTH_TYPE = "k8s"
-    AVP_K8S_ROLE  = "argocd"
-  }
-}
-
-resource "kubernetes_manifest" "argocd_vault_plugin_rolebinding" {
-  manifest = yamldecode(file("${path.module}/role/argocd-vault-plugin-role-binding.yaml"))
-}
