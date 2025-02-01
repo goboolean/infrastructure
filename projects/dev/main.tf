@@ -90,3 +90,8 @@ module "kafka" {
     source = "../../modules/infra/kafka"
     depends_on = [module.namespace]
 }
+
+module "etcd" {
+    source = "../../modules/infra/etcd"
+    depends_on = [module.namespace]
+}
