@@ -72,6 +72,6 @@ provider "kustomization" {
 }
 
 provider "argocd" {
+  server_addr = "argocd.goboolean.io:443"
   auth_token = var.argocd_auth_token
-  port_forward_with_namespace = "argocd"
 }

@@ -1,7 +1,7 @@
 resource "argocd_application" "fetch-system-worker" {
   metadata {
     name      = "fetch-system-worker"
-    namespace = "fetch-system"
+    namespace = "argocd"
   }
 
   cascade = true
