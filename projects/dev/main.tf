@@ -83,6 +83,7 @@ module "argocd" {
 
 module "argocd-application" {
     source = "../../modules/infra/argocd/application"
+    depends_on = [module.argocd]
 }
 
 module "kafka" {
