@@ -64,6 +64,6 @@ provider "kubectl" {
 
 provider "argocd" {
   server_addr = "argocd.goboolean.io:443"
-  argocd_username = module.argocd.admin_username
-  argocd_password = module.argocd.admin_password
+  username = module.argocd.admin_username
+  password = module.argocd.admin_password
 }
