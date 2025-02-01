@@ -1,0 +1,21 @@
+auth:
+  enabled: false
+listeners:
+  client:
+    containerPort: 9092
+    protocol: PLAINTEXT
+  controller:
+    protocol: PLAINTEXT
+broker:
+  enabled: true
+  replicaCount: 3
+controller:
+  enabled: false
+  replicaCount: 0
+zookeeper:
+  enabled: true
+  replicaCount: 1
+kraft:
+  enabled: false
+service:
+  type: ClusterIP
