@@ -17,7 +17,7 @@ resource "argocd_application" "fetch-system-worker" {
 
     source {
       repo_url        = "https://github.com/goboolean/manifests"
-      path            = "fetch-system.streams/worker/overlays/dev"
+      path            = "fetch-system.streams/kustomize/overlays/dev"
       target_revision = "main"
     }
 
