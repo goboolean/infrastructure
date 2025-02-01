@@ -18,7 +18,7 @@ resource "google_compute_address" "static_ip" {
 
 resource "google_compute_instance" "default" {
   name         = "atlantis"
-  machine_type = "e2-micro"
+  machine_type = "e2-small"
   zone         = var.zone
 
   boot_disk {
@@ -41,4 +41,6 @@ resource "google_compute_instance" "default" {
   }
 
   tags = ["atlantis-server"]
+
+  allow_stopping_for_update = true
 }
