@@ -14,10 +14,12 @@ resource "helm_release" "argocd" {
 
 resource "kubernetes_manifest" "argocd_cmp_plugin" {
   manifest = yamldecode(file("${path.module}/cmp-plugin.yaml"))
+  namespace = "argocd"
 }
 
 resource "kubernetes_manifest" "argocd_gateway" {
   manifest = yamldecode(file("${path.module}/gateway.yaml"))
+  namespace = "argocd"
   depends_on = [helm_release.argocd]
 }
 
