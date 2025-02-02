@@ -3,9 +3,7 @@ resource "helm_release" "opentelemetry_collector" {
   chart      = "opentelemetry-collector"
   namespace  = "opentelemetry"
   repository = "https://open-telemetry.github.io/opentelemetry-helm-charts"
-  version    = "0.114.0"
+  version    = "0.113.1"
 
-  values = [
-    file("${path.module}/values.yaml")
-  ]
+  values = [file("${path.module}/values.yaml")]
 }
