@@ -33,3 +33,7 @@ variable "cloudflare_api_key" {
 variable "argocd_auth_token" {
   description = "argocd auth token"
 }
+
+variable "argocd_password" {
+  description = "argocd password"
+}

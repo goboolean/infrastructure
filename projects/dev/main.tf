@@ -81,9 +81,10 @@ module "argocd" {
     depends_on = [module.namespace]
 }
 
-module "argocd-application" {
-    source = "../../modules/infra/argocd/application"
-}
+#module "argocd-application" {
+#    source = "../../modules/infra/argocd/application"
+#    depends_on = [module.argocd]
+#}
 
 module "kafka" {
     source = "../../modules/infra/kafka"
@@ -92,5 +93,10 @@ module "kafka" {
 
 module "etcd" {
     source = "../../modules/infra/etcd"
+    depends_on = [module.namespace]
+}
+
+module "opentelemetry" {
+    source = "../../modules/infra/opentelemetry"
     depends_on = [module.namespace]
 }
