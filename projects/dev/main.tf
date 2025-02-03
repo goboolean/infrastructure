@@ -29,6 +29,15 @@ module "cloudflare" {
   ip_address = module.istio.istio_gateway_ip
 }
 
+module "acme" {
+  source = "../../modules/cloudflare/acme"
+
+  cloudflare_email = var.cloudflare_email
+  cloudflare_api_token = var.cloudflare_api_token
+  cloudflare_zone_id = var.cloudflare_zone_id
+  cloudflare_api_key = var.cloudflare_api_key
+}
+
 module "gcs" {
   source = "../../modules/gcp/gcs"
   project_id = var.project_id
@@ -42,58 +51,49 @@ module "gke" {
   zone = var.zone
 }
 
-module "istio" {
-  source = "../../modules/infra/istio"
-  depends_on = [module.gke]
-}
-
-module "harbor" {
-  source = "../../modules/infra/harbor"
-  depends_on = [module.gke, module.namespace]
-}
-
-module "acme" {
-  source = "../../modules/cloudflare/acme"
-
-  cloudflare_email = var.cloudflare_email
-  cloudflare_api_token = var.cloudflare_api_token
-  cloudflare_zone_id = var.cloudflare_zone_id
-  cloudflare_api_key = var.cloudflare_api_key
-}
-
 module "namespace" {
   source = "../../modules/gcp/gke/namespace"
 }
 
+module "istio" {
+  source = "../../modules/infra/istio"
+  depends_on = [module.gke, module.namespace]
+}
+
 module "cert_manager" {
   source = "../../modules/infra/cert-manager"
-  depends_on = [module.namespace]
+  depends_on = [module.gke, module.namespace]
   cloudflare_api_token = var.cloudflare_api_token
 }
 
 module "vault" {
   source = "../../modules/infra/vault"
-  depends_on = [module.namespace]
+  depends_on = [module.gke, module.namespace]
 }
 
 module "argocd" {
   source = "../../modules/infra/argocd"
-  depends_on = [module.namespace]
+  depends_on = [module.gke, module.namespace]
 }
 
 module "kafka" {
   source = "../../modules/infra/kafka"
-  depends_on = [module.namespace]
+  depends_on = [module.gke, module.namespace]
 }
 
 module "etcd" {
   source = "../../modules/infra/etcd"
-  depends_on = [module.namespace]
+  depends_on = [module.gke, module.namespace]
 }
 
 module "opentelemetry" {
   source = "../../modules/infra/opentelemetry"
-  depends_on = [module.namespace]
+  depends_on = [module.gke, module.namespace]
+}
+
+module "harbor" {
+  source = "../../modules/infra/harbor"
+  depends_on = [module.gke, module.namespace]
 }
 
 /*
