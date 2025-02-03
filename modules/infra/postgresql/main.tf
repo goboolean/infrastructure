@@ -1,5 +1,5 @@
 resource "kubernetes_manifest" "postgresql-init-script" {
-  manifest = file("${path.module}/postgresql-init-script.yaml")
+  manifest = yamldecode(file("${path.module}/postgresql-init-script.yaml"))
 }
 
 locals {
