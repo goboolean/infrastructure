@@ -19,11 +19,6 @@ terraform {
       source  = "gavinbunney/kubectl"
       version = ">= 1.14.0"
     }
-
-    argocd = {
-      source = "argoproj-labs/argocd"
-      version = "7.3.0"
-    }
   }
   required_version = ">= 0.14"
 }
@@ -60,10 +55,4 @@ provider "kubectl" {
   token                  = module.gke.kubernetes_provider_config.token
   cluster_ca_certificate = module.gke.kubernetes_provider_config.cluster_ca_certificate
   load_config_file       = false
-}
-
-provider "argocd" {
-  server_addr = "argocd.goboolean.io:443"
-  username = "admin"
-  password = var.argocd_password
 }
