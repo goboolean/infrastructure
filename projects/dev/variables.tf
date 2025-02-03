@@ -30,6 +30,16 @@ variable "cloudflare_api_key" {
   description = "cloudflare api key"
 }
 
-variable "argocd_password" {
-  description = "argocd password"
+/*
+  It is not possible to deploy all infrastructure with a single main.tf.
+  Therefore, the steps need to be divided,
+  and the following variables can be injected starting from the second step,
+  so they should be moved later.
+*/
+variable "vault_role_id" {
+  description = "vault role id"
+}
+
+variable "vault_secret_id" {
+  description = "vault secret id"
 }

@@ -81,11 +81,6 @@ module "argocd" {
     depends_on = [module.namespace]
 }
 
-#module "argocd-application" {
-#    source = "../../modules/infra/argocd/application"
-#    depends_on = [module.argocd]
-#}
-
 module "kafka" {
     source = "../../modules/infra/kafka"
     depends_on = [module.namespace]
@@ -99,4 +94,25 @@ module "etcd" {
 module "opentelemetry" {
     source = "../../modules/infra/opentelemetry"
     depends_on = [module.namespace]
+}
+
+
+
+/*
+  It is not possible to deploy all infrastructure with a single main.tf.
+  Therefore, the steps need to be divided,
+  and the following variables can be injected starting from the second step,
+  so they should be moved later.
+*/
+
+data "vault_kv_secret_v2" "argocd" {
+    path = "kv-v2/data/infra/argocd"
+}
+
+module "argocd-application" {
+    source = "../../modules/infra/argocd/application"
+    depends_on = [module.argocd]
+
+    username = data.vault_kv_secret_v2.argocd.data["username"]
+    password = data.vault_kv_secret_v2.argocd.data["password"]
 }

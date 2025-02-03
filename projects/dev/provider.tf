@@ -19,6 +19,17 @@ terraform {
       source  = "gavinbunney/kubectl"
       version = ">= 1.14.0"
     }
+
+    /*
+      It is not possible to deploy all infrastructure with a single main.tf.
+      Therefore, the steps need to be divided,
+      and the following variables can be injected starting from the second step,
+      so they should be moved later.
+    */
+    vault = {
+      source  = "hashicorp/vault"
+      version = "4.6.0"
+    }
   }
   required_version = ">= 0.14"
 }
@@ -55,4 +66,21 @@ provider "kubectl" {
   token                  = module.gke.kubernetes_provider_config.token
   cluster_ca_certificate = module.gke.kubernetes_provider_config.cluster_ca_certificate
   load_config_file       = false
+}
+
+/*
+  It is not possible to deploy all infrastructure with a single main.tf.
+  Therefore, the steps need to be divided,
+  and the following variables can be injected starting from the second step,
+  so they should be moved later.
+*/
+provider "vault" {
+  address = "https://vault.goboolean.io"
+  auth_login {
+    path = "auth/approle/login"
+    parameters = {
+      role_id   = var.vault_role_id
+      secret_id = var.vault_secret_id
+    }
+  }
 }
