@@ -121,3 +121,11 @@ module "postgresql" {
   postgresql_username = data.vault_kv_secret_v2.postgresql.data["username"]
   postgresql_password = data.vault_kv_secret_v2.postgresql.data["password"]
 }
+
+module "fetch-system-util" {
+  source = "../../modules/infra/argocd/job/fetch-system.util"
+  depends_on = [module.argocd, module.postgresql, module.namespace]
+  providers = {
+    argocd = argocd
+  }
+}
