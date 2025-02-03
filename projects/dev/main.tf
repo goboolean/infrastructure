@@ -108,4 +108,7 @@ module "opentelemetry" {
 module "argocd-application" {
     source = "../../modules/infra/argocd/application"
     depends_on = [module.argocd]
+    providers = {
+        argocd = argocd
+    }
 }
