@@ -105,14 +105,7 @@ module "opentelemetry" {
   so they should be moved later.
 */
 
-data "vault_kv_secret_v2" "argocd" {
-    path = "kv-v2/data/infra/argocd"
-}
-
 module "argocd-application" {
     source = "../../modules/infra/argocd/application"
     depends_on = [module.argocd]
-
-    username = data.vault_kv_secret_v2.argocd.data["username"]
-    password = data.vault_kv_secret_v2.argocd.data["password"]
 }
