@@ -11,7 +11,7 @@ locals {
 
 resource "helm_release" "postgresql" {
   name             = "postgresql"
-  chart            = "postgresql"
+  chart            = "bitnami/postgresql"
   namespace        = "postgresql"
   repository       = "https://charts.bitnami.com/bitnami"
   version          = "16.4.5"
