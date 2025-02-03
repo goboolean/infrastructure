@@ -91,7 +91,8 @@ provider "vault" {
 }
 
 data "vault_kv_secret_v2" "argocd" {
-    path = "kv-v2/data/infra/argocd"
+  mount = "kv-v2"
+  name = "infra/argocd"
 }
 
 provider "argocd" {
