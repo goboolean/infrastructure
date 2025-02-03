@@ -11,10 +11,10 @@ locals {
 
 resource "helm_release" "postgresql" {
   name             = "postgresql"
-  chart            = "bitnami/postgresql"
+  chart            = "postgresql"
   namespace        = "postgresql"
-  repository       = "https://charts.bitnami.com/bitnami"
-  version          = "16.4.5"
+  repository       = "oci://registry-1.docker.io/bitnamicharts"
+  version          = "16.4.6"
   
   values = [local.values_yaml]
 
