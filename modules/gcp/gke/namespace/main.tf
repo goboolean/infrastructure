@@ -57,3 +57,9 @@ resource "kubernetes_namespace" "fetch-system" {
     }
   }
 }
+
+resource "kubernetes_namespace" "postgresql" {
+  metadata {
+    name = "postgresql"
+  }
+}
