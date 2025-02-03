@@ -9,6 +9,6 @@ terraform {
 
 provider "argocd" {
   server_addr = "argocd.goboolean.io:443"
-  username = "admin"
-  password = var.argocd_password
+  username = var.username
+  password = var.password
 }
