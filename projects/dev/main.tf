@@ -104,7 +104,7 @@ module "harbor" {
 */
 # module "argocd-application" {
 #   source = "../../modules/infra/argocd/application"
-#   depends_on = [module.argocd]
+#   depends_on = [module.argocd, module.namespace]
 #   providers = {
 #     argocd = argocd
 #   }

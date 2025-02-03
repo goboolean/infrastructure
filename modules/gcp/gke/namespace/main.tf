@@ -1,6 +1,6 @@
-resource "kubernetes_namespace" "argocd" {
+resource "kubernetes_namespace" "istio-system" {
   metadata {
-    name = "argocd"
+    name = "istio-system"
   }
 }
 
@@ -10,27 +10,15 @@ resource "kubernetes_namespace" "cert_manager" {
   }
 }
 
-resource "kubernetes_namespace" "harbor" {
-  metadata {
-    name = "harbor"
-    labels = {
-      name = "harbor"
-    }
-  }
-}
-
 resource "kubernetes_namespace" "vault" {
   metadata {
     name = "vault"
   }
 }
 
-resource "kubernetes_namespace" "fetch-system" {
+resource "kubernetes_namespace" "argocd" {
   metadata {
-    name = "fetch-system"
-    labels = {
-      "istio-injection" = "enabled"
-    }
+    name = "argocd"
   }
 }
 
@@ -49,5 +37,23 @@ resource "kubernetes_namespace" "etcd" {
 resource "kubernetes_namespace" "opentelemetry" {
   metadata {
     name = "opentelemetry"
+  }
+}
+
+resource "kubernetes_namespace" "harbor" {
+  metadata {
+    name = "harbor"
+    labels = {
+      name = "harbor"
+    }
+  }
+}
+
+resource "kubernetes_namespace" "fetch-system" {
+  metadata {
+    name = "fetch-system"
+    labels = {
+      "istio-injection" = "enabled"
+    }
   }
 }
