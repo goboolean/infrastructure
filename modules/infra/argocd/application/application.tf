@@ -1,3 +1,4 @@
+/*
 resource "argocd_application" "fetch-system-streams" {
   metadata {
     name      = "fetch-system-streams"
@@ -32,6 +33,7 @@ resource "argocd_application" "fetch-system-streams" {
     }
   }
 }
+*/
 
 resource "argocd_application" "fetch-system-worker" {
   metadata {
