@@ -4,8 +4,8 @@ resource "kubernetes_manifest" "postgresql-init-script" {
 
 locals {
   values_yaml = templatefile("${path.module}/values.yaml", {
-    username = var.username
-    password = var.password
+    username = var.postgresql_username
+    password = var.postgresql_password
   })
 }
 

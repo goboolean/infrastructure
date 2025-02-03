@@ -118,6 +118,6 @@ data "vault_kv_secret_v2" "postgresql" {
 module "postgresql" {
   source = "../../modules/infra/postgresql"
   depends_on = [module.gke, module.namespace]
-  username = data.vault_kv_secret_v2.postgresql.data["username"]
-  password = data.vault_kv_secret_v2.postgresql.data["password"]
+  postgresql_username = data.vault_kv_secret_v2.postgresql.data["username"]
+  postgresql_password = data.vault_kv_secret_v2.postgresql.data["password"]
 }
