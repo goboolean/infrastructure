@@ -48,6 +48,10 @@ provider "cloudflare" {
   api_token = var.cloudflare_api_token
 }
 
+provider "acme" {
+  server_url = "https://acme-staging-v02.api.letsencrypt.org/directory"
+}
+
 provider "kubernetes" {
   host                   = module.gke.kubernetes_provider_config.host
   token                  = module.gke.kubernetes_provider_config.token
@@ -60,10 +64,6 @@ provider "helm" {
     token                  = module.gke.kubernetes_provider_config.token
     cluster_ca_certificate = module.gke.kubernetes_provider_config.cluster_ca_certificate
   }
-}
-
-provider "acme" {
-  server_url = "https://acme-staging-v02.api.letsencrypt.org/directory"
 }
 
 provider "kubectl" {
