@@ -30,6 +30,11 @@ terraform {
       source  = "hashicorp/vault"
       version = "4.6.0"
     }
+
+    argocd = {
+      source  = "argoproj-labs/argocd"
+      version = "7.3.0"
+    }
   }
   required_version = ">= 0.14"
 }
@@ -83,4 +88,14 @@ provider "vault" {
       secret_id = var.vault_secret_id
     }
   }
+}
+
+data "vault_kv_secret_v2" "argocd" {
+    path = "kv-v2/data/infra/argocd"
+}
+
+provider "argocd" {
+  server_addr = "argocd.goboolean.io:443"
+  username = data.vault_kv_secret_v2.argocd.data["username"]
+  password = data.vault_kv_secret_v2.argocd.data["password"]
 }
