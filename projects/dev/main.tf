@@ -102,10 +102,10 @@ module "opentelemetry" {
   and the following variables can be injected starting from the second step,
   so they should be moved later.
 */
-module "argocd-application" {
-  source = "../../modules/infra/argocd/application"
-  depends_on = [module.argocd]
-  providers = {
-    argocd = argocd
-  }
-}
+# module "argocd-application" {
+#   source = "../../modules/infra/argocd/application"
+#   depends_on = [module.argocd]
+#   providers = {
+#     argocd = argocd
+#   }
+# }
