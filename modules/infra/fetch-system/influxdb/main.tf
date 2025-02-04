@@ -8,7 +8,7 @@ locals {
 resource "helm_release" "influxdb" {
   name             = "influxdb"
   chart            = "influxdb2"
-  namespace        = "influxdb"
+  namespace        = "influxdata"
   repository       = "https://helm.influxdata.com"
   version          = "2.1.2"
   
