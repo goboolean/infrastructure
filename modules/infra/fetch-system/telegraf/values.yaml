@@ -145,20 +145,17 @@ config:
             problem: 2
             critical: 3
   outputs:
-    - influxdb:
-        urls:
-          - "http://influxdb.monitoring.svc:8086"
-        database: "telegraf"
+    - influxdb_v2:
+        urls: "http://influxdb-influxdb2.influxdata.svc.cluster.local:8086"
+        token: ${influxdb_token}
+        organization: "goboolean"
+        bucket: "minimal"
   inputs:
-    - statsd:
-        service_address: ":8125"
-        percentiles:
-          - 50
-          - 95
-          - 99
-        metric_separator: "_"
-        allowed_pending_messages: 10000
-        percentile_limit: 1000
+    - kafka_consumer:
+        brokers: ["kafka.kafka.svc.cluster.local:9092"]
+        topic_regexps: [".*"]
+        consumer_group: "fetch-system-telegraf"
+        data_format: "json"
 metrics:
   health:
     enabled: false
