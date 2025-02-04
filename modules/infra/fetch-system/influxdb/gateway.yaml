@@ -13,4 +13,4 @@ spec:
     - destination:
         host: influxdb-influxdb2.influxdata.svc.cluster.local
         port:
-          number: 8086
+          number: 80
