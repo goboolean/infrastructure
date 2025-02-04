@@ -655,7 +655,7 @@ plugins: []
 ## ref: http://docs.grafana.org/administration/provisioning/#datasources
 ##
 datasources:
-  - name: fetch-system
+    name: fetch-system
     type: influxdb
     access: proxy
     url: http://influxdb-influxdb2.influxdata.svc.cluster.local:80
