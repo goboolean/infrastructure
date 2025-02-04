@@ -20,5 +20,5 @@ resource "helm_release" "grafana" {
 
 resource "kubernetes_manifest" "grafana-gateway" {
   manifest = yamldecode(file("${path.module}/gateway.yaml"))
-  depends_on = [helm_release.influxdb]
+  depends_on = [helm_release.grafana]
 }
