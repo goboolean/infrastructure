@@ -657,17 +657,18 @@ plugins: []
 datasources:
   datasources.yaml:
     apiVersion: 1
-    name: fetch-system
-    type: influxdb
-    access: proxy
-    url: http://influxdb-influxdb2.influxdata.svc.cluster.local:80
-    jsonData:
-      version: Flux
-      organization: goboolean
-      defaultBucket: minimal
-      tlsSkipVerify: true
-    secureJsonData:
-      token: ${influxdb_token}
+    datasources:
+      - name: fetch-system
+        type: influxdb
+        access: proxy
+        url: http://influxdb-influxdb2.influxdata.svc.cluster.local:80
+        jsonData:
+          version: Flux
+          organization: goboolean
+          defaultBucket: minimal
+          tlsSkipVerify: true
+        secureJsonData:
+          token: ${influxdb_token}
 
 
 ## Configure grafana alerting (can be templated)
