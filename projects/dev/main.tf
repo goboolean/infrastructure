@@ -158,4 +158,5 @@ module "grafana" {
   depends_on = [module.gke, module.namespace]
   grafana_username = data.vault_kv_secret_v2.grafana.data["username"]
   grafana_password = data.vault_kv_secret_v2.grafana.data["password"]
+  influxdb_token = data.vault_kv_secret_v2.influxdb.data["token"]
 }
