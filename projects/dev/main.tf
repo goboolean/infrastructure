@@ -135,7 +135,7 @@ data "vault_kv_secret_v2" "influxdb" {
 }
 
 module "influxdb" {
-  source = "../../modules/infra/fetch-system/influxdb"
+  source = "../../modules/infra/influxdb"
   depends_on = [module.gke, module.namespace]
   influxdb_username = data.vault_kv_secret_v2.influxdb.data["username"]
   influxdb_password = data.vault_kv_secret_v2.influxdb.data["password"]
@@ -154,7 +154,7 @@ data "vault_kv_secret_v2" "grafana" {
 }
 
 module "grafana" {
-  source = "../../modules/infra/fetch-system/grafana"
+  source = "../../modules/infra/grafana"
   depends_on = [module.gke, module.namespace]
   grafana_username = data.vault_kv_secret_v2.grafana.data["username"]
   grafana_password = data.vault_kv_secret_v2.grafana.data["password"]
