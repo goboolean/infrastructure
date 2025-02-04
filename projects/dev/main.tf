@@ -97,10 +97,9 @@ module "harbor" {
 }
 
 /*
-  It is not possible to deploy all infrastructure with a single main.tf.
-  Therefore, the steps need to be divided,
-  and the following variables can be injected starting from the second step,
-  so they should be moved later.
+  The following infrastructure depends on Vault.
+  Therefore, it should be separated into a distinct module
+  and divided into stages.
 */
 # module "argocd-application" {
 #   source = "../../modules/infra/argocd/application"
