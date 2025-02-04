@@ -658,7 +658,7 @@ datasources:
   datasources.yaml:
     apiVersion: 1
     datasources:
-      - name: fetch-system
+      - name: influxdb
         type: influxdb
         access: proxy
         url: http://influxdb2.influxdata.svc.cluster.local:80
