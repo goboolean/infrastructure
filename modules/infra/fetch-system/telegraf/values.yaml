@@ -146,7 +146,7 @@ config:
             critical: 3
   outputs:
     - influxdb_v2:
-        urls: "http://influxdb-influxdb2.influxdata.svc.cluster.local:8086"
+        urls: ["http://influxdb-influxdb2.influxdata.svc.cluster.local:8086"]
         token: ${influxdb_token}
         organization: "goboolean"
         bucket: "minimal"
