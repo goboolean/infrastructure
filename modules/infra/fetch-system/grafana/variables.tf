@@ -6,6 +6,6 @@ variable "grafana_password" {
   description = "grafana password"
 }
 
-variabel "influxdb_token" {
+variable "influxdb_token" {
   description = "influxdb token"
 }
