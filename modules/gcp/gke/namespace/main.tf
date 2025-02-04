@@ -63,3 +63,9 @@ resource "kubernetes_namespace" "postgresql" {
     name = "postgresql"
   }
 }
+
+resource "kubernetes_namespace" "influxdb" {
+  metadata {
+    name = "influxdb"
+  }
+}

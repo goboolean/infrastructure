@@ -129,3 +129,15 @@ module "postgresql" {
 #     argocd = argocd
 #   }
 # }
+
+data "vault_kv_secret_v2" "influxdb" {
+  mount = "kv-v2"
+  name = "infra/influxdb"
+}
+
+module "influxdb" {
+  source = "../../modules/infra/influxdb"
+  depends_on = [module.gke, module.namespace]
+  influxdb_username = data.vault_kv_secret_v2.influxdb.data["username"]
+  influxdb_password = data.vault_kv_secret_v2.influxdb.data["password"]
+}
