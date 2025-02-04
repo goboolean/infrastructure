@@ -136,7 +136,7 @@ data "vault_kv_secret_v2" "influxdb" {
 }
 
 module "influxdb" {
-  source = "../../modules/infra/influxdb"
+  source = "../../modules/infra/fetch-system/influxdb"
   depends_on = [module.gke, module.namespace]
   influxdb_username = data.vault_kv_secret_v2.influxdb.data["username"]
   influxdb_password = data.vault_kv_secret_v2.influxdb.data["password"]
