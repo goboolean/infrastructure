@@ -661,7 +661,7 @@ datasources:
       - name: fetch-system
         type: influxdb
         access: proxy
-        url: http://influxdb-influxdb2.influxdata.svc.cluster.local:80
+        url: http://influxdb2.influxdata.svc.cluster.local:80
         jsonData:
           version: Flux
           organization: goboolean
