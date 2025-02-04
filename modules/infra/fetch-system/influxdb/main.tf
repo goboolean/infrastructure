@@ -2,6 +2,7 @@ locals {
   values_yaml = templatefile("${path.module}/values.yaml", {
     username = var.influxdb_username
     password = var.influxdb_password
+    token = var.influxdb_token
   })
 }
 
