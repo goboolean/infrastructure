@@ -147,3 +147,15 @@ module "telegraf" {
   depends_on = [module.gke, module.namespace]
   influxdb_token = data.vault_kv_secret_v2.influxdb.data["token"]
 }
+
+data "vault_kv_secret_v2" "grafana" {
+  mount = "kv-v2"
+  name = "infra/grafana"
+}
+
+module "grafana" {
+  source = "../../modules/infra/fetch-system/grafana"
+  depends_on = [module.gke, module.namespace]
+  grafana_username = data.vault_kv_secret_v2.grafana.data["username"]
+  grafana_password = data.vault_kv_secret_v2.grafana.data["password"]
+}
