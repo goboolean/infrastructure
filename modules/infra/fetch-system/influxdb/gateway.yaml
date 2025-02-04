@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: influxdb-vs
+  namespace: influxdata
+spec:
+  hosts:
+  - influxdb.goboolean.io
+  gateways:
+  - istio-system/istio-ingressgateway
+  http:
+  - route:
+    - destination:
+        host: influxdb-influxdb2.influxdata.svc.cluster.local
+        port:
+          number: 8086
