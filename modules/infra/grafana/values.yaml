@@ -665,7 +665,7 @@ datasources:
         jsonData:
           version: Flux
           organization: goboolean
-          defaultBucket: minimal
+          defaultBucket: k8s-metrics
           tlsSkipVerify: true
         secureJsonData:
           token: ${influxdb_token}

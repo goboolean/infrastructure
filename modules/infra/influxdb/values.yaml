@@ -95,7 +95,7 @@ env: {}
 ##
 adminUser:
   organization: "goboolean"
-  bucket: "minimal"
+  bucket: "k8s-metrics"
   user: ${username}
   retention_policy: "0s"
   ## Leave empty to generate a random password and token.
