@@ -53,7 +53,7 @@ resource "kubernetes_namespace" "fetch-system" {
   metadata {
     name = "fetch-system"
     labels = {
-      "istio-injection" = "enabled"
+      "istio-injection" = "disabled"
     }
   }
 }
