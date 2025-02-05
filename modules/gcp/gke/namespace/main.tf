@@ -75,3 +75,9 @@ resource "kubernetes_namespace" "influxdata" {
 #     name = "grafana"
 #   }
 # }
+
+resource "kubernetes_namespace" "monitoring" {
+  metadata {
+    name = "monitoring"
+  }
+}
