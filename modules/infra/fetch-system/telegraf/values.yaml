@@ -149,7 +149,7 @@ config:
         urls: ["http://influxdb2.influxdata.svc.cluster.local:80"]
         token: ${influxdb_token}
         organization: "goboolean"
-        bucket: "minimal"   # need to change
+        bucket: "default"   # need to change
   inputs:
     - kafka_consumer:
         brokers: ["kafka.kafka.svc.cluster.local:9092"]
