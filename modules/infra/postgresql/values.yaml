@@ -314,15 +314,16 @@ primary:
   ## @param primary.pgHbaConfiguration PostgreSQL Primary client authentication configuration
   ## ref: https://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html
   ## e.g:#
-    pgHbaConfiguration: |-
-      # TYPE  DATABASE        USER            ADDRESS                 METHOD
-      host    all             all             0.0.0.0/0               md5
-      local   all             all       
-   
-  pgHbaConfiguration: ""
-  ## @param primary.existingConfigmap Name of an existing ConfigMap with PostgreSQL Primary configuration
-  ## NOTE: `primary.configuration` and `primary.pgHbaConfiguration` will be ignored
+  ## pgHbaConfiguration: |-
+  ##   local all all trust
+  ##   host all all localhost trust
+  ##   host mydatabase mysuser 192.168.0.0/24 md5
   ##
+  pgHbaConfiguration: |-
+    # TYPE  DATABASE        USER            ADDRESS                 METHOD
+    host    all             all             0.0.0.0/0               md5
+    local   all             all       
+
   existingConfigmap: ""
   ## @param primary.extendedConfiguration Extended PostgreSQL Primary configuration (appended to main or default configuration)
   ## ref: https://github.com/bitnami/containers/tree/main/bitnami/postgresql#allow-settings-to-be-loaded-from-files-other-than-the-default-postgresqlconf
