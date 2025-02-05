@@ -70,8 +70,8 @@ resource "kubernetes_namespace" "influxdata" {
   }
 }
 
-resource "kubernetes_namespace" "grafana" {
-  metadata {
-    name = "grafana"
-  }
-}
+# resource "kubernetes_namespace" "grafana" {
+#   metadata {
+#     name = "grafana"
+#   }
+# }
