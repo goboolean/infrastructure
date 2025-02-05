@@ -322,7 +322,7 @@ primary:
   pgHbaConfiguration: |-
     # TYPE  DATABASE        USER            ADDRESS                 METHOD
     host    all             all             0.0.0.0/0               md5
-    local   all             all       
+    local   all             all                                     trust
 
   existingConfigmap: ""
   ## @param primary.extendedConfiguration Extended PostgreSQL Primary configuration (appended to main or default configuration)
