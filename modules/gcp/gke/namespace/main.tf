@@ -16,12 +16,6 @@ resource "kubernetes_namespace" "vault" {
   }
 }
 
-resource "kubernetes_namespace" "harbor" {
-  metadata {
-    name = "harbor"
-  }
-}
-
 resource "kubernetes_namespace" "argocd" {
   metadata {
     name = "argocd"
