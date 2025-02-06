@@ -1021,11 +1021,7 @@ broker:
   extraEnvVarsSecret: ""
   ## @param broker.extraContainerPorts Kafka broker-only extra containerPorts.
   ##
-  extraContainerPorts:
-    - name: jmx
-      port: 5555
-      targetPort: 5555
-      protocol: TCP
+  extraContainerPorts: []
   ## Configure extra options for Kafka containers' liveness, readiness and startup probes
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
   ## @param broker.livenessProbe.enabled Enable livenessProbe on Kafka containers
