@@ -1004,7 +1004,11 @@ broker:
   ##   - name: KAFKA_CFG_BACKGROUND_THREADS
   ##     value: "10"
   ##
-  extraEnvVars: []
+  extraEnvVars:
+    - name: KAFKA_JMX_OPTS
+      value: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1"
+    - name: JMX_PORT
+      value: "5555"
   ## @param broker.extraEnvVarsCM ConfigMap with extra environment variables
   ##
   extraEnvVarsCM: ""
