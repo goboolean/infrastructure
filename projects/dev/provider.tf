@@ -104,11 +104,6 @@ provider "argocd" {
   password = data.vault_kv_secret_v2.argocd.data["password"]
 }
 
-data "vault_kv_secret_v2" "harbor" {
-  mount = "kv-v2"
-  name = "infra/harbor"
-}
-
 provider "harbor" {
   url = data.vault_kv_secret_v2.harbor.data["url"]
   username = data.vault_kv_secret_v2.harbor.data["username"]
