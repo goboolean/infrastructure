@@ -10,7 +10,6 @@ resource "helm_release" "harbor" {
   repository = "https://helm.goharbor.io"
   chart      = "harbor"
   namespace        = "harbor"
-  create_namespace = true
   version          = "1.15.1"
 
   values = [local.values_yaml]
