@@ -34,6 +34,11 @@ terraform {
       source  = "argoproj-labs/argocd"
       version = "7.3.0"
     }
+
+    harbor = {
+      source  = "goharbor/harbor"
+      version = "3.10.19"
+    }
   }
   required_version = ">= 0.14"
 }
@@ -97,4 +102,15 @@ provider "argocd" {
   server_addr = "argocd.goboolean.io:443"
   username = data.vault_kv_secret_v2.argocd.data["username"]
   password = data.vault_kv_secret_v2.argocd.data["password"]
+}
+
+data "vault_kv_secret_v2" "harbor" {
+  mount = "kv-v2"
+  name = "infra/harbor"
+}
+
+provider "harbor" {
+  url = data.vault_kv_secret_v2.harbor.data["url"]
+  username = data.vault_kv_secret_v2.harbor.data["username"]
+  password = data.vault_kv_secret_v2.harbor.data["password"]
 }

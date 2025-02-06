@@ -115,6 +115,9 @@ module "harbor" {
   harbor_url = data.vault_kv_secret_v2.harbor.data["url"]
   harbor_username = data.vault_kv_secret_v2.harbor.data["username"]
   harbor_password = data.vault_kv_secret_v2.harbor.data["password"]
+  providers = {
+    harbor = harbor
+  }
 }
 
 data "vault_kv_secret_v2" "postgresql" {
