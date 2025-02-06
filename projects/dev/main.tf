@@ -91,11 +91,6 @@ module "opentelemetry" {
   depends_on = [module.gke, module.namespace]
 }
 
-module "harbor" {
-  source = "../../modules/infra/harbor"
-  depends_on = [module.gke, module.namespace]
-}
-
 /*
   The following infrastructure depends on Vault.
   Therefore, it should be separated into a distinct module
@@ -108,6 +103,17 @@ module "harbor" {
 #     argocd = argocd
 #   }
 # }
+
+data "vault_kv_secret_v2" "harbor" {
+  mount = "kv-v2"
+  name = "infra/harbor"
+}
+
+module "harbor" {
+  source = "../../modules/infra/harbor"
+  depends_on = [module.gke, module.namespace]
+  harbor_password = data.vault_kv_secret_v2.harbor.data["password"]
+}
 
 data "vault_kv_secret_v2" "postgresql" {
   mount = "kv-v2"
