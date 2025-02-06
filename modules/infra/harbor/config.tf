@@ -2,7 +2,7 @@ resource "harbor_project" "fetch-system" {
   name                   = "fetch-system"
   public                 = true
   vulnerability_scanning = true
-  depends_on = [helm_release.harbor_gateway]
+  depends_on = [kubernetes_manifest.harbor_gateway]
 }
 
 resource "harbor_retention_policy" "fetch-system-retention" {
@@ -19,5 +19,5 @@ resource "harbor_retention_policy" "fetch-system-retention" {
 resource "harbor_garbage_collection" "gc-schedule" {
   schedule = "Daily"
   workers  = 1
-  depends_on = [helm_release.harbor_gateway]
+  depends_on = [kubernetes_manifest.harbor_gateway]
 }
