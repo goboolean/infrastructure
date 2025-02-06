@@ -44,8 +44,8 @@ resource "google_container_node_pool" "primary_nodes" {
       pod_pids_limit    = 0
     }
 
-    machine_type = "n1-standard-2"
-    disk_size_gb = 20
+    machine_type = var.gke_machine_type
+    disk_size_gb = var.gke_disk_size_gb
     tags         = ["gke-node", "${var.project_id}-gke"]
     metadata = {
       disable-legacy-endpoints = "true"
