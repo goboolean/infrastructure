@@ -1,9 +1,9 @@
 locals {
   values_yaml = templatefile("${path.module}/values.yaml", {
+    harbor_url      = var.harbor_url
     harbor_password = var.harbor_password
   })
 }
-
 
 resource "helm_release" "harbor" {
   name       = "harbor"
@@ -11,11 +11,12 @@ resource "helm_release" "harbor" {
   chart      = "harbor"
   namespace        = "harbor"
   create_namespace = true
-  version          = "1.16.2"
+  version          = "1.15.1"
 
   values = [local.values_yaml]
 }
 
 resource "kubernetes_manifest" "harbor_gateway" {
   manifest = yamldecode(file("${path.module}/gateway.yaml"))
+  depends_on = [helm_release.harbor]
 }
