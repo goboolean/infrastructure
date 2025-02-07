@@ -10,8 +10,8 @@ resource "helm_release" "kafka" {
   timeout = 600
 }
 
-resource "helm_release" "kafka-exporter" {
-  name             = "kafka-exporter"
+resource "helm_release" "prometheus-kafka-exporter" {
+  name             = "prometheus-kafka-exporter"
   chart            = "prometheus-kafka-exporter"
   namespace        = "kafka"
   repository       = "https://prometheus-community.github.io/helm-charts"
