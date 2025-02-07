@@ -2065,7 +2065,6 @@ metrics:
       - java.lang:*
       - kafka.network:*
       - kafka.log:*
-      - kafka.consumer:*
     ## @param metrics.jmx.config [string] Configuration file for JMX exporter
     ## Specify content for jmx-kafka-prometheus.yml. Evaluated as a template
     ##
@@ -2092,59 +2091,7 @@ metrics:
     ##    labels:
     ##      listener: $1
     ##
-    extraRules: |-
-      - pattern: 'kafka.consumer<type=consumer-fetch-manager-metrics, client-id=(.+), topic=(.+), partition=(.+)><>records-lag'
-        name: kafka_consumer_records_lag
-        labels:
-          clientId: "$1"
-          topic: "$2"
-          partition: "$3"
-        help: "Consumer lag for a topic partition"
-        type: GAUGE
-      - pattern: 'kafka.consumer<type=consumer-fetch-manager-metrics, client-id=(.+), topic=(.+), partition=(.+)><>records-lag-max'
-        name: kafka_consumer_records_lag_max
-        labels:
-          clientId: "$1"
-          topic: "$2"
-          partition: "$3"
-        help: "Consumer max lag for a topic partition"
-        type: GAUGE
-      - pattern: 'java.lang<type=Memory><HeapMemoryUsage>used'
-        name: jvm_memory_heap_used_bytes
-        help: "Current used heap memory"
-        type: GAUGE
-      - pattern: 'java.lang<type=Memory><HeapMemoryUsage>max'
-        name: jvm_memory_heap_max_bytes
-        help: "Maximum heap memory"
-        type: GAUGE
-      - pattern: 'java.lang<type=Memory><NonHeapMemoryUsage>used'
-        name: jvm_memory_nonheap_used_bytes
-        help: "Current used non-heap memory"
-        type: GAUGE
-      - pattern: 'java.lang<type=Memory><NonHeapMemoryUsage>max'
-        name: jvm_memory_nonheap_max_bytes
-        help: "Maximum non-heap memory"
-        type: GAUGE
-      - pattern: 'java.lang<type=GarbageCollector, name=(.+)><CollectionCount>'
-        name: jvm_gc_collection_count
-        help: "Number of GC collections"
-        labels:
-          gc: "$1"
-        type: COUNTER
-      - pattern: 'java.lang<type=GarbageCollector, name=(.+)><CollectionTime>'
-        name: jvm_gc_collection_time_seconds
-        help: "Total time spent in GC"
-        labels:
-          gc: "$1"
-        type: COUNTER
-      - pattern: 'java.lang<type=Threading><ThreadCount>'
-        name: jvm_threads_active
-        help: "Current number of live threads"
-        type: GAUGE
-      - pattern: 'java.lang<type=Threading><DaemonThreadCount>'
-        name: jvm_threads_daemon
-        help: "Current number of daemon threads"
-        type: GAUGE
+    extraRules: ""
 
   ## Prometheus Operator ServiceMonitor configuration
   ##
