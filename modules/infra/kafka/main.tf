@@ -12,7 +12,7 @@ resource "helm_release" "kafka" {
 
 resource "helm_release" "kafka-exporter" {
   name             = "kafka-exporter"
-  chart            = "kafka-exporter"
+  chart            = "prometheus-kafka-exporter"
   namespace        = "kafka"
   repository       = "https://prometheus-community.github.io/helm-charts"
   version          = "2.11.0"
