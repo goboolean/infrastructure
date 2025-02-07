@@ -149,11 +149,11 @@ config:
         urls: ["http://influxdb2.influxdata.svc.cluster.local:80"]
         token: ${influxdb_token}
         organization: "goboolean"
-        bucket: "default"   # need to change
+        bucket_tag: "topic"
   inputs:
     - kafka_consumer:
         brokers: ["kafka.kafka.svc.cluster.local:9092"]
-        topic_regexps: [".*"]
+        topics: ["+"]
         consumer_group: "fetch-system-telegraf"
         data_format: "json"
 metrics:
