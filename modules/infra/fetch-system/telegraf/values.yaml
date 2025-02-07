@@ -153,7 +153,7 @@ config:
   inputs:
     - kafka_consumer:
         brokers: ["kafka.kafka.svc.cluster.local:9092"]
-        topics: ["+"]
+        topics: ["^(?!.*\\.t$).*"]
         consumer_group: "fetch-system-telegraf"
         data_format: "json"
 metrics:
