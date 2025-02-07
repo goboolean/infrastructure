@@ -150,13 +150,15 @@ config:
         token: ${influxdb_token}
         organization: "goboolean"
         bucket_tag: "topic"
+
   inputs:
     - kafka_consumer:
         brokers: ["kafka.kafka.svc.cluster.local:9092"]
-        topics: ["^(?!__.*$)(?!.*\\.t$).*"]
+        topic_regexps: [ ".*\\.(1s|5s|1m|5m)$" ]
         topic_tag: "topic"
         consumer_group: "fetch-system-telegraf"
         data_format: "json"
+        
 metrics:
   health:
     enabled: true
