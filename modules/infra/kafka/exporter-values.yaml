@@ -29,9 +29,9 @@ global:
 replicaCount: 1
 
 kafkaServer:
-  - "kafka-broker-0.kafka-headless:9092"
-  - "kafka-broker-1.kafka-headless:9092"
-  - "kafka-broker-2.kafka-headless:9092"
+  - "kafka-broker-0.kafka-broker-headless.kafka.svc.cluster.local:9092"
+  - "kafka-broker-1.kafka-broker-headless.kafka.svc.cluster.local:9092"
+  - "kafka-broker-2.kafka-broker-headless.kafka.svc.cluster.local:9092"
 
 # Specifies broker version to use, leave empty for default
 kafkaBrokerVersion:
