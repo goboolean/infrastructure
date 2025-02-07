@@ -149,7 +149,9 @@ config:
         urls: ["http://influxdb2.influxdata.svc.cluster.local:80"]
         token: ${influxdb_token}
         organization: "goboolean"
+        bucket: "default"
         bucket_tag: "topic"
+        exclude_bucket_tag: true
 
   inputs:
     - kafka_consumer:
