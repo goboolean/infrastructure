@@ -5,8 +5,8 @@ locals {
   })
 }
 
-resource "helm_release" "prometheus" {
-  name             = "prometheus"
+resource "helm_release" "kube-prometheus-stack" {
+  name             = "kube-prometheus-stack"
   chart            = "kube-prometheus-stack"
   namespace        = "monitoring"
   repository       = "https://prometheus-community.github.io/helm-charts"
@@ -19,10 +19,10 @@ resource "helm_release" "prometheus" {
 
 resource "kubernetes_manifest" "prometheus-gateway" {
   manifest = yamldecode(file("${path.module}/prometheus-gateway.yaml"))
-  depends_on = [helm_release.prometheus]
+  depends_on = [helm_release.kube-prometheus-stack]
 }
 
 resource "kubernetes_manifest" "grafana-gateway" {
   manifest = yamldecode(file("${path.module}/grafana-gateway.yaml"))
-  depends_on = [helm_release.prometheus]
+  depends_on = [helm_release.kube-prometheus-stack]
 }

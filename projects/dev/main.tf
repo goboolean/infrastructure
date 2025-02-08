@@ -172,8 +172,8 @@ data "vault_kv_secret_v2" "grafana" {
 #   influxdb_token = data.vault_kv_secret_v2.influxdb.data["token"]
 # }
 
-module "monitoring" {
-  source = "../../modules/infra/monitoring"
+module "kube-prometheus-stack" {
+  source = "../../modules/infra/monitoring/kube-prometheus-stack"
   depends_on = [module.gke, module.namespace]
   grafana_username = data.vault_kv_secret_v2.grafana.data["username"]
   grafana_password = data.vault_kv_secret_v2.grafana.data["password"]
