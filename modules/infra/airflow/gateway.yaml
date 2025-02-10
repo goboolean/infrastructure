@@ -11,6 +11,6 @@ spec:
   http:
   - route:
     - destination:
-        host: airflow.airflow.svc.cluster.local
+        host: airflow-web.airflow.svc.cluster.local
         port:
           number: 8080
