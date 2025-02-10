@@ -21,3 +21,15 @@ resource "kubernetes_manifest" "airflow-gateway" {
   manifest = yamldecode(file("${path.module}/gateway.yaml"))
   depends_on = [helm_release.airflow]
 }
+
+resource "kubernetes_manifest" "airflow-sa" {
+  manifest = yamldecode(file("${path.module}/sa.yaml"))
+}
+
+resource "kubernetes_manifest" "airflow-cluster-role" {
+  manifest = yamldecode(file("${path.module}/cluster-role.yaml"))
+}
+
+resource "kubernetes_manifest" "airflow-cluster-role-binding" {
+  manifest = yamldecode(file("${path.module}/cluster-role-binding.yaml"))
+}

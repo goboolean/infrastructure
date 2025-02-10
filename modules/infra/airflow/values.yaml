@@ -944,7 +944,7 @@ web:
 workers:
   ## if the airflow workers StatefulSet should be deployed
   ##
-  enabled: true
+  enabled: false
 
   ## the number of worker Pods to run
   ## - if you set this >1 we recommend defining a `workers.podDisruptionBudget`
@@ -1289,7 +1289,7 @@ triggerer:
 flower:
   ## if the airflow flower UI should be deployed
   ##
-  enabled: true
+  enabled: false
 
   ## the number of flower Pods to run
   ## - if you set this >1 we recommend defining a `flower.podDisruptionBudget`
@@ -2213,7 +2213,7 @@ redis:
   ## - set to `false` if `airflow.executor` is `KubernetesExecutor`
   ## - set to `false` if using `externalRedis.*`
   ##
-  enabled: true
+  enabled: false
 
   ## configs for the redis container image
   ##
