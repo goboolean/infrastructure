@@ -1,10 +1,5 @@
 data "google_client_config" "default" {}
 
-data "google_container_engine_versions" "gke_version" {
-  location = var.zone
-  version_prefix = "1.31.4-gke.1256000"
-}
-
 resource "google_container_cluster" "primary" {
   name     = "${var.project_id}-gke"
   location = var.zone
@@ -25,7 +20,7 @@ resource "google_container_node_pool" "primary_nodes" {
   location   = var.zone
   cluster    = google_container_cluster.primary.name
 
-  version    = data.google_container_engine_versions.gke_version.release_channel_latest_version["REGULAR"]
+  version    = var.gke_version
   node_count = var.gke_num_nodes
 
   node_config {
