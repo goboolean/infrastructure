@@ -70,14 +70,14 @@ resource "kubernetes_namespace" "influxdata" {
   }
 }
 
-# resource "kubernetes_namespace" "grafana" {
-#   metadata {
-#     name = "grafana"
-#   }
-# }
-
 resource "kubernetes_namespace" "monitoring" {
   metadata {
     name = "monitoring"
+  }
+}
+
+resource "kubernetes_namespace" "airflow" {
+  metadata {
+    name = "airflow"
   }
 }
