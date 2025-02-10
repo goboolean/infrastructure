@@ -178,3 +178,15 @@ module "monitoring" {
   grafana_username = data.vault_kv_secret_v2.grafana.data["username"]
   grafana_password = data.vault_kv_secret_v2.grafana.data["password"]
 }
+
+data "vault_kv_secret_v2" "airflow" {
+  mount = "kv-v2"
+  name = "infra/airflow"
+}
+
+module "airflow" {
+  source = "../../modules/infra/airflow"
+  depends_on = [module.gke, module.namespace]
+  airflow_username = data.vault_kv_secret_v2.airflow.data["username"]
+  airflow_password = data.vault_kv_secret_v2.airflow.data["password"]
+}
