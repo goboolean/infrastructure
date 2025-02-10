@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: airflow-vs
+  namespace: airflow
+spec:
+  hosts:
+  - airflow.goboolean.io
+  gateways:
+  - istio-system/istio-ingressgateway
+  http:
+  - route:
+    - destination:
+        host: airflow.airflow.svc.cluster.local
+        port:
+          number: 8080
