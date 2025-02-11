@@ -1,9 +1,0 @@
-dependencies:
-- name: kafka
-  repository: https://charts.bitnami.com/bitnami
-  version: 26.4.0
-- name: schema-registry
-  repository: https://charts.bitnami.com/bitnami
-  version: 18.0.3
-digest: sha256:7bbc8685c88f23114d24c4c1695fa7b44c7c5764b55a11443830cdfed7cde166
-generated: "2024-06-02T04:19:35.316646+09:00"

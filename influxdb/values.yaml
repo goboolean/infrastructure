@@ -1,9 +1,0 @@
-influxdb2:
-  service:
-    type: LoadBalancer
-  adminUser:
-    organization: goboolean
-    bucket: minimal
-    user: admin
-    password: password
-
