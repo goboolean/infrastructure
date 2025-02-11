@@ -8,6 +8,10 @@ resource "google_container_cluster" "primary" {
     channel = "REGULAR"
   }
 
+  workload_identity_config {
+    workload_pool = "${var.project_id}.svc.id.goog"
+  }
+
   remove_default_node_pool = true
   initial_node_count       = 1
 
@@ -44,6 +48,10 @@ resource "google_container_node_pool" "primary_nodes" {
     tags         = ["gke-node", "${var.project_id}-gke"]
     metadata = {
       disable-legacy-endpoints = "true"
+    }
+
+    workload_metadata_config {
+      mode = "GKE_METADATA"
     }
   }
 }
