@@ -453,7 +453,7 @@ airflow:
     ##   this is because post-install helm Jobs run AFTER the main resources become Ready,
     ##   which will cause a deadlock, as other resources require db-migrations to become Ready
     ##
-    runAsJob: false
+    runAsJob: true
 
     ## resource requests/limits for the db-migrations Pods
     ## - spec for ResourceRequirements:
@@ -2071,7 +2071,7 @@ postgresql:
   ## - [WARNING] consider using an external database with `externalDatabase.*`
   ## - set to `false` if using `externalDatabase.*`
   ##
-  enabled: true
+  enabled: false
 
   ## configs for the postgres container image
   ##
@@ -2171,7 +2171,7 @@ externalDatabase:
 
   ## the username for the external database
   ##
-  user: airflow
+  user: ${postgres_user}
 
   ## the name of a pre-created secret containing the external database user
   ## - if set, this overrides `externalDatabase.user`
@@ -2180,13 +2180,13 @@ externalDatabase:
 
   ## the key within `externalDatabase.userSecret` containing the user string
   ##
-  userSecretKey: "postgresql-user"
+  userSecretKey: ""
 
   ## the password for the external database
   ## - [WARNING] to avoid storing the password in plain-text within your values,
   ##   create a Kubernetes secret and use `externalDatabase.passwordSecret`
   ##
-  password: ""
+  password: ${postgres_password}
 
   ## the name of a pre-created secret containing the external database password
   ## - if set, this overrides `externalDatabase.password`
@@ -2195,7 +2195,7 @@ externalDatabase:
 
   ## the key within `externalDatabase.passwordSecret` containing the password string
   ##
-  passwordSecretKey: "postgresql-password"
+  passwordSecretKey: ""
 
   ## extra connection-string properties for the external database
   ##

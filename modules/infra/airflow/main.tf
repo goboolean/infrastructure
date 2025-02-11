@@ -2,6 +2,10 @@ locals {
   values_yaml = templatefile("${path.module}/values.yaml", {
     username = var.airflow_username
     password = var.airflow_password
+
+    postgres_host = var.postgres_host
+    postgres_user = var.postgres_user
+    postgres_password = var.postgres_password
   })
 }
 
