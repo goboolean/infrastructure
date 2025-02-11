@@ -1,6 +1,0 @@
-dependencies:
-- name: chronograf
-  repository: https://helm.influxdata.com
-  version: 1.2.6
-digest: sha256:87effcd964cd55340ad12b6e57ef46e61fdc3fd12814f41df27075891dcd1576
-generated: "2024-08-23T01:52:21.555543+09:00"

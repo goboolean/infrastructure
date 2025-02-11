@@ -1,9 +1,0 @@
-apiVersion: v2
-name: vault
-version: 0.1.0
-description: A Helm chart for HashiCorp Vault stack
-
-dependencies:
-  - name: vault
-    version: "0.28.1"
-    repository: "https://helm.releases.hashicorp.com"
