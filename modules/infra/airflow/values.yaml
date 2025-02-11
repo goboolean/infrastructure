@@ -453,7 +453,7 @@ airflow:
     ##   this is because post-install helm Jobs run AFTER the main resources become Ready,
     ##   which will cause a deadlock, as other resources require db-migrations to become Ready
     ##
-    runAsJob: true
+    runAsJob: false
 
     ## resource requests/limits for the db-migrations Pods
     ## - spec for ResourceRequirements:
