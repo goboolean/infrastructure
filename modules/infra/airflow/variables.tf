@@ -5,3 +5,15 @@ variable "airflow_username" {
 variable "airflow_password" {
   type = string
 }
+
+variable "postgres_host" {
+  type = string
+}
+
+variable "postgres_user" {
+  type = string
+}
+
+variable "postgres_password" {
+  type = string
+}
