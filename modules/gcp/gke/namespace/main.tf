@@ -70,9 +70,9 @@ resource "kubernetes_namespace" "influxdata" {
   }
 }
 
-resource "kubernetes_namespace" "kube-prometheus-stack" {
+resource "kubernetes_namespace" "monitoring" {
   metadata {
-    name = "kube-prometheus-stack"
+    name = "monitoring"
   }
 }
 
