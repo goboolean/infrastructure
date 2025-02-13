@@ -7,7 +7,7 @@ variable "gke_machine_type" {
 }
 
 variable "gke_disk_size_gb" {
-  default     = 20
+  default     = 50
 }
 
 variable "gke_version" {
