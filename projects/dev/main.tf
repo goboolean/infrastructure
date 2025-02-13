@@ -203,3 +203,8 @@ module "loki-stack" {
 module "github" {
   source = "../../modules/github"
 }
+
+module "dex" {
+  source = "../../modules/infra/dex"
+  depends_on = [module.gke, module.namespace]
+}
