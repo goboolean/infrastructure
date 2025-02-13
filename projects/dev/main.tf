@@ -10,10 +10,18 @@ module "service" {
   project_id = var.project_id
 }
 
+module "gcs" {
+  source = "../../modules/gcp/gcs"
+  project_id = var.project_id
+  location = var.location
+}
+
 module "iam" {
   source = "../../modules/gcp/iam"
   project_id = var.project_id
   region = var.region
+  
+  depends_on = [module.gcs]
 }
 
 module "gce" {
@@ -36,12 +44,6 @@ module "acme" {
   cloudflare_api_token = var.cloudflare_api_token
   cloudflare_zone_id = var.cloudflare_zone_id
   cloudflare_api_key = var.cloudflare_api_key
-}
-
-module "gcs" {
-  source = "../../modules/gcp/gcs"
-  project_id = var.project_id
-  location = var.location
 }
 
 module "gke" {
@@ -194,11 +196,11 @@ data "vault_kv_secret_v2" "airflow" {
    postgres_password = data.vault_kv_secret_v2.postgresql.data["password"]
  }
 
-# module "loki-stack" {
-#   source = "../../modules/infra/monitoring/loki-stack"
-#   depends_on = [module.gke, module.namespace]
-#   project_id = var.project_id
-# }
+module "loki-stack" {
+  source = "../../modules/infra/monitoring/loki-stack"
+  depends_on = [module.iam, module.gke, module.namespace]
+  project_id = var.project_id
+}
 
 module "github" {
   source = "../../modules/github"

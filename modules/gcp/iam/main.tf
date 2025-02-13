@@ -57,3 +57,29 @@ resource "google_storage_bucket_iam_member" "terraform_state_access" {
   role   = "roles/storage.admin"
   member = "serviceAccount:${google_service_account.atlantis.email}"
 }
+
+# For loki
+resource "google_service_account" "loki_gcs_sa" {
+  account_id   = "loki-gcs-sa"
+  display_name = "Loki GCS Service Account"
+  description  = "Service account for Loki to access GCS"
+}
+
+resource "google_storage_bucket_iam_member" "loki_gcs_role" {
+  bucket  = "goboolean-loki"
+  role    = "roles/storage.objectUser"
+  member  = "serviceAccount:${google_service_account.loki_gcs_sa.email}"
+
+  depends_on = [google_service_account.loki_gcs_sa]
+}
+
+resource "google_service_account_iam_binding" "workload_identity_binding" {
+  service_account_id = google_service_account.loki_gcs_sa.name
+  role               = "roles/iam.workloadIdentityUser"
+
+  members = [
+    "serviceAccount:${var.project_id}.svc.id.goog[monitoring/loki-sa]"
+  ]
+
+  depends_on = [google_service_account.loki_gcs_sa]
+}
