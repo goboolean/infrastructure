@@ -38,6 +38,7 @@ resource "github_repository" "repository" {
     description = ""
 
     visibility = "public"
+    has_issues = true
 
     delete_branch_on_merge = true
     allow_merge_commit = true
