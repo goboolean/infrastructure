@@ -184,21 +184,21 @@ data "vault_kv_secret_v2" "airflow" {
   name = "infra/airflow"
 }
 
- module "airflow" {
-   source = "../../modules/infra/airflow"
-   depends_on = [module.gke, module.namespace]
-   airflow_username = data.vault_kv_secret_v2.airflow.data["username"]
-   airflow_password = data.vault_kv_secret_v2.airflow.data["password"]
-   postgres_host = "postgresql.postgresql.svc.cluster.local"
-   postgres_user = data.vault_kv_secret_v2.postgresql.data["username"]
-   postgres_password = data.vault_kv_secret_v2.postgresql.data["password"]
- }
+module "airflow" {
+  source = "../../modules/infra/airflow"
+  depends_on = [module.gke, module.namespace]
+  airflow_username = data.vault_kv_secret_v2.airflow.data["username"]
+  airflow_password = data.vault_kv_secret_v2.airflow.data["password"]
+  postgres_host = "postgresql.postgresql.svc.cluster.local"
+  postgres_user = data.vault_kv_secret_v2.postgresql.data["username"]
+  postgres_password = data.vault_kv_secret_v2.postgresql.data["password"]
+}
 
-# module "loki-stack" {
-#   source = "../../modules/infra/monitoring/loki-stack"
-#   depends_on = [module.gke, module.namespace]
-#   project_id = var.project_id
-# }
+module "loki-stack" {
+  source = "../../modules/infra/monitoring/loki-stack"
+  depends_on = [module.iam, module.gke, module.namespace]
+  project_id = var.project_id
+}
 
 module "github" {
   source = "../../modules/github"
