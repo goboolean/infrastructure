@@ -16,7 +16,7 @@ variable "repositories" {
 
 variable "archived_repositories" {
     default = [
-        {name = "manager-cli",         visibility = "private"},
+        {name = "manager-cli",         visibility = "public"},
         {name = "schema-registry",     visibility = "private"},
         {name = "command-server",      visibility = "private"},
         {name = "fetch-system.master", visibility = "public" },
