@@ -10,8 +10,7 @@ variable "repositories" {
         ".github",
         "GoCppLinkingLibrary",
         "common",
-        "buycycle",
-        "core-system."
+        "buycycle"
     ]
 }
 
