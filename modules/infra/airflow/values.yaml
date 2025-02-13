@@ -10,7 +10,7 @@ airflow:
   ##
   image:
     repository: apache/airflow
-    tag: 2.8.4-python3.9
+    tag: 2.9.0-python3.12
     pullPolicy: IfNotPresent
     pullSecret: ""
     uid: 50000
@@ -62,10 +62,10 @@ airflow:
   ##     HTTP_PROXY: "http://proxy.example.com:8080"
   ##
   config:
-    AIRFLOW__KUBERNETES__KUBE_CLIENT_REQUEST_ARGS: '{"_request_timeout": [60, 60]}'
-    AIRFLOW__KUBERNETES__WORKER_CONTAINER_REPOSITORY: apache/airflow
-    AIRFLOW__KUBERNETES__WORKER_CONTAINER_TAG: latest
-    AIRFLOW__KUBERNETES__NAMESPACE: airflow
+    AIRFLOW__KUBERNETES_EXECUTOR__KUBE_CLIENT_REQUEST_ARGS: '{"_request_timeout": [60, 60]}'
+    AIRFLOW__KUBERNETES_EXECUTOR__WORKER_CONTAINER_REPOSITORY: apache/airflow
+    AIRFLOW__KUBERNETES_EXECUTOR__WORKER_CONTAINER_TAG: 2.9.0-python3.12
+    AIRFLOW__KUBERNETES_EXECUTOR__NAMESPACE: airflow
 
   ## a list of users to create
   ## - templates can ONLY be used in: `password`, `email`, `firstName`, `lastName`
@@ -236,8 +236,9 @@ airflow:
   ##     - "SomeProject==1.0.0"
   ##
   extraPipPackages:
-    - "apache-airflow-providers-cncf-kubernetes>=7.4.0"
-
+    - "apache-airflow-providers-cncf-kubernetes==10.1.0"
+    - "psycopg2-binary==2.9.9"
+    - "sqlalchemy>=1.4.36" 
   ## pip packages that are protected from upgrade/downgrade by `extraPipPackages`
   ## - [WARNING] Pods will fail to start if `extraPipPackages` would cause these packages to change versions
   ##
@@ -248,7 +249,9 @@ airflow:
   ## - spec for EnvVar:
   ##   https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#envvar-v1-core
   ##
-  extraEnv: []
+  extraEnv:
+    - name: AIRFLOW__CORE__CHECK_DB_TIMEOUT
+      value: "120"    
 
   ## extra containers for the airflow Pods
   ## - spec for Container:
@@ -1774,7 +1777,7 @@ rbac:
   ## if the created RBAC Role has GET/LIST/WATCH on Secret resources
   ## - [WARNING] when true, workers/dags can read Secrets in airflow's namespace
   ##
-  secrets: false
+  secrets: true
 
 ###################################
 ## CONFIG | Kubernetes ServiceAccount
@@ -1868,7 +1871,7 @@ extraManifests: []
 pgbouncer:
   ## if the pgbouncer Deployment is created
   ##
-  enabled: true
+  enabled: false
 
   ## configs for the pgbouncer container image
   ##
@@ -2071,7 +2074,7 @@ postgresql:
   ## - [WARNING] consider using an external database with `externalDatabase.*`
   ## - set to `false` if using `externalDatabase.*`
   ##
-  enabled: false
+  enabled: true
 
   ## configs for the postgres container image
   ##
@@ -2159,7 +2162,7 @@ externalDatabase:
 
   ## the host of the external database
   ##
-  host: localhost
+  host: "" #${postgres_host}
 
   ## the port of the external database
   ##

@@ -17,13 +17,6 @@ resource "helm_release" "airflow" {
   version          = "8.9.0"
   
   values = [local.values_yaml]
-
-  timeout = 600
-}
-
-resource "kubernetes_manifest" "airflow-gateway" {
-  manifest = yamldecode(file("${path.module}/gateway.yaml"))
-  depends_on = [helm_release.airflow]
 }
 
 resource "kubernetes_manifest" "airflow-sa" {
@@ -36,4 +29,8 @@ resource "kubernetes_manifest" "airflow-cluster-role" {
 
 resource "kubernetes_manifest" "airflow-cluster-role-binding" {
   manifest = yamldecode(file("${path.module}/cluster-role-binding.yaml"))
+}
+
+resource "kubernetes_manifest" "airflow-gateway" {
+  manifest = yamldecode(file("${path.module}/gateway.yaml"))
 }

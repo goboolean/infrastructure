@@ -20,12 +20,21 @@ resource "google_container_cluster" "primary" {
 }
 
 resource "google_container_node_pool" "primary_nodes" {
-  name       = google_container_cluster.primary.name
+  name       = "${google_container_cluster.primary.name}-node-pool"
   location   = var.zone
   cluster    = google_container_cluster.primary.name
-
   version    = var.gke_version
   node_count = var.gke_num_nodes
+
+  management {
+    auto_repair  = true
+    auto_upgrade = true
+  }
+
+  upgrade_settings {
+    max_surge       = 1
+    max_unavailable = 0
+  }
 
   node_config {
     oauth_scopes = [
@@ -33,8 +42,8 @@ resource "google_container_node_pool" "primary_nodes" {
       "https://www.googleapis.com/auth/monitoring",
     ]
 
-    labels = {
-      env = var.project_id
+    resource_labels = {
+      "goog-gke-node-pool-provisioning-model" = "on-demand"
     }
 
     kubelet_config {
