@@ -109,3 +109,13 @@ provider "harbor" {
   username = data.vault_kv_secret_v2.harbor.data["username"]
   password = data.vault_kv_secret_v2.harbor.data["password"]
 }
+
+data "vault_kv_secret_v2" "github" {
+  mount = "kv-v2"
+  name = "infra/github"
+}
+
+provider "github" {
+  owner = "goboolean"
+  token = data.vault_kv_secret_v2.github.data["admin_token"]
+}
