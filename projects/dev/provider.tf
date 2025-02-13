@@ -116,5 +116,6 @@ data "vault_kv_secret_v2" "github" {
 }
 
 provider "github" {
+  owner = "goboolean"
   token = data.vault_kv_secret_v2.github.data["admin_token"]
 }
