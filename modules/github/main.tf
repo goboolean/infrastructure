@@ -38,5 +38,4 @@ resource "github_repository" "airflow" {
     name = each.value
 
     visibility = "public"
-    private = false
 }
