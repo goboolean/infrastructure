@@ -53,7 +53,12 @@ configSecret:
 
 # -- Application configuration.
 # See the [official documentation](https://dexidp.io/docs/).
-config: {}
+config:
+  issuer: https://auth.goboolean.io
+  storage:
+    type: kubernetes
+    config:
+      inCluster: true
 
 # -- Additional storage [volumes](https://kubernetes.io/docs/concepts/storage/volumes/).
 # See the [API reference](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#volumes-1) for details.
