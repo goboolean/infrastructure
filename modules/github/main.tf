@@ -44,6 +44,30 @@ resource "github_repository" "repository" {
     allow_merge_commit = true
 }
 
+resource "github_branch_protection" "main_branch_protection" {
+  for_each = toset(var.repositories)
+
+  repository_id = github_repository.repository[each.value].node_id
+  
+  pattern = "main"
+  
+  required_pull_request_reviews {
+    required_approving_review_count = 1
+    dismiss_stale_reviews           = false
+    require_code_owner_reviews      = false
+    dismissal_restrictions          = []
+  }
+
+  required_status_checks {
+    strict   = true
+    contexts = []
+  }
+
+  enforce_admins = true  
+  allows_deletions = false
+  allows_force_pushes = false
+}
+
 resource "github_repository" "archived" {
     for_each = { for repo in var.archived_repositories : repo.name => repo }
 
@@ -53,3 +77,4 @@ resource "github_repository" "archived" {
     visibility = each.value.visibility
     archived = true
 }
+
