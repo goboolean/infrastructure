@@ -59,6 +59,7 @@ config:
     type: kubernetes
     config:
       inCluster: true
+  enablePasswordDB: true
 
 # -- Additional storage [volumes](https://kubernetes.io/docs/concepts/storage/volumes/).
 # See the [API reference](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#volumes-1) for details.
