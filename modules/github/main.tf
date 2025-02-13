@@ -18,24 +18,63 @@ variable "archived_repositories" {
     default = [{
         name = "manager-cli",
         visibility = "private",
-        archived = false,
     },
     {
         name = "schema-registry",
         visibility = "private",
-        archived = false,
     },
     {
         name = "command-server",
         visibility = "private",
-        archived = false,
-    }]
+    },
+    {
+        name = "fetch-system.master",
+        visibility = "public",
+    },
+    {
+        name: "core-system.command"
+        visibility = "private",
+    },
+    {
+        name: "core-system.join"
+        visibility = "private",
+    },
+    {
+        name: "model-server"
+        visibility = "private",
+    },
+    {
+        name: "ops"
+        visibility = "private",
+    },
+    {
+        name: "client",
+        visibility = "private",        
+    },
+    {
+        name: "identity-server"
+        visibility = "private",
+    },
+    {
+        name: "fetch-server.v1"
+        visibility = "private",
+    }
+    
+    ]
 }
 
 
-resource "github_repository" "airflow" {
-    for_each = var.repositories
+resource "github_repository" "repository" {
+    for_each = toset(var.repositories)
     name = each.value
 
     visibility = "public"
+}
+
+resource "github_repository" "archived" {
+    for_each = { for repo in var.archived_repositories : repo.name => repo }
+
+    name = each.value.name
+    visibility = each.value.visibility
+    archived = true
 }
