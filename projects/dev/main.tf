@@ -199,3 +199,7 @@ data "vault_kv_secret_v2" "airflow" {
 #   depends_on = [module.gke, module.namespace]
 #   project_id = var.project_id
 # }
+
+module "github" {
+  source = "../../modules/github"
+}
