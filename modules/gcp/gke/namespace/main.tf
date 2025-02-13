@@ -81,3 +81,9 @@ resource "kubernetes_namespace" "airflow" {
     name = "airflow"
   }
 }
+
+resource "kubernetes_namespace" "dex" {
+  metadata {
+    name = "dex"
+  }
+}
