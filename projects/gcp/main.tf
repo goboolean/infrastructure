@@ -1,7 +1,7 @@
 terraform {
   backend "gcs" {
-    bucket = "terraform-state"
-    key = "gcp/terraform.tfstate"
+    bucket = "goboolean-450909-terraform-state"
+    prefix = "gcp"
   }
 }
 
