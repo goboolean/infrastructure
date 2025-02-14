@@ -28,7 +28,7 @@ module "iam" {
 
     depends_on = [module.service]
 }
-/*
+
 module "gke" {
     source = "../../modules/gcp/gke"
     region = var.region
@@ -37,4 +37,3 @@ module "gke" {
 
     depends_on = [module.service]
 }
-*/
