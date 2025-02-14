@@ -1,11 +1,8 @@
 terraform {
-    backend "local" {
-        path = "terraform.tfstate"
+    backend "gcs" {
+        bucket = "terraform-state"
+        key = "gcp/terraform.tfstate"
     }
-    #backend "gcs" {
-    #    bucket = "terraform-state"
-    #    key = "gcp/terraform.tfstate"
-    #}
 }
 
 module "service" {
