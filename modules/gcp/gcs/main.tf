@@ -13,7 +13,7 @@ resource "google_storage_bucket" "terraform_state" {
 }
 
 resource "google_storage_bucket" "loki" {
-  name          = "${var.project_id}-goboolean-loki"
+  name          = "${var.project_id}-loki"
   location      = var.location
   project       = var.project_id
 
