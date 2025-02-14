@@ -18,7 +18,7 @@ resource "google_storage_bucket" "loki" {
   project       = var.project_id
 
   versioning {
-    enabled = true
+    enabled = false
   }
 
   uniform_bucket_level_access = true

@@ -3,7 +3,7 @@ variable "gke_num_nodes" {
 }
 
 variable "gke_machine_type" {
-  default     = "n1-standard-4"
+  default     = "e2-standard-4"
 }
 
 variable "gke_disk_size_gb" {

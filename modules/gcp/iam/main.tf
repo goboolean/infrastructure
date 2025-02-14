@@ -1,3 +1,4 @@
+/*
 resource "google_service_account" "atlantis" {
   account_id   = "atlantis"
   display_name = "Service Account for Atlantis"
@@ -40,6 +41,7 @@ resource "google_project_iam_member" "compute_instance_admin" {
   member  = "serviceAccount:${google_service_account.atlantis.email}"
 }
 
+
 resource "google_project_iam_member" "service_account_user" {
   project = var.project_id
   role    = "roles/iam.serviceAccountUser"
@@ -53,13 +55,15 @@ resource "google_project_iam_member" "storage_admin" {
 }
 
 resource "google_storage_bucket_iam_member" "terraform_state_access" {
-  bucket = "goboolean-terraform-state"
+  bucket = "terraform-state"
   role   = "roles/storage.admin"
   member = "serviceAccount:${google_service_account.atlantis.email}"
 }
+*/
 
 # For loki
 resource "google_service_account" "loki_gcs_sa" {
+  project = var.project_id
   account_id   = "loki-gcs-sa"
   display_name = "Loki GCS Service Account"
   description  = "Service account for Loki to access GCS"
