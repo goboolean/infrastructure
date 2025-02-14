@@ -21,14 +21,6 @@ module "gcs" {
     depends_on = [module.service]
 }
 
-module "iam" {
-    source = "../../modules/gcp/iam"
-    project_id = var.project_id
-    region = var.region
-
-    depends_on = [module.service]
-}
-
 module "gke" {
     source = "../../modules/gcp/gke"
     region = var.region
@@ -36,4 +28,12 @@ module "gke" {
     zone = var.zone
 
     depends_on = [module.service]
+}
+
+module "iam" {
+    source = "../../modules/gcp/iam"
+    project_id = var.project_id
+    region = var.region
+
+    depends_on = [module.gke]
 }
