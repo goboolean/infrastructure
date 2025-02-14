@@ -12,6 +12,7 @@ resource "harbor_retention_policy" "fetch-system-retention" {
   rule {
     most_recently_pushed = 2 
     repo_matching        = "**"
+    tag_matching         = "**"
   }
   depends_on = [harbor_project.fetch-system]
 }
