@@ -1,5 +1,5 @@
 resource "google_storage_bucket" "terraform_state" {
-  name          = "goboolean-terraform-state"
+  name          = "${var.project_id}-terraform-state"
   location      = var.location
   project       = var.project_id
 
@@ -13,13 +13,9 @@ resource "google_storage_bucket" "terraform_state" {
 }
 
 resource "google_storage_bucket" "loki" {
-  name          = "goboolean-loki"
+  name          = "${var.project_id}-goboolean-loki"
   location      = var.location
   project       = var.project_id
-
-  versioning {
-    enabled = false
-  }
 
   uniform_bucket_level_access = true
 
