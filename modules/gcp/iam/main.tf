@@ -70,7 +70,7 @@ resource "google_service_account" "loki_gcs_sa" {
 }
 
 resource "google_storage_bucket_iam_member" "loki_gcs_role" {
-  bucket  = "goboolean-loki"
+  bucket  = "${var.project_id}-loki"
   role    = "roles/storage.objectUser"
   member  = "serviceAccount:${google_service_account.loki_gcs_sa.email}"
 
