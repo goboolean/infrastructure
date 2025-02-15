@@ -87,3 +87,23 @@ resource "google_service_account_iam_binding" "workload_identity_binding" {
 
   depends_on = [google_service_account.loki_gcs_sa]
 }
+
+
+resource "google_service_account" "airflow_sa" {
+  project = var.project_id
+  account_id   = "airflow-sa"
+  display_name = "Airflow Service Account"
+  description  = "Service account for Airflow"
+}
+
+resource "google_storage_bucket_iam_member" "airflow_iam" {
+  bucket  = "${var.project_id}-stock-data"
+  role    = "roles/storage.objectUser"
+  member  = "serviceAccount:${google_service_account.airflow_sa.email}"
+
+  depends_on = [google_service_account.airflow_sa]
+}
+
+resource "google_storage_hmac_key" "airflow_hmac_key" {
+  service_account_email = google_service_account.airflow_sa.email
+}
