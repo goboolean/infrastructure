@@ -77,7 +77,7 @@ resource "google_storage_bucket_iam_member" "loki_gcs_role" {
   depends_on = [google_service_account.loki_gcs_sa]
 }
 
-resource "google_service_account_iam_binding" "workload_identity_binding" {
+resource "google_service_account_iam_binding" "loki_gcs_workload_identity_binding" {
   service_account_id = google_service_account.loki_gcs_sa.name
   role               = "roles/iam.workloadIdentityUser"
 
@@ -106,4 +106,30 @@ resource "google_storage_bucket_iam_member" "airflow_iam" {
 
 resource "google_storage_hmac_key" "airflow_hmac_key" {
   service_account_email = google_service_account.airflow_sa.email
+}
+
+resource "google_service_account" "load_tester_sa" {
+  project = var.project_id
+  account_id   = "load-tester-sa"
+  display_name = "Load Tester Service Account"
+  description  = "Service account for Load Tester"
+}
+
+resource "google_storage_bucket_iam_member" "load_tester_role" {
+  bucket  = "${var.project_id}-load-test"
+  role    = "roles/storage.objectUser"
+  member  = "serviceAccount:${google_service_account.load_tester_sa.email}"
+
+  depends_on = [google_service_account.load_tester_sa]
+}
+
+resource "google_service_account_iam_binding" "load_tester_workload_identity_binding" {
+  service_account_id = google_service_account.load_tester_sa.name
+  role               = "roles/iam.workloadIdentityUser"
+
+  members = [
+    "serviceAccount:${var.project_id}.svc.id.goog[monitoring/load-tester-sa]"
+  ]
+
+  depends_on = [google_service_account.load_tester_sa]
 }
