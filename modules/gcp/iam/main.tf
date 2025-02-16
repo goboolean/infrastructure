@@ -61,7 +61,7 @@ resource "google_storage_bucket_iam_member" "terraform_state_access" {
 }
 */
 
-# For loki
+# ƒor loki
 resource "google_service_account" "loki_gcs_sa" {
   project = var.project_id
   account_id   = "loki-gcs-sa"
@@ -88,7 +88,7 @@ resource "google_service_account_iam_binding" "loki_gcs_workload_identity_bindin
   depends_on = [google_service_account.loki_gcs_sa]
 }
 
-
+### for airflow
 resource "google_service_account" "airflow_sa" {
   project = var.project_id
   account_id   = "airflow-sa"
@@ -108,6 +108,7 @@ resource "google_storage_hmac_key" "airflow_hmac_key" {
   service_account_email = google_service_account.airflow_sa.email
 }
 
+### for load-tester
 resource "google_service_account" "load_tester_sa" {
   project = var.project_id
   account_id   = "load-tester-sa"
@@ -132,4 +133,25 @@ resource "google_service_account_iam_binding" "load_tester_workload_identity_bin
   ]
 
   depends_on = [google_service_account.load_tester_sa]
+}
+
+### for atlantis
+resource "google_service_account" "atlantis" {
+  account_id   = "atlantis"
+  display_name = "Service Account for Atlantis"
+  project      = var.project_id
+}
+
+resource "google_project_iam_member" "owner" {
+  project = var.project_id
+  role    = "roles/owner"
+  member  = "serviceAccount:${google_service_account.atlantis.email}"
+}
+
+resource "google_service_account_iam_binding" "workload_identity_binding" {
+  service_account_id = google_service_account.atlantis.name
+  role               = "roles/iam.workloadIdentityUser"
+  members = [
+    "serviceAccount:${var.project_id}.svc.id.goog[atlantis/atlantis]"
+  ]
 }
