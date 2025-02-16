@@ -446,7 +446,9 @@ sidecars: []
 ## @param podAnnotations [object] Annotations for etcd pods
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 ##
-podAnnotations: {}
+podAnnotations:
+  sidecar.istio.io/inject: "true"
+
 ## @param podLabels [object] Extra labels for etcd pods
 ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 ##

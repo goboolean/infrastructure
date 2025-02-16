@@ -52,9 +52,6 @@ resource "kubernetes_namespace" "harbor" {
 resource "kubernetes_namespace" "fetch-system" {
   metadata {
     name = "fetch-system"
-    labels = {
-      "istio-injection" = "disabled"
-    }
   }
 }
 

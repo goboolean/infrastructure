@@ -8,7 +8,8 @@ image:
 
 ## Annotations to be added to InfluxDB pods
 ##
-podAnnotations: {}
+podAnnotations:
+  sidecar.istio.io/inject: "true"
 
 ## Labels to be added to InfluxDB pods
 ##
