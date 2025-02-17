@@ -57,9 +57,11 @@ data "terraform_remote_state" "gcp" {
   }
 }
 
+data "google_client_config" "default" {}
+
 locals {
   gke_host                   = data.terraform_remote_state.gcp.outputs.kubernetes_provider_config.host
-  gke_token                  = data.terraform_remote_state.gcp.outputs.kubernetes_provider_config.token
+  gke_token                  = data.google_client_config.default.access_token
   gke_cluster_ca_certificate = data.terraform_remote_state.gcp.outputs.kubernetes_provider_config.cluster_ca_certificate
 }
 
