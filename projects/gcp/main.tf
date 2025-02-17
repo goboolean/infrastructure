@@ -39,3 +39,9 @@ module "storageclass" {
   source = "../../modules/gcp/gke/storageclass"
   depends_on = [module.gke]
 }
+
+resource "google_project_service" "secretmanager_api" {
+  service = "secretmanager.googleapis.com"
+  project = var.project_id
+  disable_on_destroy = false
+}
