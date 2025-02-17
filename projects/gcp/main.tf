@@ -32,5 +32,10 @@ module "iam" {
   project_id = var.project_id
   region = var.region
 
+  depends_on = [module.gke, module.gcs]
+}
+
+module "storageclass" {
+  source = "../../modules/gcp/gke/storageclass"
   depends_on = [module.gke]
 }
