@@ -13,3 +13,11 @@ module "cert_manager_manifest" {
   source = "../../modules/infra/cert-manager/manifest"
   cloudflare_api_token = local.cloudflare_api_token
 }
+
+module "vault" {
+  source = "../../modules/infra/vault"
+  project_id = var.project_id
+  region = var.region
+  key_ring_name = local.vault_kms_keyring_name
+  crypto_key_name = local.vault_kms_crypto_key_name
+}
