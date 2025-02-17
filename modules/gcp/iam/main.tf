@@ -61,6 +61,44 @@ resource "google_storage_bucket_iam_member" "terraform_state_access" {
 }
 */
 
+# for vault
+resource "google_service_account" "vault_kms_sa" {
+  account_id   = "vault-kms-sa"
+  display_name = "Vault KMS Service Account"
+}
+
+resource "google_project_iam_custom_role" "vault_kms_custom_role" {
+  role_id     = "vaultKmsRole"
+  title       = "Vault KMS Custom Role"
+  description = "Custom role for Vault to use KMS for auto-unseal with minimal permissions"
+  project     = var.project_id
+
+  permissions = [
+    "cloudkms.cryptoKeyVersions.useToEncrypt",
+    "cloudkms.cryptoKeyVersions.useToDecrypt",
+    "cloudkms.cryptoKeys.get",
+  ]
+}
+
+resource "google_kms_crypto_key_iam_member" "vault_kms_custom_binding" {
+  crypto_key_id = var.vault_kms_crypto_key_id
+  role          = "projects/${var.project_id}/roles/${google_project_iam_custom_role.vault_kms_custom_role.role_id}"
+  member        = "serviceAccount:${google_service_account.vault_kms_sa.email}"
+
+  depends_on = [google_service_account.vault_kms_sa, google_project_iam_custom_role.vault_kms_custom_role]
+}
+
+resource "google_service_account_iam_binding" "vault_workload_identity_binding" {
+  service_account_id = google_service_account.vault_kms_sa.name
+  role               = "roles/iam.workloadIdentityUser"
+
+  members = [
+    "serviceAccount:${var.project_id}.svc.id.goog[vault/vault-sa]"
+  ]
+
+  depends_on = [google_service_account.vault_kms_sa]
+}
+
 # ƒor loki
 resource "google_service_account" "loki_gcs_sa" {
   project = var.project_id
