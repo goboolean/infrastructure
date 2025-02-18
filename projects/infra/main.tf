@@ -5,6 +5,25 @@ terraform {
   }
 }
 
+data "vault_kv_secret_v2" "harbor" {
+  mount = "kv"
+  name = "infra/harbor"
+}
+
+module "harbor" {
+  source = "../../modules/infra/harbor"
+  harbor_username = data.vault_kv_secret_v2.harbor.data["username"]
+  harbor_password = data.vault_kv_secret_v2.harbor.data["password"]
+}
+
+module "harbor_policy" {
+  source = "../../modules/infra/harbor/policy"
+  providers = {
+    harbor = harbor
+  }
+}
+
+
 module "argocd" {
   source = "../../modules/infra/argocd"
 }
@@ -28,25 +47,6 @@ module "opentelemetry" {
 #     argocd = argocd
 #   }
 # }
-
-
-data "vault_kv_secret_v2" "harbor" {
-  mount = "kv"
-  name = "infra/harbor"
-}
-
-module "harbor" {
-  source = "../../modules/infra/harbor"
-  harbor_username = data.vault_kv_secret_v2.harbor.data["username"]
-  harbor_password = data.vault_kv_secret_v2.harbor.data["password"]
-}
-
-module "harbor_policy" {
-  source = "../../modules/infra/harbor/policy"
-  providers = {
-    harbor = harbor
-  }
-}
 
 data "vault_kv_secret_v2" "postgresql" {
   mount = "kv"
@@ -108,4 +108,24 @@ module "loki-stack" {
 
 module "dex" {
   source = "../../modules/infra/dex"
+}
+
+data "vault_kv_secret_v2" "github" {
+  mount = "kv"
+  name = "github"
+}
+
+data "vault_kv_secret_v2" "atlantis" {
+  mount = "kv"
+  name = "infra/atlantis"
+}
+
+module "atlantis" {
+  source = "../../modules/infra/atlantis"
+  project_id = var.project_id
+  github_username = "goboolean-io"
+  github_token = data.vault_kv_secret_v2.github.data["admin_token"]
+  webhook_secret = data.vault_kv_secret_v2.github.data["atlantis_webhook_secret"]
+  username = data.vault_kv_secret_v2.atlantis.data["username"]
+  password = data.vault_kv_secret_v2.atlantis.data["password"]
 }
