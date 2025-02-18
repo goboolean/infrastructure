@@ -60,3 +60,8 @@ module "storageclass" {
   source = "../../modules/gcp/gke/storageclass"
   depends_on = [module.gke]
 }
+
+module "namespace" {
+  source = "../../modules/gcp/gke/namespace"
+  depends_on = [module.gke]
+}
