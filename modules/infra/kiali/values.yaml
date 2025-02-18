@@ -2,8 +2,8 @@ nameOverride: ""
 fullnameOverride: ""
 
 image: # see: https://quay.io/repository/kiali/kiali-operator?tab=tags
-  repo: ${HELM_IMAGE_REPO} # quay.io/kiali/kiali-operator
-  tag: ${HELM_IMAGE_TAG} # version string like v1.39.0 or a digest hash
+  #repo: $${HELM_IMAGE_REPO} # quay.io/kiali/kiali-operator
+  #tag: $${HELM_IMAGE_TAG} # version string like v1.39.0 or a digest hash
   digest: "" # use "sha256" if tag is a sha256 hash (do NOT prefix this value with a "@")
   pullPolicy: Always
   pullSecrets: []
@@ -90,16 +90,31 @@ watchesFile: ""
 
 # For what a Kiali CR spec can look like, see: https://kiali.io/docs/configuration/kialis.kiali.io/
 cr:
-  create: false
+  create: true
   name: kiali
   # If you elect to create a Kiali CR (--set cr.create=true)
   # and the operator is watching all namespaces (--set watchNamespace="")
   # then this is the namespace where the CR will be created (the default will be the operator namespace).
-  namespace: ""
+  namespace: "istio-system"
 
   # Annotations to place in the Kiali CR metadata.
   annotations: {}
 
   spec:
+    auth:
+      strategy: "token"
     deployment:
       cluster_wide_access: true
+    external_services:
+      grafana:
+        auth:
+          insecure_skip_verify: true
+          password: ${grafana_password}
+          username: ${grafana_username}
+        dashboards: []
+        enabled: true
+        external_url: ${grafana_url}
+      prometheus:
+        auth:
+          insecure_skip_verify: true
+        url: ${prometheus_url}

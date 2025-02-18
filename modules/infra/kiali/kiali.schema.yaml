@@ -2,7 +2,6 @@ apiVersion: kiali.io/v1alpha1
 kind: Kiali
 metadata:
   name: kiali
-  namespace: istio-system
   annotations:
     ansible.sdk.operatorframework.io/verbosity: "1"
 spec:
@@ -39,9 +38,9 @@ spec:
       scopes: ["openid", "profile", "email"]
       username_claim: "sub"
     openshift:
-      redirect_uris: []
-      token_inactivity_timeout: 0
-      token_max_age: 0
+      #redirect_uris:
+      #token_inactivity_timeout:
+      #token_max_age:
 
   clustering:
     autodetect_secrets:
@@ -61,26 +60,24 @@ spec:
     affinity:
       # default: node is empty
       node:
-        preferredDuringSchedulingIgnoredDuringExecution:  # ← Changed to "preferred"
-        - weight: 100
-          preference:
-            matchExpressions:
-            - key: topology.kubernetes.io/zone
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/e2e-az-name
               operator: In
               values:
-              - asia-northeast3-a
+              - e2e-az1
+              - e2e-az2
       # default: pod is empty
       pod:
-        preferredDuringSchedulingIgnoredDuringExecution:  # ← Changed to "preferred"
-        - weight: 100
-          podAffinityTerm:
-            labelSelector:
-              matchExpressions:
-              - key: security
-                operator: In
-                values:
-                - S1
-            topologyKey: topology.kubernetes.io/zone
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: security
+              operator: In
+              values:
+              - S1
+          topologyKey: topology.kubernetes.io/zone
       # default: pod_anti is empty
       pod_anti:
         preferredDuringSchedulingIgnoredDuringExecution:
@@ -104,17 +101,17 @@ spec:
     - name: "NO_PROXY"
       value: "hostname.example.com"
     # default: custom_secrets is an empty list
-    custom_secrets: []
-    #- name: "a-custom-secret"
-    #  mount: "/a-custom-secret-path"
-    #  optional: true
-    #- name: "a-csi-secret"
-    #  mount: "/a-csi-secret-path"
-    #  csi:
-    #    driver: secrets-store.csi.k8s.io
-    #    readOnly: true
-    #    volumeAttributes:
-    #      secretProviderClass: kiali-secretprovider
+    custom_secrets:
+    - name: "a-custom-secret"
+      mount: "/a-custom-secret-path"
+      optional: true
+    - name: "a-csi-secret"
+      mount: "/a-csi-secret-path"
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: kiali-secretprovider
     # default: discovery_selectors is empty
     discovery_selectors:
       default:
@@ -214,7 +211,8 @@ spec:
     namespace: "istio-system"
     # default: node_selector is empty
     node_selector:
-      kubernetes.io/os: linux     # default: pod_annotations is empty
+      nodeSelector: "nodeSelectorValue"
+    # default: pod_annotations is empty
     pod_annotations:
       podAnnotation: "podAnnotationValue"
     # default: pod_labels is empty
@@ -247,7 +245,7 @@ spec:
     service_annotations:
       svcAnnotation: "svcAnnotationValue"
     # default: service_type is undefined
-    service_type: "ClusterIP"
+    service_type: "NodePort"
     # default: tolerations is an empty list
     tolerations:
     - key: "example-key"
@@ -272,12 +270,12 @@ spec:
       prometheus:
         auth:
           ca_file: ""
-          insecure_skip_verify: true
-          password: ${prometheus_password}
+          insecure_skip_verify: false
+          password: ""
           token: ""
           type: "none"
           use_kiali_token: false
-          username: "${prometheus_username}"
+          username: ""
         cache_duration: 10
         cache_enabled: true
         cache_expiration: 300
@@ -294,16 +292,16 @@ spec:
           enabled: false
           retention_period: "7d"
           scrape_interval: "30s"
-        url: ${prometheus_url}
+        url: ""
     grafana:
       auth:
         ca_file: ""
         insecure_skip_verify: false
-        password: ${grafana_password}
+        password: ""
         token: ""
         type: "none"
         use_kiali_token: false
-        username: ${grafana_username}
+        username: ""
       dashboards:
       - name: "Istio Service Dashboard"
         variables:
@@ -318,7 +316,7 @@ spec:
       - name: "Istio Performance Dashboard"
       - name: "Istio Wasm Extension Dashboard"
       enabled: true
-      external_url: ${grafana_url}
+      external_url: ""
       health_check_url: ""
       # default: internal_url is undefined
       internal_url: ""
@@ -348,11 +346,11 @@ spec:
       auth:
         ca_file: ""
         insecure_skip_verify: false
-        password: ${prometheus_password}
+        password: ""
         token: ""
         type: "none"
         use_kiali_token: false
-        username: ${prometheus_username}
+        username: ""
       cache_duration: 10
       cache_enabled: true
       cache_expiration: 300
@@ -369,7 +367,7 @@ spec:
         enabled: false
         retention_period: "7d"
         scrape_interval: "30s"
-      url: ${prometheus_url}
+      url: ""
     tracing:
       auth:
         ca_file: ""
