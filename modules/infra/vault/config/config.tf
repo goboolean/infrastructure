@@ -7,7 +7,7 @@ resource "vault_mount" "kv_v2" {
 resource "vault_policy" "argocd" {
   name   = "argocd"
   policy = <<EOT
-path "kv-v2/data/*" {
+path "kv/data/*" {
   capabilities = ["read"]
 }
 EOT
@@ -25,7 +25,7 @@ resource "vault_kubernetes_auth_backend_config" "k8s_auth" {
 }
 
 resource "vault_kubernetes_auth_backend_role" "argocd" {
-  backend                          = vault_auth_backend.kubernetes.path
+  backend                          = "kubernetes"
   role_name                        = "argocd"
   bound_service_account_names      = ["argocd-repo-server"]
   bound_service_account_namespaces = ["argocd"]
