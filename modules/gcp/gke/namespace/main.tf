@@ -84,3 +84,27 @@ resource "kubernetes_namespace" "dex" {
     name = "dex"
   }
 }
+
+resource "kubernetes_namespace" "atlantis" {
+  metadata {
+    name = "atlantis"
+  }
+}
+
+resource "kubernetes_namespace" "kiali" {
+  metadata {
+    name = "kiali"
+  }
+}
+
+resource "kubernetes_namespace" "open-webui" {
+  metadata {
+    name = "open-webui"
+  }
+}
+
+resource "kubernetes_namespace" "redis" {
+  metadata {
+    name = "redis"
+  }
+}

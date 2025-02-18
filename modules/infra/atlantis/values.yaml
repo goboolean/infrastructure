@@ -15,10 +15,10 @@ atlantisUrl: "https://atlantis.goboolean.io"
 # Example:  http://10.0.0.0
 
 # -- Replace this with your own repo allowlist.
-orgAllowlist: "github.com/goboolean/*"
+orgAllowlist: "github.com/goboolean/infrastructure"
 
 # -- Deprecated in favor of orgAllowlist.
-orgWhitelist: "<deprecated>"
+orgWhitelist: "github.com/goboolean/infrastructure"
 
 # -- Specify the log level for Atlantis.
 # Accepts: debug, info, warn, or error.
@@ -208,7 +208,13 @@ config: ""
 # -- Use Server Side Repo Config,
 # ref: https://www.runatlantis.io/docs/server-side-repo-config.html.
 # Check values.yaml for examples.
-repoConfig: ""
+repoConfig: |
+  repos:
+    - id: "github.com/goboolean/infrastructure"
+      apply_requirements: []
+      workflow: default
+      allowed_overrides: [workflow]
+      allow_custom_workflows: true
 # Example with default configuration:
 # repoConfig: |
 #   ---
@@ -422,7 +428,11 @@ customPem: ""
 
 # -- Resources for Atlantis.
 # Check values.yaml for examples.
-resources: {}
+resources:
+  limits:
+    memory: 1500Mi
+    cpu: 1Gi
+
 # resources:
 #   requests:
 #     memory: 1Gi

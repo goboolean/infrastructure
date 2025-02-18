@@ -13,3 +13,11 @@ variable "github_token" {
 variable "webhook_secret" {
   type = string
 }
+
+variable "username" {
+  type = string
+}
+
+variable "password" {
+  type = string
+}
