@@ -4,7 +4,6 @@ resource "helm_release" "vault" {
   namespace  = "vault"
   repository = "https://helm.releases.hashicorp.com"
   version    = "0.29.1"
-  create_namespace = true
 
   values = [templatefile("${path.module}/values.yaml", {
     project_id = var.project_id

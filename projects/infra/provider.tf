@@ -38,6 +38,9 @@ locals {
   gke_host                   = data.terraform_remote_state.gcp.outputs.kubernetes_provider_config.host
   gke_token                  = data.google_client_config.default.access_token
   gke_cluster_ca_certificate = data.terraform_remote_state.gcp.outputs.kubernetes_provider_config.cluster_ca_certificate
+
+  vault_role_id = data.google_secret_manager_secret_version.vault_role_id.secret_data
+  vault_secret_id = data.google_secret_manager_secret_version.vault_secret_id.secret_data
 }
 
 
@@ -60,8 +63,8 @@ provider "vault" {
   auth_login {
     path = "auth/approle/login"
     parameters = {
-      role_id   = data.google_secret_manager_secret_version.vault_role_id.secret_data
-      secret_id = data.google_secret_manager_secret_version.vault_secret_id.secret_data
+      role_id   = local.vault_role_id
+      secret_id = local.vault_secret_id
     }
   }
 }
