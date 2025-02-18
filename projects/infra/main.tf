@@ -122,10 +122,22 @@ data "vault_kv_secret_v2" "atlantis" {
 
 module "atlantis" {
   source = "../../modules/infra/atlantis"
+
   project_id = var.project_id
   github_username = "goboolean-io"
   github_token = data.vault_kv_secret_v2.github.data["admin_token"]
   webhook_secret = data.vault_kv_secret_v2.github.data["atlantis_webhook_secret"]
   username = data.vault_kv_secret_v2.atlantis.data["username"]
   password = data.vault_kv_secret_v2.atlantis.data["password"]
+}
+
+#module "kiali" {
+#  source = "../../modules/infra/kiali"
+#
+#  grafana_username = data.vault_kv_secret_v2.grafana.data["username"]
+#  grafana_password = data.vault_kv_secret_v2.grafana.data["password"]
+#}
+
+module "redis" {
+  source = "../../modules/infra/redis"
 }
