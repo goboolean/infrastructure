@@ -9,8 +9,8 @@ module "istio" {
   source = "../../modules/infra/istio"
 }
 
-module "cloudflare" {
-  source = "../../modules/cloudflare"
+module "dns" {
+  source = "../../modules/cloudflare/dns"
   api_token = local.cloudflare_api_token
   zone_id = local.cloudflare_zone_id
   ip_address = module.istio.istio_gateway_ip
