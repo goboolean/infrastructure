@@ -336,8 +336,8 @@ loki:
     # Loki requires a bucket for chunks and the ruler. GEL requires a third bucket for the admin API.
     # Please provide these values if you are using object storage.
     bucketNames:
-      chunks: goboolean-loki
-      ruler: goboolean-loki
+      chunks: ${bucket_name}
+      ruler: ${bucket_name}
     #   admin: FIXME
     type: gcs
     s3:
@@ -448,7 +448,7 @@ loki:
       index_gateway_client:
         server_address: '{{ include "loki.indexGatewayAddress" . }}'
     gcs:
-      bucket_name: goboolean-loki
+      bucket_name: ${bucket_name}
     bloom_shipper:
       working_directory: /var/loki/data/bloomshipper
     hedging:
