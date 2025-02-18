@@ -1,5 +1,5 @@
-variable "repositories" {
-    default = [
+locals {
+    repositories = [
         "infrastructure",
         "manifests",
         "airflow-pipeline-factory",
@@ -12,10 +12,8 @@ variable "repositories" {
         "common",
         "buycycle"
     ]
-}
 
-variable "archived_repositories" {
-    default = [
+    archived_repositories = [
         {name = "manager-cli",         visibility = "public"},
         {name = "schema-registry",     visibility = "private"},
         {name = "command-server",      visibility = "private"},
@@ -32,7 +30,7 @@ variable "archived_repositories" {
 
 
 resource "github_repository" "repository" {
-    for_each = toset(var.repositories)
+    for_each = toset(local.repositories)
 
     name = each.value
     description = ""
@@ -45,7 +43,7 @@ resource "github_repository" "repository" {
 }
 
 resource "github_branch_protection" "main_branch_protection" {
-  for_each = toset(var.repositories)
+  for_each = toset(local.repositories)
 
   repository_id = github_repository.repository[each.value].node_id
   
@@ -69,7 +67,7 @@ resource "github_branch_protection" "main_branch_protection" {
 }
 
 resource "github_repository" "archived" {
-    for_each = { for repo in var.archived_repositories : repo.name => repo }
+    for_each = { for repo in local.archived_repositories : repo.name => repo }
 
     name = each.value.name
     description = ""
@@ -77,4 +75,3 @@ resource "github_repository" "archived" {
     visibility = each.value.visibility
     archived = true
 }
-
