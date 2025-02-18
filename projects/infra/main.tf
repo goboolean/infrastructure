@@ -21,11 +21,6 @@ module "opentelemetry" {
   source = "../../modules/infra/opentelemetry"
 }
 
-/*
-  The following infrastructure depends on Vault.
-  Therefore, it should be separated into a distinct module
-  and divided into stages.
-*/
 # module "argocd-application" {
 #   source = "../../modules/infra/argocd/application"
 #   depends_on = [module.argocd, module.namespace]
@@ -33,7 +28,8 @@ module "opentelemetry" {
 #     argocd = argocd
 #   }
 # }
-/*
+
+
 data "vault_kv_secret_v2" "harbor" {
   mount = "kv"
   name = "infra/harbor"
@@ -43,11 +39,15 @@ module "harbor" {
   source = "../../modules/infra/harbor"
   harbor_username = data.vault_kv_secret_v2.harbor.data["username"]
   harbor_password = data.vault_kv_secret_v2.harbor.data["password"]
+}
+
+module "harbor_policy" {
+  source = "../../modules/infra/harbor/policy"
   providers = {
     harbor = harbor
   }
 }
-*/
+
 data "vault_kv_secret_v2" "postgresql" {
   mount = "kv"
   name = "infra/postgresql"
@@ -80,14 +80,6 @@ data "vault_kv_secret_v2" "grafana" {
   mount = "kv"
   name = "infra/grafana"
 }
-
-# module "grafana" {
-#   source = "../../modules/infra/grafana"
-#   depends_on = [module.namespace]
-#   grafana_username = data.vault_kv_secret_v2.grafana.data["username"]
-#   grafana_password = data.vault_kv_secret_v2.grafana.data["password"]
-#   influxdb_token = data.vault_kv_secret_v2.influxdb.data["token"]
-# }
 
 module "kube-prometheus-stack" {
   source = "../../modules/infra/monitoring/kube-prometheus-stack"
