@@ -141,3 +141,9 @@ module "kiali" {
 module "redis" {
   source = "../../modules/infra/redis"
 }
+
+module "vault_operator" {
+  source = "../../modules/infra/vault/operator"
+  vault_role_id = local.vault_role_id
+  vault_secret_id = local.vault_secret_id
+}
