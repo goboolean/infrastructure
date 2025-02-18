@@ -59,18 +59,13 @@ data "google_secret_manager_secret_version" "vault_secret_id" {
   secret = "vault_secret_id"
 }
 
-locals {
-  vault_role_id   = data.google_secret_manager_secret_version.vault_role_id.secret_data
-  vault_secret_id = data.google_secret_manager_secret_version.vault_secret_id.secret_data
-}
-
 provider "vault" {
   address = "https://vault.goboolean.io"
   auth_login {
     path = "auth/approle/login"
     parameters = {
-      role_id   = local.vault_role_id
-      secret_id = local.vault_secret_id
+      role_id   = data.google_secret_manager_secret_version.vault_role_id.secret_data
+      secret_id = data.google_secret_manager_secret_version.vault_secret_id.secret_data
     }
   }
 }
