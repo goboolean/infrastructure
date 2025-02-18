@@ -43,9 +43,6 @@ resource "kubernetes_namespace" "opentelemetry" {
 resource "kubernetes_namespace" "harbor" {
   metadata {
     name = "harbor"
-    labels = {
-      name = "harbor"
-    }
   }
 }
 
@@ -53,7 +50,7 @@ resource "kubernetes_namespace" "fetch-system" {
   metadata {
     name = "fetch-system"
     labels = {
-      "istio-injection" = "disabled"
+      "istio-injection" = "enabled"
     }
   }
 }
