@@ -109,3 +109,16 @@ module "loki-stack" {
 module "dex" {
   source = "../../modules/infra/dex"
 }
+
+data "vault_kv_secret_v2" "github" {
+  mount = "kv"
+  name = "github"
+}
+
+module "atlantis" {
+  source = "../../modules/infra/atlantis"
+  project_id = var.project_id
+  github_username = "goboolean-io"
+  github_token = data.vault_kv_secret_v2.github.data["admin_token"]
+  webhook_secret = data.vault_kv_secret_v2.github.data["atlantis_webhook_secret"]
+}
