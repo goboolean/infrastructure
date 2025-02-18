@@ -104,10 +104,8 @@ provider "argocd" {
   password = data.vault_kv_secret_v2.argocd.data["password"]
 }
 
-/*
 provider "harbor" {
   url = "https://registry.goboolean.io"
   username = data.vault_kv_secret_v2.harbor.data["username"]
   password = data.vault_kv_secret_v2.harbor.data["password"]
 }
-*/
