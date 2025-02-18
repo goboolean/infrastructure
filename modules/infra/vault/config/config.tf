@@ -1,5 +1,5 @@
 resource "vault_mount" "kv_v2" {
-  path        = "kv_v2"
+  path        = "kv"
   type        = "kv-v2"
   description = "KV Version 2 Secrets Engine"
 }
