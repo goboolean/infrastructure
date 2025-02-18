@@ -131,12 +131,12 @@ module "atlantis" {
   password = data.vault_kv_secret_v2.atlantis.data["password"]
 }
 
-#module "kiali" {
-#  source = "../../modules/infra/kiali"
-#
-#  grafana_username = data.vault_kv_secret_v2.grafana.data["username"]
-#  grafana_password = data.vault_kv_secret_v2.grafana.data["password"]
-#}
+module "kiali" {
+  source = "../../modules/infra/kiali"
+
+  grafana_username = data.vault_kv_secret_v2.grafana.data["username"]
+  grafana_password = data.vault_kv_secret_v2.grafana.data["password"]
+}
 
 module "redis" {
   source = "../../modules/infra/redis"
