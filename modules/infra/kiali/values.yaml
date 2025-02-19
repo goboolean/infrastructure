@@ -113,7 +113,8 @@ cr:
           username: ${grafana_username}
         dashboards: []
         enabled: true
-        external_url: ${grafana_url}
+        external_url: ${grafana_external_url}
+        internal_url: ${grafana_internal_url}
       prometheus:
         auth:
           insecure_skip_verify: true

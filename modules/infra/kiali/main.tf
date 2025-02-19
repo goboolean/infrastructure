@@ -7,7 +7,8 @@ resource "helm_release" "kiali_operator" {
 
   values = [templatefile("${path.module}/values.yaml", {
     prometheus_url = "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090"
-    grafana_url = "http://kube-prometheus-stack-grafana.monitoring.svc.cluster.local"
+    grafana_external_url = "https://grafana.goboolean.io"
+    grafana_internal_url = "http://kube-prometheus-stack-grafana.monitoring.svc.cluster.local:80"
     grafana_username = var.grafana_username
     grafana_password = var.grafana_password
   })]
