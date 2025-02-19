@@ -43,8 +43,6 @@ locals {
   vault_secret_id = data.google_secret_manager_secret_version.vault_secret_id.secret_data
 }
 
-
-
 provider "google" {
   project = var.project_id
   region = var.region
@@ -89,12 +87,6 @@ provider "kubectl" {
   cluster_ca_certificate = local.gke_cluster_ca_certificate
   load_config_file       = false
 }
-
-/*
-  The following infrastructure depends on Vault.
-  Therefore, it should be separated into a distinct module
-  and divided into stages.
-*/
 
 data "vault_kv_secret_v2" "argocd" {
   mount = "kv"

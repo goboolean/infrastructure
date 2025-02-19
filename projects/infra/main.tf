@@ -23,11 +23,6 @@ module "harbor_policy" {
   }
 }
 
-
-module "argocd" {
-  source = "../../modules/infra/argocd"
-}
-
 module "kafka" {
   source = "../../modules/infra/kafka"
 }
@@ -40,13 +35,17 @@ module "opentelemetry" {
   source = "../../modules/infra/opentelemetry"
 }
 
-# module "argocd-application" {
-#   source = "../../modules/infra/argocd/application"
-#   depends_on = [module.argocd, module.namespace]
-#   providers = {
-#     argocd = argocd
-#   }
-# }
+module "argocd" {
+  source = "../../modules/infra/argocd"
+}
+
+module "argocd-application" {
+  source = "../../modules/infra/argocd/application"
+  depends_on = [module.argocd]
+  providers = {
+    argocd = argocd
+  }
+}
 
 data "vault_kv_secret_v2" "postgresql" {
   mount = "kv"
@@ -68,11 +67,6 @@ module "influxdb" {
   source = "../../modules/infra/influxdb"
   influxdb_username = data.vault_kv_secret_v2.influxdb.data["username"]
   influxdb_password = data.vault_kv_secret_v2.influxdb.data["password"]
-  influxdb_token = data.vault_kv_secret_v2.influxdb.data["token"]
-}
-
-module "telegraf" {
-  source = "../../modules/infra/fetch-system/telegraf"
   influxdb_token = data.vault_kv_secret_v2.influxdb.data["token"]
 }
 
