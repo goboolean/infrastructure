@@ -43,15 +43,15 @@ resource "kubernetes_namespace" "opentelemetry" {
 resource "kubernetes_namespace" "harbor" {
   metadata {
     name = "harbor"
-    labels = {
-      name = "harbor"
-    }
   }
 }
 
 resource "kubernetes_namespace" "fetch-system" {
   metadata {
     name = "fetch-system"
+    labels = {
+      "istio-injection" = "enabled"
+    }
   }
 }
 
@@ -82,5 +82,29 @@ resource "kubernetes_namespace" "airflow" {
 resource "kubernetes_namespace" "dex" {
   metadata {
     name = "dex"
+  }
+}
+
+resource "kubernetes_namespace" "atlantis" {
+  metadata {
+    name = "atlantis"
+  }
+}
+
+resource "kubernetes_namespace" "kiali" {
+  metadata {
+    name = "kiali"
+  }
+}
+
+resource "kubernetes_namespace" "open-webui" {
+  metadata {
+    name = "open-webui"
+  }
+}
+
+resource "kubernetes_namespace" "redis" {
+  metadata {
+    name = "redis"
   }
 }

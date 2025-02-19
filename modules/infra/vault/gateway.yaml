@@ -13,4 +13,4 @@ spec:
     - destination:
         host: vault-ui.vault.svc.cluster.local
         port:
-          number: 80
+          number: 8200

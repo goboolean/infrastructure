@@ -3,7 +3,6 @@ resource "helm_release" "istio_base" {
   repository       = "https://istio-release.storage.googleapis.com/charts"
   chart            = "base"
   namespace        = "istio-system"
-  create_namespace = true
   version          = "1.24.2"
 
   timeout = 300
@@ -38,8 +37,4 @@ data "kubernetes_service" "istio_ingressgateway" {
   }
 
   depends_on = [helm_release.istio_ingressgateway]
-}
-
-resource "kubernetes_manifest" "istio_gateway" {
-  manifest = yamldecode(file("${path.module}/gateway.yaml"))
 }

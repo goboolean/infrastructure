@@ -1,3 +1,10 @@
+locals {
+  values_yaml = templatefile("${path.module}/loki-values.yaml", {
+    bucket_name = "${var.project_id}-loki"
+    project_id = var.project_id
+  })
+}
+
 resource "helm_release" "loki" {
   name             = "loki"
   chart            = "loki"
@@ -5,9 +12,7 @@ resource "helm_release" "loki" {
   repository       = "https://grafana.github.io/helm-charts"
   version          = "6.25.0"
   
-  values = [templatefile("${path.module}/loki-values.yaml", {
-    project_id = var.project_id
-  })]
+  values = [local.values_yaml]
 
   timeout = 600
 }

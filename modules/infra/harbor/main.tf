@@ -1,6 +1,6 @@
 locals {
   values_yaml = templatefile("${path.module}/values.yaml", {
-    harbor_url      = var.harbor_url
+    harbor_url      = "https://registry.goboolean.io"
     harbor_password = var.harbor_password
   })
 }
@@ -17,5 +17,4 @@ resource "helm_release" "harbor" {
 
 resource "kubernetes_manifest" "harbor_gateway" {
   manifest = yamldecode(file("${path.module}/gateway.yaml"))
-  depends_on = [helm_release.harbor]
 }
