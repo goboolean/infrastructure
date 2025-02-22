@@ -53,7 +53,9 @@ resource "github_branch_protection" "main_branch_protection" {
     required_approving_review_count = 1
     dismiss_stale_reviews           = false
     require_code_owner_reviews      = false
-    dismissal_restrictions          = []
+    pull_request_bypassers = [
+      "goboolean/devops"
+    ]
   }
 
   required_status_checks {
@@ -74,4 +76,31 @@ resource "github_repository" "archived" {
 
     visibility = each.value.visibility
     archived = true
+}
+
+resource "github_team" "devops" {
+  name        = "devops"
+  description = "DevOps team"
+}
+
+resource "github_team_members" "devops_members" {
+  team_id  = github_team.devops.id
+
+  members {
+    username = "mulmuri"
+    role     = "maintainer"
+  }
+
+  members {
+    username = "ikjeong"
+    role     = "maintainer"
+  }
+}
+
+resource "github_team_repository" "devops_access" {
+  for_each = toset(local.repositories)
+
+  team_id    = github_team.devops.id
+  repository = each.value
+  permission = "push"
 }
