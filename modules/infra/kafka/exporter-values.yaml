@@ -112,7 +112,7 @@ prometheus:
     # additionalLabels:
     #   release: kube-prometheus
     additionalLabels:
-      release: prometheus
+      release: kube-prometheus-stack
     targetLabels: []
     # Relabel configs to apply to target's labelset before the target gets scraped.
     # https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#monitoring.coreos.com/v1.RelabelConfig
