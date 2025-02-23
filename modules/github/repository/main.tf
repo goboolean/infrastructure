@@ -95,6 +95,11 @@ resource "github_team_members" "devops_members" {
     username = "ikjeong"
     role     = "maintainer"
   }
+
+  members {
+    username = "goboolean-io"
+    role     = "member"
+  }
 }
 
 resource "github_team_repository" "devops_access" {

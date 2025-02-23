@@ -25,18 +25,27 @@ resource "kubernetes_namespace" "argocd" {
 resource "kubernetes_namespace" "kafka" {
   metadata {
     name = "kafka"
+    labels = {
+      "istio-injection" = "enabled"
+    }
   }
 }
 
 resource "kubernetes_namespace" "etcd" {
   metadata {
     name = "etcd"
+    labels = {
+      "istio-injection" = "enabled"
+    }
   }
 }
 
 resource "kubernetes_namespace" "opentelemetry" {
   metadata {
     name = "opentelemetry"
+    labels = {
+      "istio-injection" = "enabled"
+    }
   }
 }
 
@@ -58,12 +67,18 @@ resource "kubernetes_namespace" "fetch-system" {
 resource "kubernetes_namespace" "postgresql" {
   metadata {
     name = "postgresql"
+    labels = {
+      "istio-injection" = "enabled"
+    }
   }
 }
 
 resource "kubernetes_namespace" "influxdata" {
   metadata {
     name = "influxdata"
+    labels = {
+      "istio-injection" = "enabled"
+    }
   }
 }
 

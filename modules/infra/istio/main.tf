@@ -15,6 +15,8 @@ resource "helm_release" "istiod" {
   namespace  = "istio-system"
   version    = "1.24.2"
 
+  values = [file("${path.module}/values.yaml")]
+
   depends_on = [helm_release.istio_base]
   timeout    = 300
 }

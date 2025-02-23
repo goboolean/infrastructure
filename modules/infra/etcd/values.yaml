@@ -446,8 +446,8 @@ sidecars: []
 ## @param podAnnotations [object] Annotations for etcd pods
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 ##
-podAnnotations:
-  sidecar.istio.io/inject: "true"
+podAnnotations: {}
+
 
 ## @param podLabels [object] Extra labels for etcd pods
 ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
@@ -600,7 +600,8 @@ service:
   extraPorts: []
   ## @param service.annotations [object] Additional annotations for the etcd service
   ##
-  annotations: {}
+  annotations:
+    sidecar.istio.io/inject: "true"
   ## @param service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
   ## If "ClientIP", consecutive client requests will be directed to the same Pod
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
