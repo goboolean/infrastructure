@@ -46,12 +46,9 @@ resource "argocd_application" "kustomize_application" {
 
     sync_policy {
       automated {
-        prune       = true
+        prune       = false
         self_heal   = true
-        allow_empty = true
       }
-
-      sync_options = ["StatusForceHealth=true"]
     }
   }
 }
@@ -87,12 +84,9 @@ resource "argocd_application" "helm_application" {
 
     sync_policy {
       automated {
-        prune       = true
+        prune       = false
         self_heal   = true
-        allow_empty = true
       }
-
-      sync_options = ["StatusForceHealth=true"]
     }
   }
 }

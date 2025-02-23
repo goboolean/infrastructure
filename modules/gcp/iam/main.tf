@@ -154,6 +154,12 @@ resource "google_service_account" "load_tester_sa" {
   description  = "Service account for Load Tester"
 }
 
+resource "google_project_iam_member" "load_tester_storage" {
+  project = var.project_id
+  role    = "roles/storage.objectViewer"
+  member  = "serviceAccount:${google_service_account.load_tester_sa.email}"
+}
+
 resource "google_storage_bucket_iam_member" "load_tester_role" {
   bucket  = "${var.project_id}-load-test"
   role    = "roles/storage.objectUser"
@@ -167,7 +173,7 @@ resource "google_service_account_iam_binding" "load_tester_workload_identity_bin
   role               = "roles/iam.workloadIdentityUser"
 
   members = [
-    "serviceAccount:${var.project_id}.svc.id.goog[monitoring/load-tester-sa]"
+    "serviceAccount:${var.project_id}.svc.id.goog[fetch-system/load-tester-sa]"
   ]
 
   depends_on = [google_service_account.load_tester_sa]
