@@ -23,3 +23,18 @@ resource "helm_release" "prometheus-kafka-exporter" {
 
   depends_on = [helm_release.kafka]
 }
+
+resource "helm_release" "kafka-ui" {
+  name             = "kafka-ui"
+  chart            = "kafka-ui"
+  namespace        = "kafka"
+  repository       = "https://provectus.github.io/kafka-ui-charts"
+  version          = "0.7.6"
+
+  values = [file("${path.module}/kafka-ui-values.yaml")]
+}
+
+resource "kubernetes_manifest" "kafka-ui-gateway" {
+  manifest = yamldecode(file("${path.module}/gateway.yaml"))
+  depends_on = [helm_release.kafka-ui]
+}
