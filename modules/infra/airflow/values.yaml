@@ -1786,12 +1786,12 @@ serviceAccount:
   ## if a Kubernetes ServiceAccount is created
   ## - if `false`, you must create the service account outside this chart with name: `serviceAccount.name`
   ##
-  create: true
+  create: false
 
   ## the name of the ServiceAccount
   ## - by default the name is generated using the `airflow.serviceAccountName` template in `_helpers/common.tpl`
   ##
-  name: ""
+  name: airflow-worker
 
   ## annotations for the ServiceAccount
   ##
