@@ -1,5 +1,5 @@
 variable "gke_num_nodes" {
-  default     = 3
+  default     = 4
 }
 
 variable "gke_machine_type" {
@@ -11,5 +11,5 @@ variable "gke_disk_size_gb" {
 }
 
 variable "gke_version" {
-  default     = "1.31.4-gke.1372000"
+  default     = "1.31.5-gke.1068000"
 }

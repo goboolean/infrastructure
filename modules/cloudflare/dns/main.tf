@@ -1,4 +1,4 @@
-resource "cloudflare_dns_record" "istio-gateway" {
+resource "cloudflare_dns_record" "istio-dns" {
   zone_id = var.zone_id
   content = var.ip_address
   name = "*.goboolean.io"

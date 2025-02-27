@@ -4,10 +4,6 @@ resource "google_container_cluster" "primary" {
   name     = "${var.project_id}-gke"
   location = var.zone
 
-  release_channel {
-    channel = "REGULAR"
-  }
-
   workload_identity_config {
     workload_pool = "${var.project_id}.svc.id.goog"
   }

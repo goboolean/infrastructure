@@ -1,11 +1,5 @@
 locals {
   services = toset([
-    "cloudresourcemanager.googleapis.com",
-    "iam.googleapis.com",
-    "serviceusage.googleapis.com",
-    "compute.googleapis.com",
-    "container.googleapis.com",
-    "storage.googleapis.com",
     "secretmanager.googleapis.com"
   ])
 }
