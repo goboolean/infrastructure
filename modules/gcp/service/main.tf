@@ -5,7 +5,8 @@ locals {
     "serviceusage.googleapis.com",
     "compute.googleapis.com",
     "container.googleapis.com",
-    "storage.googleapis.com"
+    "storage.googleapis.com",
+    "secretmanager.googleapis.com"
   ])
 }
 
@@ -16,5 +17,5 @@ resource "google_project_service" "services" {
   service = each.key
   
   disable_dependent_services = true
-  disable_on_destroy = true
+  disable_on_destroy = false
 }
