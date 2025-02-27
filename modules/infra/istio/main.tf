@@ -5,6 +5,16 @@ resource "helm_release" "istio_base" {
   namespace        = "istio-system"
   version          = "1.24.2"
 
+  set {
+    name  = "base.enableIstioConfigCRDs"
+    value = "false"
+  }
+
+  set {
+    name  = "base.enableCRDTemplates"
+    value = "false"
+  }
+
   timeout = 300
 }
 
