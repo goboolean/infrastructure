@@ -1,7 +1,7 @@
 resource "google_storage_bucket" "terraform_state" {
-  name          = "${var.project_id}-tfstate"
+  name          = "${var.main_project_id}-tfstate"
   location      = var.location
-  project       = var.project_id
+  project       = var.main_project_id
 
   versioning {
     enabled = true

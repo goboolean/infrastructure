@@ -1,13 +1,14 @@
 locals {
   services = toset([
-    "secretmanager.googleapis.com"
+    "secretmanager.googleapis.com",
+    "cloudkms.googleapis.com"
   ])
 }
 
 resource "google_project_service" "services" {
   for_each = local.services
   
-  project = var.project_id
+  project = var.main_project_id
   service = each.key
   
   disable_dependent_services = true

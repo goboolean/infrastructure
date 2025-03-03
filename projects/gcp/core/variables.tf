@@ -1,11 +1,12 @@
 variable "project_id" {
-  type        = string
+  description = "project id"
 }
-
-variable "location" {
-  type        = string
+variable "main_project_id" {
+  description = "main project id"
 }
-
 variable "region" {
-  type        = string
+  description = "region"
+}
+variable "location" {
+  description = "location"
 }

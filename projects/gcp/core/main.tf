@@ -20,8 +20,9 @@ terraform {
 module "core" {
   source = "../../../modules/gcp/core"
   project_id = var.project_id
-  location = var.location
+  main_project_id = var.main_project_id
   region = var.region
+  location = var.location
 }
 
 module "acme" {

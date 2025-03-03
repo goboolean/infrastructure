@@ -8,6 +8,7 @@ terraform {
 module "vault" {
   source = "../../../../modules/infra/vault"
   project_id = var.project_id
+  main_project_id = var.main_project_id
   region = var.region
   key_ring_name = local.vault_kms_keyring_name
   crypto_key_name = local.vault_kms_crypto_key_name
