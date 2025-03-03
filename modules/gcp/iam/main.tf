@@ -79,6 +79,23 @@ resource "google_service_account_iam_binding" "vault_workload_identity_binding" 
   depends_on = [google_service_account.vault_sa]
 }
 
+resource "google_project_iam_custom_role" "vault_service_account_role" {
+  role_id   = "VaultServiceAccountRole"
+  project   = var.project_id
+  title     = "Vault Service Account Role"
+  description = "Role for Vault to authenticate using GCP service accounts"
+  permissions = [
+    "iam.serviceAccounts.get",
+    "iam.serviceAccountKeys.get"
+  ]
+}
+
+resource "google_project_iam_member" "vault_service_account_role_binding" {
+  project = var.project_id
+  role    = "projects/${var.project_id}/roles/VaultServiceAccountRole"
+  member  = "serviceAccount:${google_service_account.vault_sa.email}"
+}
+
 # ƒor loki
 resource "google_service_account" "loki_gcs_sa" {
   project = var.project_id
@@ -177,5 +194,14 @@ resource "google_service_account_iam_binding" "workload_identity_binding" {
   role               = "roles/iam.workloadIdentityUser"
   members = [
     "serviceAccount:${var.project_id}.svc.id.goog[atlantis/atlantis]"
+  ]
+}
+
+resource "google_service_account_iam_binding" "service_account_token_creator" {
+  service_account_id = google_service_account.atlantis.name
+  role               = "roles/iam.serviceAccountTokenCreator"
+  members            = [
+    "serviceAccount:${google_service_account.atlantis.email}",
+    "user:jipark7937@gmail.com"
   ]
 }
