@@ -7,6 +7,7 @@ resource "helm_release" "vault" {
 
   values = [templatefile("${path.module}/values.yaml", {
     project_id = var.project_id
+    main_project_id = var.main_project_id
     region = var.region
     key_ring_name = var.key_ring_name
     crypto_key_name = var.crypto_key_name

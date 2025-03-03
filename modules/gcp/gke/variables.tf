@@ -11,5 +11,5 @@ variable "gke_disk_size_gb" {
 }
 
 variable "gke_version" {
-  default     = "1.31.5-gke.1068000"
+  default     = "1.31.5-gke.1169000"
 }

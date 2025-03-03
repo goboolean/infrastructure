@@ -925,7 +925,7 @@ server:
         # GKMS keys must already exist, and the cluster must have a service account
         # that is authorized to access GCP KMS.
         seal "gcpckms" {
-          project     = "${project_id}"
+          project     = "${main_project_id}"
           region      = "${region}"
           key_ring    = "${key_ring_name}"
           crypto_key  = "${crypto_key_name}"
@@ -1008,7 +1008,7 @@ server:
     # YAML or a YAML-formatted multi-line templated string map of the
     # annotations to apply to the serviceAccount.
     annotations:
-      iam.gke.io/gcp-service-account: "vault-kms-sa@${project_id}.iam.gserviceaccount.com"
+      iam.gke.io/gcp-service-account: "vault-sa@${project_id}.iam.gserviceaccount.com"
     # Extra labels to attach to the serviceAccount
     # This should be a YAML map of the labels to apply to the serviceAccount
     extraLabels: {}

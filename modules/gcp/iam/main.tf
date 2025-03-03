@@ -62,20 +62,21 @@ resource "google_storage_bucket_iam_member" "terraform_state_access" {
 */
 
 # for vault
-data "google_service_account" "vault_kms_sa" {
-  account_id = "vault-kms-sa"
-  project    = var.main_project_id
+resource "google_service_account" "vault_sa" {
+  project = var.project_id
+  account_id   = "vault-sa"
+  display_name = "Vault Service Account"
 }
 
 resource "google_service_account_iam_binding" "vault_workload_identity_binding" {
-  service_account_id = data.google_service_account.vault_kms_sa.name
+  service_account_id = google_service_account.vault_sa.name
   role               = "roles/iam.workloadIdentityUser"
 
   members = [
     "serviceAccount:${var.project_id}.svc.id.goog[vault/vault-sa]"
   ]
 
-  depends_on = [data.google_service_account.vault_kms_sa]
+  depends_on = [google_service_account.vault_sa]
 }
 
 # ƒor loki

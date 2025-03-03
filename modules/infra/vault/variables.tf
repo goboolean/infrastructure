@@ -2,6 +2,10 @@ variable "project_id" {
   description = "The project ID"
 }
 
+variable "main_project_id" {
+  description = "The main project ID"
+}
+
 variable "region" {
   description = "The region"
 }
