@@ -196,3 +196,12 @@ resource "google_service_account_iam_binding" "workload_identity_binding" {
     "serviceAccount:${var.project_id}.svc.id.goog[atlantis/atlantis]"
   ]
 }
+
+resource "google_service_account_iam_binding" "service_account_token_creator" {
+  service_account_id = google_service_account.atlantis.name
+  role               = "roles/iam.serviceAccountTokenCreator"
+  members            = [
+    "serviceAccount:${google_service_account.atlantis.email}",
+    "user:jipark7937@gmail.com"
+  ]
+}

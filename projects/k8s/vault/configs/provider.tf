@@ -2,7 +2,7 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "4.84.0"
+      version = "6.23.0"
     }
     vault = {
       source  = "hashicorp/vault"
@@ -44,8 +44,6 @@ data "kubernetes_secret" "vault_sa_token" {
 
 locals {
   token_reviewer_jwt = data.kubernetes_secret.vault_sa_token.data["token"]
-  role_id = data.google_secret_manager_secret_version.vault_role_id.secret_data
-  secret_id = data.google_secret_manager_secret_version.vault_secret_id.secret_data
 }
 
 provider "google" {
@@ -53,21 +51,25 @@ provider "google" {
   region = var.region
 }
 
-data "google_secret_manager_secret_version" "vault_role_id" {
-  secret = "vault_role_id"
-}
+ephemeral "google_service_account_jwt" "vault_jwt" {
+  target_service_account = "atlantis@${var.project_id}.iam.gserviceaccount.com"
 
-data "google_secret_manager_secret_version" "vault_secret_id" {
-  secret = "vault_secret_id"
+  payload = jsonencode({
+    sub: "atlantis@${var.project_id}.iam.gserviceaccount.com",
+    aud: "vault/terraform",
+  })
+
+  expires_in = 1800
 }
 
 provider "vault" {
   address = "https://vault.goboolean.io"
+  
   auth_login {
-    path = "auth/approle/login"
+    path = "auth/gcp/login"
     parameters = {
-      role_id   = local.role_id
-      secret_id = local.secret_id
+      jwt  = ephemeral.google_service_account_jwt.vault_jwt.jwt
+      role = "terraform"
     }
   }
 }
