@@ -3,21 +3,30 @@ provider "google" {
   region = var.region
 }
 
-data "google_secret_manager_secret_version" "vault_role_id" {
-  secret = "vault_role_id"
-}
+ephemeral "google_service_account_jwt" "vault_jwt" {
+  target_service_account = "atlantis@${var.project_id}.iam.gserviceaccount.com"
 
-data "google_secret_manager_secret_version" "vault_secret_id" {
-  secret = "vault_secret_id"
+  payload = jsonencode({
+    sub: "atlantis@${var.project_id}.iam.gserviceaccount.com",
+    aud: "vault/terraform",
+  })
+
+  expires_in = 1800
 }
 
 provider "vault" {
   address = "https://vault.goboolean.io"
+  
   auth_login {
-    path = "auth/approle/login"
+    path = "auth/gcp/login"
     parameters = {
-      role_id   = data.google_secret_manager_secret_version.vault_role_id.secret_data
-      secret_id = data.google_secret_manager_secret_version.vault_secret_id.secret_data
+      jwt  = ephemeral.google_service_account_jwt.vault_jwt.jwt
+      role = "terraform"
     }
   }
+}
+
+provider "github" {
+  owner = "goboolean"
+  token = local.github_token
 }

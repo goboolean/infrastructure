@@ -1,16 +1,15 @@
 locals {
     repositories = [
-        "infrastructure",
-        "manifests",
-        "airflow-pipeline-factory",
-        "fetch-system.worker",
-        "fetch-system.util",
-        "core-system.worker",
-        "hts-connector",
-        ".github",
-        "GoCppLinkingLibrary",
-        "common",
-        "buycycle"
+        {name = "infrastructure",           tags = ["devops"]},
+        {name = "manifests",                tags = ["devops"]},
+        {name = "airflow-pipeline-factory", tags = ["de"]},
+        {name = "fetch-system.worker",      tags = ["backend"]},
+        {name = "fetch-system.util",        tags = ["backend"]},
+        {name = "core-system.worker",       tags = ["backend"]},
+        {name = "hts-connector",            tags = ["backend"]},
+        {name = ".github",                  tags = []},
+        {name = "GoCppLinkingLibrary",      tags = ["ml"]},
+        {name = "common",                   tags = []}
     ]
 
     archived_repositories = [
@@ -30,82 +29,56 @@ locals {
 
 
 resource "github_repository" "repository" {
-    for_each = toset(local.repositories)
+  for_each = { for repo in local.repositories : repo.name => repo }
 
-    name = each.value
-    description = ""
+  name = each.value.name
+  description = ""
 
-    visibility = "public"
-    has_issues = true
+  visibility = "public"
+  has_issues = true
 
-    delete_branch_on_merge = true
-    allow_merge_commit = true
+  delete_branch_on_merge = true
+  allow_merge_commit = true
 }
 
-resource "github_branch_protection" "main_branch_protection" {
-  for_each = toset(local.repositories)
+resource "github_repository_topics" "repository_topic" {
+  for_each = { for repo in local.repositories : repo.name => repo }
 
-  repository_id = github_repository.repository[each.value].node_id
-  
-  pattern = "main"
+  repository = each.value.name
+  topics = each.value.tags
+
+  depends_on = [github_repository.repository]
+}
+
+resource "github_branch_protection_v3" "main_branch_protection" {
+  for_each = { for repo in local.repositories : repo.name => repo }
+
+  repository = each.value.name
+  branch = "main"
+  enforce_admins = true  
   
   required_pull_request_reviews {
     required_approving_review_count = 1
     dismiss_stale_reviews           = false
     require_code_owner_reviews      = false
-    pull_request_bypassers = [
-      "goboolean/devops"
-    ]
+    bypass_pull_request_allowances {
+      teams = ["goboolean/devops"]
+    }
   }
 
   required_status_checks {
     strict   = true
-    contexts = []
   }
 
-  enforce_admins = true  
-  allows_deletions = false
-  allows_force_pushes = false
+  depends_on = [github_repository.repository]
 }
 
 resource "github_repository" "archived" {
-    for_each = { for repo in local.archived_repositories : repo.name => repo }
+  for_each = { for repo in local.archived_repositories : repo.name => repo }
 
-    name = each.value.name
-    description = ""
+  name = each.value.name
+  description = ""
 
-    visibility = each.value.visibility
-    archived = true
-}
-
-resource "github_team" "devops" {
-  name        = "devops"
-  description = "DevOps team"
-}
-
-resource "github_team_members" "devops_members" {
-  team_id  = github_team.devops.id
-
-  members {
-    username = "mulmuri"
-    role     = "maintainer"
-  }
-
-  members {
-    username = "ikjeong"
-    role     = "maintainer"
-  }
-
-  members {
-    username = "goboolean-io"
-    role     = "member"
-  }
-}
-
-resource "github_team_repository" "devops_access" {
-  for_each = toset(local.repositories)
-
-  team_id    = github_team.devops.id
-  repository = each.value
-  permission = "push"
+  visibility = each.value.visibility
+  archived = true
 }
