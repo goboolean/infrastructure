@@ -38,9 +38,7 @@ module "github_secret" {
   registry_password = local.harbor_password
 }
 
-provider "github" {
-  owner = "goboolean"
-  token = local.github_token
+module "team" {
+  source = "../../modules/github/team"
+  depends_on = [module.repository]
 }
-
-
