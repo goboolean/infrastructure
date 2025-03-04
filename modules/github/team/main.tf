@@ -28,6 +28,27 @@ resource "github_team_members" "active_users" {
   }
 }
 
+#Admin
+resource "github_team" "admin" {
+  name = "admin"
+  description = "Admin team"
+}
+
+resource "github_team_members" "admin_members" {
+  team_id  = github_team.admin.id
+
+  members {
+    username = "mulmuri"
+    role     = "member"
+  }
+
+  members {
+    username = "ikjeong"
+    role     = "maintainer"
+  }
+}
+
+
 
 #DevOps
 resource "github_team" "devops" {
@@ -70,7 +91,7 @@ resource "github_team_repository" "devops_access" {
 #DE
 resource "github_team" "de" {
   name = "DE"
-  description = "DevOps"
+  description = "Data Engineering"
 }
 
 resource "github_team_members" "de_members" {
