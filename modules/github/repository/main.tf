@@ -9,7 +9,8 @@ locals {
         {name = "hts-connector",            tags = ["backend"]},
         {name = ".github",                  tags = []},
         {name = "GoCppLinkingLibrary",      tags = ["ml"]},
-        {name = "common",                   tags = []}
+        {name = "common",                   tags = []},
+        {name = "airflow-dags",             tags = ["de"]}
     ]
 
     archived_repositories = [
@@ -36,6 +37,7 @@ resource "github_repository" "repository" {
 
   visibility = "public"
   has_issues = true
+  auto_init   = true
 
   delete_branch_on_merge = true
   allow_merge_commit = true
@@ -62,7 +64,8 @@ resource "github_branch_protection_v3" "main_branch_protection" {
     dismiss_stale_reviews           = false
     require_code_owner_reviews      = false
     bypass_pull_request_allowances {
-      teams = ["goboolean/DevOps"]
+      users = ["goboolean-io", "mulmuri", "ikjeong"]
+      teams = ["goboolean/admin"]
     }
   }
 

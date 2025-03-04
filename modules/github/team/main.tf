@@ -26,7 +26,38 @@ resource "github_team_members" "active_users" {
     username = "dawit0905"
     role     = "member"
   }
+
+  members {
+    username = "lsjtop10"
+    role     = "member"
+  }
 }
+
+#Admin
+resource "github_team" "admin" {
+  name = "admin"
+  description = "Admin team"
+}
+
+resource "github_team_members" "admin_members" {
+  team_id  = github_team.admin.id
+
+  members {
+    username = "mulmuri"
+    role     = "maintainer"
+  }
+
+  members {
+    username = "ikjeong"
+    role     = "maintainer"
+  }
+
+  members {
+    username = "goboolean-io"
+    role     = "maintainer"
+  }
+}
+
 
 
 #DevOps
@@ -47,11 +78,6 @@ resource "github_team_members" "devops_members" {
     username = "ikjeong"
     role     = "maintainer"
   }
-
-  members {
-    username = "goboolean-io"
-    role     = "maintainer"
-  }
 }
 
 data "github_repositories" "infra_repos" {
@@ -70,7 +96,7 @@ resource "github_team_repository" "devops_access" {
 #DE
 resource "github_team" "de" {
   name = "DE"
-  description = "DevOps"
+  description = "Data Engineering"
 }
 
 resource "github_team_members" "de_members" {
@@ -111,6 +137,11 @@ resource "github_team_members" "backend_members" {
 
   members {
     username = "mulmuri"
+    role     = "maintainer"
+  }
+
+  members {
+    username = "lsjtop10"
     role     = "maintainer"
   }
 }
