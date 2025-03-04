@@ -62,7 +62,7 @@ resource "github_branch_protection_v3" "main_branch_protection" {
     dismiss_stale_reviews           = false
     require_code_owner_reviews      = false
     bypass_pull_request_allowances {
-      teams = ["goboolean/devops"]
+      teams = ["goboolean/DevOps"]
     }
   }
 
