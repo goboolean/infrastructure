@@ -1,3 +1,10 @@
+locals {
+  argocd_password_hash = bcrypt(var.admin_password, 10)
+  values_yaml = templatefile("${path.module}/values.yaml", {
+    argocd_password_hash = local.argocd_password_hash
+  })
+}
+
 resource "helm_release" "argocd" {
   name       = "argocd"
   chart      = "argo-cd"
@@ -5,9 +12,7 @@ resource "helm_release" "argocd" {
   repository = "https://argoproj.github.io/argo-helm"
   version    = "7.7.21"
 
-  values = [
-    file("${path.module}/values.yaml")
-  ]
+  values = [local.values_yaml]
 
   depends_on = [kubernetes_manifest.argocd_cmp_plugin]
 }
@@ -40,11 +45,3 @@ resource "kubernetes_secret" "argocd_vault_plugin_credentials" {
   depends_on = [helm_release.argocd]
 }
 
-data "kubernetes_secret" "argocd_initial_password" {
-  metadata {
-    name      = "argocd-initial-admin-secret"
-    namespace = "argocd"
-  }
-
-  depends_on = [helm_release.argocd]
-}
