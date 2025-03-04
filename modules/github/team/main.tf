@@ -26,6 +26,11 @@ resource "github_team_members" "active_users" {
     username = "dawit0905"
     role     = "member"
   }
+
+  members {
+    username = "lsjtop10"
+    role     = "member"
+  }
 }
 
 #Admin
@@ -39,11 +44,16 @@ resource "github_team_members" "admin_members" {
 
   members {
     username = "mulmuri"
-    role     = "member"
+    role     = "maintainer"
   }
 
   members {
     username = "ikjeong"
+    role     = "maintainer"
+  }
+
+  members {
+    username = "goboolean-io"
     role     = "maintainer"
   }
 }
@@ -66,11 +76,6 @@ resource "github_team_members" "devops_members" {
 
   members {
     username = "ikjeong"
-    role     = "maintainer"
-  }
-
-  members {
-    username = "goboolean-io"
     role     = "maintainer"
   }
 }
@@ -132,6 +137,11 @@ resource "github_team_members" "backend_members" {
 
   members {
     username = "mulmuri"
+    role     = "maintainer"
+  }
+
+  members {
+    username = "lsjtop10"
     role     = "maintainer"
   }
 }
