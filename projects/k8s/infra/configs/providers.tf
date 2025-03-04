@@ -1,23 +1,30 @@
 terraform {
+  backend "gcs" {
+    bucket = "goboolean-450909-tfstate"
+    prefix = "452007/k8s/infra/configs"
+  }
+
   required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = "6.23.0"
+    argocd = {
+      source  = "argoproj-labs/argocd"
+      version = "7.3.0"
     }
-    vault = {
-      source  = "hashicorp/vault"
-      version = "4.6.0"
+
+    harbor = {
+      source  = "goharbor/harbor"
+      version = "3.10.19"
     }
   }
   required_version = ">= 0.14"
 }
 
+
 data "terraform_remote_state" "gcp" {
   backend = "gcs"
 
   config = {
-    bucket = "goboolean-450909-tfstate"
-    prefix = "452007/gcp"
+    bucket = "goboolean-450909-terraform-state"
+    prefix = "gcp"
   }
 }
 
@@ -33,17 +40,6 @@ provider "kubernetes" {
   host                   = local.gke_host
   token                  = local.gke_token
   cluster_ca_certificate = local.gke_cluster_ca_certificate
-}
-
-data "kubernetes_secret" "vault_sa_token" {
-  metadata {
-    name      = "vault-sa-token"
-    namespace = "vault"
-  }
-}
-
-locals {
-  token_reviewer_jwt = data.kubernetes_secret.vault_sa_token.data["token"]
 }
 
 provider "google" {
@@ -72,4 +68,26 @@ provider "vault" {
       role = "terraform"
     }
   }
+}
+
+data "vault_kv_secret_v2" "argocd" {
+  mount = "kv"
+  name = "infra/argocd"
+}
+
+provider "argocd" {
+  server_addr = "argocd.goboolean.io:443"
+  username = data.vault_kv_secret_v2.argocd.data["username"]
+  password = data.vault_kv_secret_v2.argocd.data["password"]
+}
+
+data "vault_kv_secret_v2" "harbor" {
+  mount = "kv"
+  name = "infra/harbor"
+}
+
+provider "harbor" {
+  url = "https://registry.goboolean.io"
+  username = data.vault_kv_secret_v2.harbor.data["username"]
+  password = data.vault_kv_secret_v2.harbor.data["password"]
 }
