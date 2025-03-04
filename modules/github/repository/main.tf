@@ -52,10 +52,6 @@ resource "github_repository_topics" "repository_topic" {
   depends_on = [github_repository.repository]
 }
 
-data "github_team" "admin_team" {
-  slug = "admin"
-}
-
 resource "github_branch_protection_v3" "main_branch_protection" {
   for_each = { for repo in local.repositories : repo.name => repo }
 
@@ -68,7 +64,8 @@ resource "github_branch_protection_v3" "main_branch_protection" {
     dismiss_stale_reviews           = false
     require_code_owner_reviews      = false
     bypass_pull_request_allowances {
-      teams = [data.github_team.admin_team.id]
+      users = ["goboolean-io", "mulmuri", "ikjeong"]
+      teams = ["goboolean/admin"]
     }
   }
 
