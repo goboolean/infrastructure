@@ -26,22 +26,12 @@ module "etcd" {
 }
 
 module "opentelemetry" {
-  source = "../../modules/infra/opentelemetry"
+  source = "../../../../modules/infra/opentelemetry"
 }
 
 module "argocd" {
-  source = "../../modules/infra/argocd"
-  admin_password = data.vault_kv_secret_v2.argocd.data["password"]
-}
-
-module "argocd-application" {
-  source = "../../modules/infra/argocd/application"
-  depends_on = [module.argocd]
-  providers = {
-    argocd = argocd
-  }
-}
   source = "../../../../modules/infra/argocd"
+  admin_password = data.vault_kv_secret_v2.argocd.data["password"]
 }
 
 
