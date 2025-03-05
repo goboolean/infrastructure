@@ -16,8 +16,8 @@ data "terraform_remote_state" "gcp" {
   backend = "gcs"
 
   config = {
-    bucket = "goboolean-450909-terraform-state"
-    prefix = "gcp"
+    bucket = "goboolean-450909-tfstate"
+    prefix = "452007/gcp"
   }
 }
 

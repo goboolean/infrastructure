@@ -2,11 +2,15 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "4.84.0"
+      version = "6.23.0"
     }
     vault = {
       source  = "hashicorp/vault"
       version = "4.6.0"
+    }
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = ">= 1.14.0"
     }
   }
   required_version = ">= 0.14"
@@ -16,8 +20,8 @@ data "terraform_remote_state" "gcp" {
   backend = "gcs"
 
   config = {
-    bucket = "goboolean-450909-terraform-state"
-    prefix = "gcp"
+    bucket = "goboolean-450909-tfstate"
+    prefix = "452007/gcp"
   }
 }
 
@@ -35,37 +39,45 @@ provider "kubernetes" {
   cluster_ca_certificate = local.gke_cluster_ca_certificate
 }
 
-data "kubernetes_secret" "vault_sa_token" {
-  metadata {
-    name      = "vault-sa-token"
-    namespace = "vault"
-  }
-}
-
-locals {
-  token_reviewer_jwt = data.kubernetes_secret.vault_sa_token.data["token"]
-}
-
 provider "google" {
   project = var.project_id
   region = var.region
 }
 
-data "google_secret_manager_secret_version" "vault_role_id" {
-  secret = "vault_role_id"
-}
+ephemeral "google_service_account_jwt" "vault_jwt" {
+  target_service_account = "atlantis@${var.project_id}.iam.gserviceaccount.com"
 
-data "google_secret_manager_secret_version" "vault_secret_id" {
-  secret = "vault_secret_id"
+  payload = jsonencode({
+    sub: "atlantis@${var.project_id}.iam.gserviceaccount.com",
+    aud: "vault/terraform",
+  })
+
+  expires_in = 1800
 }
 
 provider "vault" {
   address = "https://vault.goboolean.io"
+  
   auth_login {
-    path = "auth/approle/login"
+    path = "auth/gcp/login"
     parameters = {
-      role_id   = data.google_secret_manager_secret_version.vault_role_id.secret_data
-      secret_id = data.google_secret_manager_secret_version.vault_secret_id.secret_data
+      jwt  = ephemeral.google_service_account_jwt.vault_jwt.jwt
+      role = "terraform"
     }
   }
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = local.gke_host
+    token                  = local.gke_token
+    cluster_ca_certificate = local.gke_cluster_ca_certificate
+  }
+}
+
+provider "kubectl" {
+  host                   = local.gke_host
+  token                  = local.gke_token
+  cluster_ca_certificate = local.gke_cluster_ca_certificate
+  load_config_file       = false
 }

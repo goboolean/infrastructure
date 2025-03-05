@@ -1,7 +1,7 @@
 terraform {
   backend "gcs" {
     bucket = "goboolean-450909-terraform-state"
-    prefix = "infra"
+    prefix = "452007/k8s/infra/deployments"
   }
 }
 
@@ -11,33 +11,22 @@ data "vault_kv_secret_v2" "harbor" {
 }
 
 module "harbor" {
-  source = "../../modules/infra/harbor"
+  source = "../../../../modules/infra/harbor"
   harbor_username = data.vault_kv_secret_v2.harbor.data["username"]
   harbor_password = data.vault_kv_secret_v2.harbor.data["password"]
 }
 
-module "harbor_policy" {
-  source = "../../modules/infra/harbor/policy"
-  providers = {
-    harbor = harbor
-  }
-}
-
 module "kafka" {
-  source = "../../modules/infra/kafka"
+  source = "../../../../modules/infra/kafka"
+  depends_on = [module.kube-prometheus-stack]
 }
 
 module "etcd" {
-  source = "../../modules/infra/etcd"
+  source = "../../../../modules/infra/etcd"
 }
 
 module "opentelemetry" {
   source = "../../modules/infra/opentelemetry"
-}
-
-data "vault_kv_secret_v2" "argocd" {
-  mount = "kv"
-  name = "infra/argocd"
 }
 
 module "argocd" {
@@ -52,6 +41,9 @@ module "argocd-application" {
     argocd = argocd
   }
 }
+  source = "../../../../modules/infra/argocd"
+}
+
 
 data "vault_kv_secret_v2" "postgresql" {
   mount = "kv"
@@ -59,7 +51,7 @@ data "vault_kv_secret_v2" "postgresql" {
 }
 
 module "postgresql" {
-  source = "../../modules/infra/postgresql"
+  source = "../../../../modules/infra/postgresql"
   postgresql_username = data.vault_kv_secret_v2.postgresql.data["username"]
   postgresql_password = data.vault_kv_secret_v2.postgresql.data["password"]
 }
@@ -70,7 +62,7 @@ data "vault_kv_secret_v2" "influxdb" {
 }
 
 module "influxdb" {
-  source = "../../modules/infra/influxdb"
+  source = "../../../../modules/infra/influxdb"
   influxdb_username = data.vault_kv_secret_v2.influxdb.data["username"]
   influxdb_password = data.vault_kv_secret_v2.influxdb.data["password"]
   influxdb_token = data.vault_kv_secret_v2.influxdb.data["token"]
@@ -82,7 +74,7 @@ data "vault_kv_secret_v2" "grafana" {
 }
 
 module "kube-prometheus-stack" {
-  source = "../../modules/infra/monitoring/kube-prometheus-stack"
+  source = "../../../../modules/infra/monitoring/kube-prometheus-stack"
   grafana_username = data.vault_kv_secret_v2.grafana.data["username"]
   grafana_password = data.vault_kv_secret_v2.grafana.data["password"]
 }
@@ -93,7 +85,7 @@ data "vault_kv_secret_v2" "airflow" {
 }
 
 module "airflow" {
-  source = "../../modules/infra/airflow"
+  source = "../../../../modules/infra/airflow"
   airflow_username = data.vault_kv_secret_v2.airflow.data["username"]
   airflow_password = data.vault_kv_secret_v2.airflow.data["password"]
   postgres_host = "postgresql.postgresql.svc.cluster.local"
@@ -102,12 +94,12 @@ module "airflow" {
 }
 
 module "loki-stack" {
-  source = "../../modules/infra/monitoring/loki-stack"
+  source = "../../../../modules/infra/monitoring/loki-stack"
   project_id = var.project_id
 }
 
 module "dex" {
-  source = "../../modules/infra/dex"
+  source = "../../../../modules/infra/dex"
 }
 
 data "vault_kv_secret_v2" "github" {
@@ -121,7 +113,7 @@ data "vault_kv_secret_v2" "atlantis" {
 }
 
 module "atlantis" {
-  source = "../../modules/infra/atlantis"
+  source = "../../../../modules/infra/atlantis"
 
   project_id = var.project_id
   github_username = "goboolean-io"
@@ -132,18 +124,12 @@ module "atlantis" {
 }
 
 module "kiali" {
-  source = "../../modules/infra/kiali"
+  source = "../../../../modules/infra/kiali"
 
   grafana_username = data.vault_kv_secret_v2.grafana.data["username"]
   grafana_password = data.vault_kv_secret_v2.grafana.data["password"]
 }
 
 module "redis" {
-  source = "../../modules/infra/redis"
-}
-
-module "vault_operator" {
-  source = "../../modules/infra/vault/operator"
-  vault_role_id = local.vault_role_id
-  vault_secret_id = local.vault_secret_id
+  source = "../../../../modules/infra/redis"
 }
