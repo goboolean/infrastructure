@@ -202,6 +202,7 @@ resource "google_service_account_iam_binding" "service_account_token_creator" {
   role               = "roles/iam.serviceAccountTokenCreator"
   members            = [
     "serviceAccount:${google_service_account.atlantis.email}",
-    "user:jipark7937@gmail.com"
+    "user:jipark7937@gmail.com",
+    "user:goboolean.io@gmail.com"
   ]
 }
