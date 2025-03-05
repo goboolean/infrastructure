@@ -5,6 +5,8 @@ server:
 configs:
   params:
     server.insecure: true
+  secret:
+    argocdServerAdminPassword: "${argocd_password_hash}"
 
 # argocd-vault-plugin
 repoServer:
