@@ -2085,7 +2085,7 @@ metrics:
     ## @param metrics.jmx.existingConfigmap Name of existing ConfigMap with JMX exporter configuration
     ## NOTE: This will override metrics.jmx.config
     ##
-    existingConfigmap: ""
+    existingConfigmap: "kafka-jmx-config"
     ## @param metrics.jmx.extraRules  Add extra rules to JMX exporter configuration
     ## e.g:
     ## extraRules: |-

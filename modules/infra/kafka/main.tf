@@ -1,3 +1,7 @@
+resource "kubernetes_manifest" "kafka-jmx-config" {
+  manifest = yamldecode(file("${path.module}/kafka-jmx-config.yaml"))
+}
+
 resource "helm_release" "kafka" {
   name             = "kafka"
   chart            = "kafka"
@@ -8,6 +12,8 @@ resource "helm_release" "kafka" {
   values = [file("${path.module}/kafka-values.yaml")]
 
   timeout = 600
+
+  depends_on = [ kubernetes_manifest.kafka-jmx-config ]
 }
 
 resource "helm_release" "prometheus-kafka-exporter" {

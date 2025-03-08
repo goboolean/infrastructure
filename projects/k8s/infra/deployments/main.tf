@@ -29,6 +29,11 @@ module "opentelemetry" {
   source = "../../../../modules/infra/opentelemetry"
 }
 
+data "vault_kv_secret_v2" "argocd" {
+  mount = "kv"
+  name = "infra/argocd"
+}
+
 module "argocd" {
   source = "../../../../modules/infra/argocd"
   admin_password = data.vault_kv_secret_v2.argocd.data["password"]
