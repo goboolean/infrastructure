@@ -206,3 +206,46 @@ resource "google_service_account_iam_binding" "service_account_token_creator" {
     "user:goboolean.io@gmail.com"
   ]
 }
+
+
+resource "google_iam_workload_identity_pool" "github_pool" {
+  workload_identity_pool_id = "github-pool"
+  display_name              = "GitHub Actions Pool"
+  description               = "Pool for GitHub Actions workflows"
+  disabled                  = false
+}
+
+resource "google_iam_workload_identity_pool_provider" "github_provider" {
+  workload_identity_pool_id          = google_iam_workload_identity_pool.github_pool.workload_identity_pool_id
+  workload_identity_pool_provider_id = "github-pool-provider"
+  display_name                       = "GitHub Provider"
+  description                        = "OIDC provider for GitHub Actions"
+
+  oidc {
+    issuer_uri = "https://token.actions.githubusercontent.com"
+  }
+
+  attribute_mapping = {
+    "google.subject"             = "assertion.sub"
+    "attribute.repository"       = "assertion.repository"
+    "attribute.repository_owner" = "assertion.repository_owner"
+  }
+}
+
+resource "google_service_account" "github_sa" {
+  account_id   = "github-actions-sa"
+  display_name = "GitHub Actions Service Account"
+  description  = "Service account for GitHub Actions workflows" 
+}
+
+resource "google_project_iam_member" "sa_role" {
+  project = var.project_id
+  role    = "roles/storage.admin"
+  member  = "serviceAccount:${google_service_account.github_sa.email}"
+}
+
+resource "google_service_account_iam_member" "workload_identity_user" {
+  service_account_id = google_service_account.github_sa.name
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "principal://iam.googleapis.com/${google_iam_workload_identity_pool.github_pool.name}/attribute.repository_owner/goboolean"
+}
