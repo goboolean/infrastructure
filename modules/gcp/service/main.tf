@@ -8,6 +8,8 @@ locals {
     "storage.googleapis.com",
     "secretmanager.googleapis.com",
     "cloudkms.googleapis.com",
+    "iamcredentials.googleapis.com",
+    "sts.googleapis.com"
   ])
 }
 
