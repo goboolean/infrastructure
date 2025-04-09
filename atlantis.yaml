@@ -1,28 +1,28 @@
 version: 3
 automerge: true
 projects:
-  - dir: projects/gcp
-    workflow: default
-    autoplan:
-      when_modified: ["*.tf", "*.yaml", "*.json", "../../modules/**/*.tf", "../../modules/**/*.yaml", "../../modules/**/*.json"]
-      enabled: true
-  - dir: projects/core
-    workflow: default
-    autoplan:
-      when_modified: ["*.tf", "*.yaml", "*.json", "../../modules/**/*.tf", "../../modules/**/*.yaml", "../../modules/**/*.json"]
-      enabled: true
-  - dir: projects/core/config
-    workflow: default
-    autoplan:
-      when_modified: ["*.tf", "*.yaml", "*.json", "../../../modules/**/*.tf", "../../../modules/**/*.yaml", "../../../modules/**/*.json"]
-      enabled: true
-  - dir: projects/domain
-    workflow: default
-    autoplan:
-      when_modified: ["*.tf", "*.yaml", "*.json", "../../../modules/**/*.tf", "../../../modules/**/*.yaml", "../../../modules/**/*.json"]
-      enabled: true
-  - dir: projects/infra
-    workflow: default
-    autoplan:
-      when_modified: ["*.tf", "*.yaml", "*.json", "../../../modules/**/*.tf", "../../../modules/**/*.yaml", "../../../modules/**/*.json"]
-      enabled: true
+#  - dir: projects/gcp
+#    workflow: default
+#    autoplan:
+#      when_modified: ["*.tf", "*.yaml", "*.json", "../../modules/**/*.tf", "../../modules/**/*.yaml", "../../modules/**/*.json"]
+#      enabled: true
+#  - dir: projects/core
+#    workflow: default
+#    autoplan:
+#      when_modified: ["*.tf", "*.yaml", "*.json", "../../modules/**/*.tf", "../../modules/**/*.yaml", "../../modules/**/*.json"]
+#      enabled: true
+#  - dir: projects/core/config
+#    workflow: default
+#    autoplan:
+#      when_modified: ["*.tf", "*.yaml", "*.json", "../../../modules/**/*.tf", "../../../modules/**/*.yaml", "../../../modules/**/*.json"]
+#      enabled: true
+#  - dir: projects/domain
+#    workflow: default
+#    autoplan:
+#      when_modified: ["*.tf", "*.yaml", "*.json", "../../../modules/**/*.tf", "../../../modules/**/*.yaml", "../../../modules/**/*.json"]
+#      enabled: true
+#  - dir: projects/infra
+#    workflow: default
+#    autoplan:
+#      when_modified: ["*.tf", "*.yaml", "*.json", "../../../modules/**/*.tf", "../../../modules/**/*.yaml", "../../../modules/**/*.json"]
+#      enabled: true
